@@ -1,0 +1,9 @@
+.view-company-details-custom-card .ant-card-head {
+  background-color: #bae7ff; /* Change background color of the header */
+  overflow-y: auto;
+}
+
+/* .view-company-details-custom-card .ant-card-body {
+  background-color: rgb(213, 234, 241);
+  overflow-y: auto;
+} */

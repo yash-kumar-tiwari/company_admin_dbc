@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Button, Layout, Menu, theme } from "antd";
+import { Button, Layout, Menu, message, theme } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
   CreditCardOutlined,
   LogoutOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
+import { MdOutlinePassword } from "react-icons/md";
+
 import ViewProfile from "../../../components/Dashboard/ViewProfile/ViewProfile";
 import ViewCompanyDetails from "../../../components/Dashboard/ViewCompanyDetails/ViewCompanyDetails";
 import ViewCards from "../../../components/Dashboard/ViewCards/ViewCards";
 import ViewChangePassword from "../../../components/Dashboard/ViewChangePassword/ViewChangePassword";
+import ViewCreateCard from "../../../components/Dashboard/ViewCreateCard/ViewCreateCard";
+import { logoutUser } from "../../../services/apiServices";
+import { useNavigate } from "react-router-dom";
+import "./CompanyDashboardPage.css";
+
 const { Header, Content, Footer, Sider } = Layout;
 
 const CompanyDashboardPage = () => {
@@ -17,13 +25,16 @@ const CompanyDashboardPage = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const navigate = useNavigate();
+
   const [selectedTab, setSelectedTab] = useState("1");
 
   const items = [
-    { key: "1", icon: <UserOutlined />, label: "Profile" },
-    { key: "2", icon: <ProfileOutlined />, label: "Company Details" },
+    { key: "1", icon: <ProfileOutlined />, label: "Company Details" },
+    { key: "2", icon: <PlusOutlined />, label: "Create Card" },
     { key: "3", icon: <CreditCardOutlined />, label: "Cards" },
-    { key: "4", icon: <UserOutlined />, label: "Change Password" },
+    { key: "4", icon: <UserOutlined />, label: "Profile" },
+    { key: "5", icon: <MdOutlinePassword />, label: "Change Password" },
     // { key: "4", icon: <LogoutOutlined />, label: "Logout" },
   ];
 
@@ -36,13 +47,13 @@ const CompanyDashboardPage = () => {
       case "1":
         return (
           <>
-            <ViewProfile />
+            <ViewCompanyDetails />
           </>
         );
       case "2":
         return (
           <>
-            <ViewCompanyDetails />
+            <ViewCreateCard />
           </>
         );
       case "3":
@@ -54,11 +65,27 @@ const CompanyDashboardPage = () => {
       case "4":
         return (
           <>
+            <ViewProfile />
+          </>
+        );
+      case "5":
+        return (
+          <>
             <ViewChangePassword />
           </>
         );
       default:
         return <div>No Content</div>;
+    }
+  };
+
+  const handleLogout = async () => {
+    let isLoggedOut = await logoutUser();
+
+    if (isLoggedOut) {
+      navigate("/");
+    } else {
+      message.error("Logged Out Successfully");
     }
   };
 
@@ -100,6 +127,7 @@ const CompanyDashboardPage = () => {
           onCollapse={(collapsed, type) => {
             console.log(collapsed, type);
           }}
+          style={{ backgroundColor: "aliceblue" }}
         >
           <div className="demo-logo-vertical" />
           <Menu
@@ -107,13 +135,14 @@ const CompanyDashboardPage = () => {
             mode="inline"
             defaultSelectedKeys={["1"]}
             onClick={handleMenuClick}
+            style={{ backgroundColor: "aliceblue" }}
           >
             {items.map((item) => (
               <Menu.Item
                 key={item.key}
                 icon={item.icon}
-                style={{ borderRadius: "16px" }}
-                className="my-2"
+                style={{ borderRadius: "20px" }}
+                className="sider-dashboard-menu-item my-2 fw-bold"
               >
                 {item.label}
               </Menu.Item>
@@ -123,14 +152,14 @@ const CompanyDashboardPage = () => {
               type="primary"
               className="w-100"
               shape="round"
-              onClick={"handleLogout"}
+              onClick={handleLogout}
               icon={<LogoutOutlined />}
             >
               Logout
             </Button>
           </Menu>
         </Sider>
-        <Layout>
+        <Layout style={{ backgroundColor: "aliceblue" }}>
           {/* <Header
             style={{
               padding: 0,
@@ -142,6 +171,8 @@ const CompanyDashboardPage = () => {
           <Content
             style={{
               margin: "24px 16px 0",
+              height: "85vh",
+              maxHeight: "85vh",
             }}
           >
             <div
@@ -151,17 +182,18 @@ const CompanyDashboardPage = () => {
                 background: colorBgContainer,
                 borderRadius: borderRadiusLG,
               }}
+              className="dashboard-container"
             >
               {renderContent()}
             </div>
           </Content>
-          <Footer
+          {/* <Footer
             style={{
               textAlign: "center",
             }}
           >
             Ant Design ©{new Date().getFullYear()} Created by Ant UED
-          </Footer>
+          </Footer> */}
         </Layout>
       </Layout>
     </div>

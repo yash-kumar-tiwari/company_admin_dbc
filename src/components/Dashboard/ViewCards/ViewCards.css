@@ -1,3 +1,4 @@
-.view-change-pass-custom-card .ant-card-head {
+.view-cards-custom-card .ant-card-head {
   background-color: #bae7ff; /* Change background color of the header */
+  overflow-y: auto;
 }

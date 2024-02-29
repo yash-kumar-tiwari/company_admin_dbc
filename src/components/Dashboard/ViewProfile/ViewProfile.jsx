@@ -21,8 +21,9 @@ import {
 import { Col, Row } from "react-bootstrap";
 import { Card as CardRB } from "react-bootstrap";
 import { UploadOutlined } from "@ant-design/icons";
+import ImgCrop from "antd-img-crop";
 
-const { Text, Title } = Typography;
+const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
 
 function ViewProfile() {
@@ -32,13 +33,20 @@ function ViewProfile() {
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
   const [profileData, setProfileData] = useState({});
   const [avatarPreview, setAvatarPreview] = useState("");
+  const [fileList, setFileList] = useState([]);
 
   const onFinishSubmit = async (values) => {
     console.log("Form values:", values);
-    // Ensure avatar field exists, set to empty string if not provided
-    const updatedValues = { ...values, avatar: profileData.avatar || "" };
+    setIsUpdatingProfile(true);
     try {
-      setIsUpdatingProfile(true);
+      const uploadedPhotoPath = await handleProfilePicUpdate(
+        fileList[0]?.originFileObj
+      );
+
+      const updatedValues = {
+        ...values,
+        avatar: uploadedPhotoPath || profileData.avatar,
+      };
 
       const response = await editProfile(updatedValues); // Send updated profile data to API
       if (response && response.status === 200) {
@@ -56,6 +64,27 @@ function ViewProfile() {
     }
   };
 
+  const handleProfilePicUpdate = async (imageFile) => {
+    // Check if there's a new file in fileList
+    if (fileList.length > 0) {
+      const file = fileList[0].originFileObj; // Assuming only one file is selected
+
+      // Upload the file and get the path
+      const response = await uploadAvatar(imageFile);
+      console.log(response);
+      if (response.status === 201) {
+        let imagePath = response.data.data;
+        return imagePath;
+      } else {
+        message.error(response.data.message);
+        return;
+      }
+    } else {
+      // If no new file selected, use the current avatar path
+      return profileData.avatar || "";
+    }
+  };
+
   const fetchViewProfileData = useCallback(async () => {
     setIsFetchingProfile(true);
     try {
@@ -63,7 +92,7 @@ function ViewProfile() {
       if (response && response.status === 200) {
         // message.success(response.data.message);
         setProfileData(response.data.data);
-        setAvatarPreview(response.data.data.avatar); // Set avatar preview
+        // setAvatarPreview(response.data.data.avatar); // Set avatar preview
 
         form.setFieldsValue(response.data.data);
         navigate("/dashboard");
@@ -72,38 +101,44 @@ function ViewProfile() {
       }
     } catch (error) {
       console.error("API request failed:", error);
-      message.error("Failed to login. Please try again later.");
+      message.error("Failed to Load Details. Please try again later.");
     } finally {
       setIsFetchingProfile(false);
     }
   }, [navigate, form]);
 
-  const handleProfilePictureChange = async (info) => {
-    if (info.file.status === "done") {
-      const file = info.file.originFileObj;
-      const formData = new FormData();
-      formData.append("avatar", file);
-      try {
-        const response = await uploadAvatar(formData);
-        if (response && response.status === 200) {
-          // Set the preview of the uploaded image
-          setAvatarPreview(URL.createObjectURL(file));
-          // Optionally, you may want to update the profile data or trigger form validation
-        } else {
-          message.error(response.data.message);
-        }
-      } catch (error) {
-        console.error("Failed to upload profile picture:", error);
-        message.error(
-          "Failed to upload profile picture. Please try again later."
-        );
-      }
-    }
-  };
-
   useEffect(() => {
     fetchViewProfileData();
   }, [navigate, fetchViewProfileData]);
+
+  const onChange = ({ fileList: newFileList }) => {
+    // Assuming only one file is selected
+    console.log(newFileList);
+    if (newFileList.length > 0) {
+      const newAvatarPreview = URL.createObjectURL(
+        newFileList[0].originFileObj
+      );
+      setAvatarPreview(newAvatarPreview);
+    } else {
+      setAvatarPreview(""); // Clear the preview if no file is selected
+    }
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
 
   return (
     <>
@@ -113,7 +148,11 @@ function ViewProfile() {
           title={<span className="fw-bold text-center">Profile</span>}
           className="view-profile-custom-card"
         >
-          <Card type="inner" className="view-profile-custom-card">
+          <Card
+            type="inner"
+            className="view-profile-custom-card"
+            style={{ overflow: "auto", maxHeight: "60vh" }}
+          >
             <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
               <Row></Row>
               <Row>
@@ -121,37 +160,49 @@ function ViewProfile() {
                 <Col lg={4} md={6} sm={6} className="my-2">
                   <label className="fw-bold my-1">Profile Photo</label>
                   <br />
-                  <Avatar
-                    size={120}
-                    src={profileData?.avatar}
-                    alt="User Profile Picture"
-                  />
-                  <br />
-                  <Upload
-                    accept="image/*"
-                    onChange={handleProfilePictureChange}
-                    showUploadList={true}
-                    beforeUpload={() => false} // Disable default upload behavior
-                    customRequest={({ file, onSuccess }) => {
-                      setTimeout(() => {
-                        onSuccess("ok");
-                      }, 0);
-                    }} // Use customRequest instead of action
-                  >
-                    <Button icon={<UploadOutlined />}>
-                      Select File to Update{" "}
-                    </Button>
-                  </Upload>
+                  <ImgCrop rotationSlider showReset>
+                    <Upload
+                      accept="image/*"
+                      onChange={onChange}
+                      onPreview={onPreview}
+                      showUploadList={false}
+                      fileList={fileList} // Pass the fileList prop here
+                      maxCount={1}
+                      customRequest={({ file, onSuccess }) => {
+                        setTimeout(() => {
+                          onSuccess("ok");
+                        }, 0);
+                      }} // Use customRequest instead of action
+                    >
+                      <label htmlFor="avatar-upload">
+                        <Avatar
+                          id="avatar-upload" // This id is used for associating the label with the upload input
+                          size={120}
+                          src={avatarPreview || profileData?.avatar}
+                          alt="User Profile Picture"
+                        />
+                      </label>
+                      {/* Button is not needed anymore */}
+                      {/* <Button icon={<UploadOutlined />}> */}
+                      {/*   Select File to Update */}
+                      {/* </Button> */}
+                    </Upload>
+                  </ImgCrop>
+
                   <br />
                 </Col>
                 <Col lg={4} md={6} sm={6} className="my-2">
                   <label className="fw-bold my-1">Company Name</label>
                   <br />
                   {(
-                    <Tag color="processing" className="p-2 fw-bold fs-4">
+                    <Text className="p-2 text-primary fw-bold">
                       {profileData?.company_name}
-                    </Tag>
-                  ) || <Tag color="default">{"N/A"}</Tag>}
+                    </Text>
+                  ) || (
+                    <Text className="p-2 text-danger fw-bold">
+                      {"Not Available"}
+                    </Text>
+                  )}
                 </Col>
                 <Col lg={2} md={0} sm={0}></Col>
               </Row>

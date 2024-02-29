@@ -1,5 +1,6 @@
 import { message } from "antd";
 import axios from "axios";
+import { makeFormDataApiRequest, makeJsonApiRequest } from "./apiRequests";
 
 const api_base_url = "http://localhost:3007/api/v1/companyAdmin/";
 
@@ -14,59 +15,11 @@ const setAuthToken = (token) => {
   }
 };
 
-// Function to make API requests
-const makeApiRequest = async (
-  method,
-  endpoint,
-  data = null,
-  token = null,
-  dataType = "json"
-) => {
-  try {
-    let headers = {};
-    let requestData = data;
-
-    // Check if token is available in localStorage
-    const storedToken = localStorage.getItem("user-token");
-
-    // If token is available in localStorage, set it to headers
-    if (storedToken) {
-      headers = {
-        "Content-Type":
-          dataType === "form-data" ? "multipart/form-data" : "application/json",
-        Authorization: `${storedToken}`,
-      };
-    } else {
-      headers = {
-        "Content-Type":
-          dataType === "form-data" ? "multipart/form-data" : "application/json",
-      };
-    }
-
-    if (dataType === "form-data" && data) {
-      requestData = new FormData();
-      for (const key in data) {
-        requestData.append(key, data[key]);
-      }
-    }
-
-    const config = {
-      method,
-      url: endpoint,
-      data: requestData,
-      headers,
-    };
-
-    const response = await axios(config);
-    return response;
-  } catch (error) {
-    return error.response;
-  }
-};
+/*----- Auth Section -----*/
 
 // login user
 export const loginUser = async (loginCredentials) => {
-  const response = await makeApiRequest(
+  const response = await makeJsonApiRequest(
     "post",
     `${api_base_url}loginCompanyAdmin`,
     loginCredentials
@@ -79,15 +32,31 @@ export const loginUser = async (loginCredentials) => {
   return response;
 };
 
+// logout user
+export const logoutUser = async () => {
+  try {
+    setAuthToken(null);
+    localStorage.removeItem("user-token");
+    localStorage.removeItem("authenticated");
+    return true;
+  } catch (error) {
+    console.error("Error logging out:", error);
+    return false;
+  }
+};
+
 // view profile
 export const fetchViewProfile = async () => {
-  const response = await makeApiRequest("get", `${api_base_url}showCAProfile`);
+  const response = await makeJsonApiRequest(
+    "get",
+    `${api_base_url}showCAProfile`
+  );
   return response;
 };
 
 // change password
 export const changePassword = async (passwordCredentials) => {
-  const response = await makeApiRequest(
+  const response = await makeJsonApiRequest(
     "put",
     `${api_base_url}changePassword`,
     passwordCredentials
@@ -97,7 +66,7 @@ export const changePassword = async (passwordCredentials) => {
 
 // edit profile
 export const editProfile = async (updatedData) => {
-  const response = await makeApiRequest(
+  const response = await makeJsonApiRequest(
     "put",
     `${api_base_url}editProfile`,
     updatedData
@@ -106,11 +75,49 @@ export const editProfile = async (updatedData) => {
 };
 
 // upload avatar
-export const uploadAvatar = async (avatarData) => {};
+export const uploadAvatar = async (avatarData) => {
+  const response = await makeFormDataApiRequest(
+    "post",
+    `${api_base_url}uploadAvatar`,
+    avatarData
+  );
+  return response;
+};
 
-// logout user
-export const logoutUser = () => {
-  setAuthToken(null);
-  localStorage.removeItem("user-token");
-  localStorage.removeItem("authenticated");
+/*----- Card Section -----*/
+
+// card lists
+export const fetchCardsList = async () => {
+  const response = await makeJsonApiRequest("get", `${api_base_url}cardLists`);
+  return response;
+};
+
+export const createBusinessCard = async (cardDetails) => {
+  const response = await makeJsonApiRequest(
+    "post",
+    `${api_base_url}createCard`,
+    cardDetails
+  );
+  return response;
+};
+
+// upload card profile pic
+export const uploadCardProfilePic = async (imageData) => {
+  const response = await makeFormDataApiRequest(
+    "post",
+    `${api_base_url}uploadCardProfilePicture`,
+    imageData
+  );
+  return response;
+};
+
+/*----- Company Section -----*/
+
+// company details
+export const fetchCompanyDetails = async () => {
+  const response = await makeJsonApiRequest(
+    "get",
+    `${api_base_url}companyDetails`
+  );
+  return response;
 };

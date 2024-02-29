@@ -1,0 +1,11 @@
+/* Custom hover style */
+li.ant-menu-item.sider-dashboard-menu-item.my-2:hover {
+  background-color: #e6f7ff; /* Change background color on hover */
+  color: black;
+}
+
+/* Custom active style */
+li.ant-menu-item.ant-menu-item-selected.sider-dashboard-menu-item.my-2 {
+  background-color: #bae7ff; /* Change background color when item is active */
+  color: black; /* Change text color when item is active */
+}

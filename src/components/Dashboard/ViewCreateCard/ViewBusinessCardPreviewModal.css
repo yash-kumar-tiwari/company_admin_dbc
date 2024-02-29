@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #000;
+}
+
+.container {
+  background-color: #000;
+  display: grid;
+  grid-gap: 39px 49px;
+  grid-template-rows: repeat(auto-fill, minmax(80px, auto)) 1fr;
+  grid-template-columns: auto 1fr;
+  padding: 53px 65px;
+}
+
+.businessCardContainer {
+  max-height: 70vh; /* Set maximum height of container to viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Card Container */
+.cardContainer {
+  max-width: 100%;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  padding: 44px 20px; /* Adjust padding for smaller screens */
+  background-image: url("../../../assets/images/bg-01.jpg"); /* Set background image */
+  background-size: cover; /* Cover the entire element with the background image */
+  background-position: center; /* Center the background image */
+  color: white;
+  border-radius: 10px;
+}
+
+/* Card Profile Section */
+.cardProfileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile_image {
+  height: 20vh;
+  /* max-width: 100%; */
+  /* border-radius: 50%; */
+}
+
+/* .profile_name {
+    font-size: 25px;
+  }
+  
+  .profile_designation {
+    font-size: 12px;
+    color: #f3bf99;
+    font-weight: 400;
+  }
+  
+  .profile_website {
+    padding: 10px 0;
+    font-size: 14px;
+    color: #f5f5f5;
+    font-weight: 400;
+  } */
+
+/* Card Bio Section */
+.cardBioSection {
+  background-color: aliceblue;
+  color: #23252c;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cardBioParagraph {
+  font-size: 14px; /* Increase font size for better readability */
+  font-weight: 400;
+}
+
+/* Card Company Section*/
+.cardCompanySection {
+  background-color: aliceblue;
+  color: #23252c;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Card Social */
+.cardSocialSection {
+  background-color: aliceblue;
+  color: #23252c;
+  border-radius: 10px;
+  height: max-content;
+  /* display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px; */
+}
+
+.cardSocialItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+i {
+  margin-right: 10px;
+}
