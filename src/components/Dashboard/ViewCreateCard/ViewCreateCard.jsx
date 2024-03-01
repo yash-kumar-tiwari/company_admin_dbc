@@ -1,39 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Avatar,
   Button,
   Card,
   Form,
   Input,
   Typography,
-  message,
-  Spin,
-  Tag,
   Upload,
-  Modal,
   Steps,
   Divider,
 } from "antd";
 import "./ViewCreateCard.css";
 import { useNavigate } from "react-router-dom";
-import {
-  editProfile,
-  fetchViewProfile,
-  uploadAvatar,
-} from "../../../services/apiServices";
+
 import { Col, Image, Row } from "react-bootstrap";
 import { Card as CardRB } from "react-bootstrap";
-import {
-  CheckCircleOutlined,
-  ProfileOutlined,
-  ShareAltOutlined,
-  UploadOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import BusinessCard from "./BusinessCard";
 import ViewBusinessCardPreviewModal from "./ViewBusinessCardPreviewModal";
 import ImgCrop from "antd-img-crop";
 import ViewProfilePreviewModal from "./ViewProfilePreviewModal";
+import { FaUser, FaCircleInfo, FaCircleCheck } from "react-icons/fa6";
+import { IoShareSocialSharp } from "react-icons/io5";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -130,25 +117,25 @@ function ViewCreateCard() {
           >
             <Step
               title="Personal"
-              icon={<UserOutlined />}
+              icon={<FaUser style={{ color: "blue" }} />}
               onClick={() => handleStepClick(0)}
               status={currentStep >= 0 ? "finish" : "wait"}
             />
             <Step
               title="Bio"
-              icon={<ProfileOutlined />}
+              icon={<FaCircleInfo style={{ color: "gray" }} />}
               onClick={() => handleStepClick(1)}
               status={currentStep >= 1 ? "finish" : "wait"}
             />
             <Step
               title="Social"
-              icon={<ShareAltOutlined />}
+              icon={<IoShareSocialSharp style={{ color: "orange" }} />}
               onClick={() => handleStepClick(2)}
               status={currentStep >= 2 ? "finish" : "wait"}
             />
             <Step
               title="Review"
-              icon={<CheckCircleOutlined />}
+              icon={<FaCircleCheck style={{ color: "green" }} />}
               onClick={() => handleStepClick(3)}
               status={currentStep === 3 ? "finish" : "wait"}
             />

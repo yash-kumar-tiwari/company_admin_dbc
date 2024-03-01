@@ -48,7 +48,7 @@ function ViewProfile() {
         avatar: uploadedPhotoPath || profileData.avatar,
       };
 
-      const response = await editProfile(updatedValues); // Send updated profile data to API
+      const response = await editProfile(updatedValues);
       if (response && response.status === 200) {
         message.success(response.data.message);
         fetchViewProfileData();

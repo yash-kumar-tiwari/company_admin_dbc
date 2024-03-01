@@ -1,8 +1,7 @@
-import { message } from "antd";
-import axios from "axios";
 import { makeFormDataApiRequest, makeJsonApiRequest } from "./apiRequests";
 
 const api_base_url = "http://localhost:3007/api/v1/companyAdmin/";
+const card_base_url = "http://localhost:3007/api/v1/";
 
 // Function to set authentication token in local storage
 const setAuthToken = (token) => {
@@ -92,6 +91,7 @@ export const fetchCardsList = async () => {
   return response;
 };
 
+// create business card
 export const createBusinessCard = async (cardDetails) => {
   const response = await makeJsonApiRequest(
     "post",
@@ -111,6 +111,14 @@ export const uploadCardProfilePic = async (imageData) => {
   return response;
 };
 
+export const fetchViewDigitalCardAll = async (queries) => {
+  const response = await makeJsonApiRequest(
+    "get",
+    `${card_base_url}card?comp_name=${queries.companyName}&card_ref=${queries.cardReference}`
+  );
+  return response;
+};
+
 /*----- Company Section -----*/
 
 // company details
@@ -118,6 +126,26 @@ export const fetchCompanyDetails = async () => {
   const response = await makeJsonApiRequest(
     "get",
     `${api_base_url}companyDetails`
+  );
+  return response;
+};
+
+// upload company logo
+export const uploadCompanyLogo = async (imageData) => {
+  const response = await makeFormDataApiRequest(
+    "post",
+    `${api_base_url}uploadCompanyLogo`,
+    imageData
+  );
+  return response;
+};
+
+// edit company details
+export const editCompanyDetails = async (updatedData) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}editCompanyDetails`,
+    updatedData
   );
   return response;
 };

@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #000;
+}
+
+.viewDigitalBusinessCardContainer {
+  background-image: url("../../assets/images/background/abstract_black_01.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card Container */
+.viewCardContainer {
+  max-width: 100%;
+  overflow-x: hidden;
+  background-color: white;
+  color: gray;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr; /* single column */
+  grid-auto-rows: minmax(min-content, max-content); /* automatic row height */
+  row-gap: 20px; /* gap between rows */
+}
+
+/* View Card Images Section */
+.viewCardImagesSection {
+  position: relative; /* Ensure positioning context */
+  height: 25vh;
+  width: 100%;
+  background-image: url("../../assets/images/background/office_cover_photo_01.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+.viewCardImages_profileImage {
+  position: absolute; /* Position absolutely within the relative parent */
+  top: 100%;
+  left: 25%;
+  transform: translate(-50%, -50%); /* Center the image */
+  z-index: 1; /* Ensure profile image stays above the cover image */
+}
+
+/* View Card Profile Bio Section */
+.viewCardProfileBioDetails {
+  width: 100%;
+  grid-column: 1; /* span the entire column */
+  padding: 20px; /* add some padding for better readability */
+  margin-top: 5vh; /* Ensure profile bio starts after the profile picture ends */
+  z-index: 2; /* Ensure profile bio stays above the cover and profile image */
+}
+
+.viewCardSocialLinks {
+  width: 100%;
+  grid-column: 1;
+  padding: 20px;
+  margin-top: 5vh;
+  z-index: 2;
+}
+
+.view_card_content_title {
+  font-size: xx-large;
+  font-weight: 500;
+  color: black;
+}
+
+.view_card_content_sub_title {
+  font-size: large;
+  font-weight: 400;
+  color: black;
+}
+
+/* .label_title {
+  font-size: large;
+  font-weight: 400;
+  color: black;
+} */
+
+.button-content {
+  display: flex;
+  align-items: center;
+}
+
+.social_custom_icon {
+  margin-right: 5px; /* Adjust as needed to add spacing between icon and text */
+}

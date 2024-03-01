@@ -170,7 +170,7 @@ function ViewCards() {
           <Card
             type="inner"
             className="view-cards-custom-card"
-            style={{ overflow: "auto", maxHeight: "60vh" }}
+            style={{ overflow: "auto", maxHeight: "70vh" }}
           >
             {selectedUser && (
               <div className="selected-user-description-section my-2">
