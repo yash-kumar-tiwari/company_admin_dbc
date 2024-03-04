@@ -111,10 +111,50 @@ export const uploadCardProfilePic = async (imageData) => {
   return response;
 };
 
+// activate card for QR
+export const activateCardforQRCode = async (cardID) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}activateSingleCardForQr?card_id=${cardID}`,
+    {}
+  );
+  return response;
+};
+
+// activate multiple card for QR
+export const activateMultipleCardforQRCode = async (cardIDs) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}activateMultipleCardsForQR`,
+    cardIDs
+  );
+  return response;
+};
+
+// deactivate card
+export const deactivateCard = async (cardID) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}deactivateCard?card_id=${cardID}`,
+    {}
+  );
+  return response;
+};
+
+// view card for all
 export const fetchViewDigitalCardAll = async (queries) => {
   const response = await makeJsonApiRequest(
     "get",
     `${card_base_url}card?comp_name=${queries.companyName}&card_ref=${queries.cardReference}`
+  );
+  return response;
+};
+
+// get vcf card of card
+export const getVCFCardforDigitalCard = async (vcfCardID) => {
+  const response = await makeJsonApiRequest(
+    "get",
+    `${card_base_url}vcf?card_id=${vcfCardID}`
   );
   return response;
 };

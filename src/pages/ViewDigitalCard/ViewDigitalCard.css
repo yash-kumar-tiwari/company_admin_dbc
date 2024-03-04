@@ -5,8 +5,11 @@
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Roboto" !important;
   background-color: #000;
+}
+body p {
+  font-family: "Roboto" !important;
 }
 
 .viewDigitalBusinessCardContainer {
@@ -53,7 +56,7 @@ body {
 .viewCardProfileBioDetails {
   width: 100%;
   grid-column: 1; /* span the entire column */
-  padding: 20px; /* add some padding for better readability */
+  padding: 20px 0; /* add some padding for better readability */
   margin-top: 5vh; /* Ensure profile bio starts after the profile picture ends */
   z-index: 2; /* Ensure profile bio stays above the cover and profile image */
 }
@@ -61,21 +64,21 @@ body {
 .viewCardSocialLinks {
   width: 100%;
   grid-column: 1;
-  padding: 20px;
-  margin-top: 5vh;
+  padding: 0px;
+  margin-top: 1vh;
+  margin-bottom: 6vh;
   z-index: 2;
 }
 
 .view_card_content_title {
-  font-size: xx-large;
+  font-size: larger;
   font-weight: 500;
-  color: black;
 }
 
 .view_card_content_sub_title {
-  font-size: large;
+  font-size: small;
   font-weight: 400;
-  color: black;
+  color: gray;
 }
 
 /* .label_title {

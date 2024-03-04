@@ -90,7 +90,7 @@ const CompanyDashboardPage = () => {
   };
 
   return (
-    <div>
+    <div className="MainBg">
       <Header
         style={{
           position: "sticky",
@@ -171,8 +171,6 @@ const CompanyDashboardPage = () => {
           <Content
             style={{
               margin: "24px 16px 0",
-              height: "85vh",
-              maxHeight: "85vh",
             }}
           >
             <div

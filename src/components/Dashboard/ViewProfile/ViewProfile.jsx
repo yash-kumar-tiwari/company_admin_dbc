@@ -148,11 +148,7 @@ function ViewProfile() {
           title={<span className="fw-bold text-center">Profile</span>}
           className="view-profile-custom-card"
         >
-          <Card
-            type="inner"
-            className="view-profile-custom-card"
-            style={{ overflow: "auto", maxHeight: "60vh" }}
-          >
+          <div>
             <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
               <Row></Row>
               <Row>
@@ -299,8 +295,8 @@ function ViewProfile() {
               </Row>
 
               <Row>
-                <Col lg={3} md={0} sm={0}></Col>
-                <Col lg={3} md={6} sm={6}>
+                <Col lg={4} md={4} sm={3} className="text-center"></Col>
+                <Col lg={4} md={4} sm={6} className="text-center">
                   <Item>
                     <Button
                       type="primary"
@@ -313,22 +309,10 @@ function ViewProfile() {
                     </Button>
                   </Item>
                 </Col>
-                <Col lg={3} md={6} sm={6}>
-                  {/* <Item>
-                    <Button
-                      type="primary"
-                      className="w-100"
-                      shape="round"
-                      htmlType="button"
-                    >
-                      Change Password
-                    </Button>
-                  </Item> */}
-                </Col>
-                <Col lg={3} md={0} sm={0}></Col>
+                <Col lg={4} md={4} sm={3} className="text-center"></Col>
               </Row>
             </Form>
-          </Card>
+          </div>
         </Card>
       </Spin>
     </>

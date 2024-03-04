@@ -187,289 +187,276 @@ function ViewCompanyDetails() {
           title={<span className="fw-bold text-center">Company Details</span>}
           className="view-company-details-custom-card"
         >
-          <Card
-            type="inner"
-            className="view-company-details-custom-card"
-            style={{ overflow: "auto", maxHeight: "60vh" }}
-          >
-            <LoadScript googleMapsApiKey={apiKey} libraries={["places"]}>
-              <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
-                <Row></Row>
-                <Row>
-                  {/* <Col lg={2} md={0} sm={0}></Col> */}
-                  <Col lg={4} md={6} sm={6} className="my-2">
-                    <label className="fw-bold my-1">Company Logo</label>
-                    <br />
-                    <ImgCrop rotationSlider showReset>
-                      <Upload
-                        accept="image/*"
-                        onChange={onChange}
-                        onPreview={onPreview}
-                        showUploadList={false}
-                        fileList={fileList} // Pass the fileList prop here
-                        maxCount={1}
-                        customRequest={({ file, onSuccess }) => {
-                          setTimeout(() => {
-                            onSuccess("ok");
-                          }, 0);
-                        }} // Use customRequest instead of action
-                      >
-                        <label htmlFor="avatar-upload">
-                          <Avatar
-                            id="avatar-upload" // This id is used for associating the label with the upload input
-                            size={120}
-                            src={companyLogo || companyData?.company_logo}
-                            alt="Company Logo"
-                          />
-                        </label>
-                      </Upload>
-                    </ImgCrop>
-                    <br />
-                  </Col>
-                  <Col lg={4} md={6} sm={6} className="my-2">
-                    <label className="fw-bold my-1">Company Name</label>
-                    <br />
-                    {(
-                      <Text className="p-2 text-primary fw-bold">
-                        {companyData?.company_name}
-                      </Text>
-                    ) || (
-                      <Text className="p-2 text-danger fw-bold">
-                        {"Not Available"}
-                      </Text>
-                    )}
-                  </Col>
-                  <Col lg={4} md={0} sm={0} className="my-2">
-                    <Row
-                      className="my-1 p-4"
-                      style={{
-                        backgroundColor: "#bae7ff",
-                        borderRadius: "15px",
-                      }}
+          <LoadScript googleMapsApiKey={apiKey} libraries={["places"]}>
+            <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
+              <Row></Row>
+              <Row>
+                {/* <Col lg={2} md={0} sm={0}></Col> */}
+                <Col lg={4} md={6} sm={6} className="my-2">
+                  <label className="fw-bold my-1">Company Logo</label>
+                  <br />
+                  <ImgCrop rotationSlider showReset>
+                    <Upload
+                      accept="image/*"
+                      onChange={onChange}
+                      onPreview={onPreview}
+                      showUploadList={false}
+                      fileList={fileList} // Pass the fileList prop here
+                      maxCount={1}
+                      customRequest={({ file, onSuccess }) => {
+                        setTimeout(() => {
+                          onSuccess("ok");
+                        }, 0);
+                      }} // Use customRequest instead of action
                     >
-                      <Col lg={6}>
-                        <Statistic
-                          title={
-                            <span className="fw-bold text-black">
-                              Used Cards
-                            </span>
-                          }
-                          value={companyData.used_cards}
-                          formatter={formatter}
+                      <label htmlFor="avatar-upload">
+                        <Avatar
+                          id="avatar-upload" // This id is used for associating the label with the upload input
+                          size={120}
+                          src={companyLogo || companyData?.company_logo}
+                          alt="Company Logo"
                         />
-                      </Col>
-                      <Col lg={6}>
-                        <Statistic
-                          title={
-                            <span className="fw-bold text-black">
-                              Max Cards
-                            </span>
+                      </label>
+                    </Upload>
+                  </ImgCrop>
+                  <br />
+                </Col>
+                <Col lg={4} md={6} sm={6} className="my-2">
+                  <label className="fw-bold my-1">Company Name</label>
+                  <br />
+                  {(
+                    <Text className="p-2 text-primary fw-bold">
+                      {companyData?.company_name}
+                    </Text>
+                  ) || (
+                    <Text className="p-2 text-danger fw-bold">
+                      {"Not Available"}
+                    </Text>
+                  )}
+                </Col>
+                <Col lg={4} md={0} sm={0} className="my-2">
+                  <Row
+                    className="my-1 p-4"
+                    style={{
+                      backgroundColor: "#bae7ff",
+                      borderRadius: "15px",
+                    }}
+                  >
+                    <Col lg={6}>
+                      <Statistic
+                        title={
+                          <span className="fw-bold text-black">Used Cards</span>
+                        }
+                        value={companyData.used_cards}
+                        formatter={formatter}
+                      />
+                    </Col>
+                    <Col lg={6}>
+                      <Statistic
+                        title={
+                          <span className="fw-bold text-black">Max Cards</span>
+                        }
+                        value={companyData.max_cards}
+                        // precision={2}
+                        formatter={formatter}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Company Name</label>
+                  <Item
+                    name="company_name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter company name",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Enter Your Company Name"
+                      defaultValue={companyData?.company_name || "N/A"}
+                    />
+                  </Item>
+                </Col>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Company Email</label>
+                  <Item
+                    name="company_email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your company email",
+                      },
+                      {
+                        type: "email",
+                        message: "Please enter a valid email",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Enter Your Company Email"
+                      defaultValue={companyData?.company_email || "N/A"}
+                    />
+                  </Item>
+                </Col>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Description</label>
+                  <Item
+                    name="description"
+                    // rules={[
+                    //   { required: true, message: "Please enter Description" },
+                    // ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Enter Company Description"
+                      defaultValue={companyData?.description || "N/A"}
+                    />
+                  </Item>
+                </Col>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Company Address</label>
+                  <Item
+                    name="company_address"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your company address",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Enter Your Company Address"
+                      defaultValue={companyData?.company_address || "N/A"}
+                    />
+                  </Item>
+                </Col>
+
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Company Contact Number</label>
+                  <Item
+                    name="company_contact_number"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your company contact number",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Enter Your Company Contact Number"
+                      defaultValue={companyData.company_contact_number || "N/A"}
+                    />
+                  </Item>
+                </Col>
+
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Company Website</label>
+                  <Item
+                    name="company_website"
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "Please enter your company website",
+                    //   },
+                    // ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Enter Your Company Website"
+                      defaultValue={companyData.company_website || "N/A"}
+                    />
+                  </Item>
+                </Col>
+
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Contact Person Name</label>
+                  <Item
+                    name="contact_person_name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your contact person name",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      disabled
+                      placeholder="Enter Your Contact Person Name"
+                      defaultValue={companyData.contact_person_name || "N/A"}
+                    />
+                  </Item>
+                </Col>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Contact Person Email</label>
+                  <Item
+                    name="contact_person_email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your contact person email",
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      disabled
+                      placeholder="Enter Your Contact Person Email"
+                      defaultValue={companyData.contact_person_email || "N/A"}
+                    />
+                  </Item>
+                </Col>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Location</label>
+                  <Form.Item name="location">
+                    <StandaloneSearchBox
+                      onLoad={(ref) => (searchBoxRef.current = ref)}
+                      onPlacesChanged={() =>
+                        handlePlaceSelect(searchBoxRef.current.getPlaces()[0])
+                      }
+                    >
+                      <div>
+                        {" "}
+                        {/* Wrap Input and Button in a parent element */}
+                        <Input
+                          placeholder="Search Location, Places"
+                          value={location?.name} // Display the selected place name
+                          onChange={(e) =>
+                            setLocation({
+                              ...location,
+                              location: e.target.value,
+                            })
+                          } // Update the location name if manually changed
+                          addonAfter={
+                            <Button
+                              danger
+                              type="text"
+                              title="Clear Location"
+                              onClick={() =>
+                                setLocation({
+                                  location: "",
+                                  latitude: null,
+                                  longitude: null,
+                                })
+                              }
+
+                              // icon={<CloseCircleOutlined />}
+                            >
+                              Clear
+                            </Button>
                           }
-                          value={companyData.max_cards}
-                          // precision={2}
-                          formatter={formatter}
                         />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Company Name</label>
-                    <Item
-                      name="company_name"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter company name",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        placeholder="Enter Your Company Name"
-                        defaultValue={companyData?.company_name || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Company Email</label>
-                    <Item
-                      name="company_email"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your company email",
-                        },
-                        {
-                          type: "email",
-                          message: "Please enter a valid email",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        placeholder="Enter Your Company Email"
-                        defaultValue={companyData?.company_email || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Description</label>
-                    <Item
-                      name="description"
-                      // rules={[
-                      //   { required: true, message: "Please enter Description" },
-                      // ]}
-                      hasFeedback
-                    >
-                      <Input
-                        placeholder="Enter Company Description"
-                        defaultValue={companyData?.description || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Company Address</label>
-                    <Item
-                      name="company_address"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your company address",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        placeholder="Enter Your Company Address"
-                        defaultValue={companyData?.company_address || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">
-                      Company Contact Number
-                    </label>
-                    <Item
-                      name="company_contact_number"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your company contact number",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        placeholder="Enter Your Company Contact Number"
-                        defaultValue={
-                          companyData.company_contact_number || "N/A"
-                        }
-                      />
-                    </Item>
-                  </Col>
-
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Company Website</label>
-                    <Item
-                      name="company_website"
-                      // rules={[
-                      //   {
-                      //     required: true,
-                      //     message: "Please enter your company website",
-                      //   },
-                      // ]}
-                      hasFeedback
-                    >
-                      <Input
-                        placeholder="Enter Your Company Website"
-                        defaultValue={companyData.company_website || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Contact Person Name</label>
-                    <Item
-                      name="contact_person_name"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your contact person name",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        disabled
-                        placeholder="Enter Your Contact Person Name"
-                        defaultValue={companyData.contact_person_name || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Contact Person Email</label>
-                    <Item
-                      name="contact_person_email"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your contact person email",
-                        },
-                      ]}
-                      hasFeedback
-                    >
-                      <Input
-                        disabled
-                        placeholder="Enter Your Contact Person Email"
-                        defaultValue={companyData.contact_person_email || "N/A"}
-                      />
-                    </Item>
-                  </Col>
-                  <Col lg={6} md={12} sm={6}>
-                    <label className="fw-bold my-1">Location</label>
-                    <Form.Item name="location">
-                      <StandaloneSearchBox
-                        onLoad={(ref) => (searchBoxRef.current = ref)}
-                        onPlacesChanged={() =>
-                          handlePlaceSelect(searchBoxRef.current.getPlaces()[0])
-                        }
-                      >
-                        <div>
-                          {" "}
-                          {/* Wrap Input and Button in a parent element */}
-                          <Input
-                            placeholder="Search Location, Places"
-                            value={location?.name} // Display the selected place name
-                            onChange={(e) =>
-                              setLocation({
-                                ...location,
-                                location: e.target.value,
-                              })
-                            } // Update the location name if manually changed
-                            addonAfter={
-                              <Button
-                                danger
-                                type="text"
-                                title="Clear Location"
-                                onClick={() =>
-                                  setLocation({
-                                    location: "",
-                                    latitude: null,
-                                    longitude: null,
-                                  })
-                                }
-
-                                // icon={<CloseCircleOutlined />}
-                              >
-                                Clear
-                              </Button>
-                            }
-                          />
-                          {/* <Button
+                        {/* <Button
                             onClick={() =>
                               setLocation({
                                 location: "",
@@ -480,29 +467,29 @@ function ViewCompanyDetails() {
                           >
                             Clear
                           </Button> */}
-                        </div>
-                      </StandaloneSearchBox>
-                    </Form.Item>
-                  </Col>
-                </Row>
+                      </div>
+                    </StandaloneSearchBox>
+                  </Form.Item>
+                </Col>
+              </Row>
 
-                <Row>
-                  <Col lg={3} md={0} sm={0}></Col>
-                  <Col lg={3} md={6} sm={6}>
-                    <Item>
-                      <Button
-                        type="primary"
-                        className="w-100"
-                        shape="round"
-                        htmlType="submit"
-                        loading={isUpdatingCompany}
-                      >
-                        Save Changes
-                      </Button>
-                    </Item>
-                  </Col>
-                  <Col lg={3} md={6} sm={6}>
-                    {/* <Item>
+              <Row>
+                <Col lg={3} md={0} sm={0}></Col>
+                <Col lg={3} md={6} sm={6}>
+                  <Item>
+                    <Button
+                      type="primary"
+                      className="w-100"
+                      shape="round"
+                      htmlType="submit"
+                      loading={isUpdatingCompany}
+                    >
+                      Save Changes
+                    </Button>
+                  </Item>
+                </Col>
+                <Col lg={3} md={6} sm={6}>
+                  {/* <Item>
                     <Button
                       type="primary"
                       className="w-100"
@@ -512,12 +499,11 @@ function ViewCompanyDetails() {
                       Change Password
                     </Button>
                   </Item> */}
-                  </Col>
-                  <Col lg={3} md={0} sm={0}></Col>
-                </Row>
-              </Form>
-            </LoadScript>
-          </Card>
+                </Col>
+                <Col lg={3} md={0} sm={0}></Col>
+              </Row>
+            </Form>
+          </LoadScript>
         </Card>
       </Spin>
     </>

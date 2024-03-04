@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
-import {
-  FaInstagram,
-  FaLine,
-  FaLinkedin,
-  FaShareAlt,
-  FaTelegram,
-  FaWhatsapp,
-} from "react-icons/fa";
-import { MdOutlineMail } from "react-icons/md";
+import { FaShareAlt } from "react-icons/fa";
 import "./ViewDigitalCard.css";
-import { fetchViewDigitalCardAll } from "../../services/apiServices";
+import {
+  fetchViewDigitalCardAll,
+  getVCFCardforDigitalCard,
+} from "../../services/apiServices";
 import { useParams } from "react-router-dom";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
-import { WhatsAppOutlined } from "@ant-design/icons";
 import WhatsAppCustomIcon from "../../assets/images/social/whatsapp.png";
 import InstagramCustomIcon from "../../assets/images/social/instagram.png";
 import TelegramCustomIcon from "../../assets/images/social/telegram.png";
@@ -63,7 +57,9 @@ function ViewDigitalCard() {
         setCardDetails(response.data.data);
         setImageUrl(response.data.data.profile_picture);
         setBioHTML(JSON.parse(response.data.data.bio));
-        setProductServiceHTML(JSON.parse(response.data.data.product_service));
+        setProductServiceHTML(
+          '\u003c!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"\u003e\n\u003chtml\u003e\u003cbody\u003e\n\u003cp\u003e \u003c/p\u003e\n\u003cp\u003e \u003c/p\u003e\n\u003cp\u003eMultimedia content Dummy Content\u003c/p\u003e\n\u003cp\u003e\u003ciframe style="width: 328px; height: 155px;" title="YouTube video player" src="https://www.youtube.com/embed/zlljnJSTuZA?si=55bEqLnHSQY9z6gD" width="328" height="155" frameborder="0" allowfullscreen="allowfullscreen" data-mce-fragment="1"\u003e\u003c/iframe\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eTech Consultancy:\u003c/strong\u003e Unlock the full potential of your business with our expert Tech Consultancy services. We provide tailored solutions to optimize your IT infrastructure, enhance cybersecurity, and streamline operations for maximum efficiency.\u003c/p\u003e\n\u003cp\u003e\u003cimg style="width: 100%; height: auto;" src="https://api.byebug.io/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbGJ0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--d3e82080a4cf9bd554e0e53a1109c9feb8b47d5d/ttpi.jpg" alt=""\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eDigital Marketing Boost:\u003c/strong\u003e Propel your brand to new heights with our Digital Marketing Boost services. From social media management to SEO strategies, we\'ll help you create a strong online presence and connect with your target audience.\u003c/p\u003e\n\u003cp\u003e\u003cimg style="width: 100%; height: auto;" src="https://api.byebug.io/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbGZ0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a5af999553dd4fb75baf62d224382e99f82b9780/CIH9k_iqlIMDEAE=.webp" alt=""\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eCustomer Care Excellence:\u003c/strong\u003e Our commitment to customer satisfaction is unwavering. Experience unparalleled support with our Customer Care Excellence services. Our dedicated team is ready to assist you, ensuring a smooth and hassle-free experience with our products and services.\u003c/p\u003e\n\u003c/body\u003e\u003c/html\u003e\n'
+        );
         console.log(response.data.data.bio, "bio");
         console.log(response.data.data.product_service, "pro");
       } catch (error) {
@@ -74,10 +70,33 @@ function ViewDigitalCard() {
     fetchCard();
   }, [companyName, cardReference]);
 
+  const handleAddToContacts = async () => {
+    try {
+      // Run your API to fetch vCard data
+      const response = await getVCFCardforDigitalCard(cardDetails.id);
+      console.log(response);
+
+      // Create a Blob with the vCard data
+      const blob = new Blob([response.data], { type: "text/vcard" });
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute("download", "contact.vcf"); // Set the filename for the vCard file
+
+      // Programmatically click the link to trigger download
+      link.click();
+    } catch (error) {
+      console.error("Error generating vCard:", error);
+      message.error(error);
+    }
+  };
+
   const openLocationUrl = () => {
     // Open the location URL
     window.open(cardDetails.location, "_blank");
   };
+
   return (
     <>
       <Container fluid className="viewDigitalBusinessCardContainer">
@@ -87,7 +106,7 @@ function ViewDigitalCard() {
               Digital Business Card Details
             </h1>
           </Col>
-          <Col lg={6} md={12} sm={12} className="my-5">
+          <Col lg={4} md={12} sm={12} className="my-5">
             <div className="viewBusinessCardContainer">
               <div className="viewCardContainer">
                 <div className="viewCardImagesSection">
@@ -104,14 +123,14 @@ function ViewDigitalCard() {
                   />
                 </div>
                 <div className="viewCardDetails p-4">
-                  <span className="viewCardProfileBioDetails">
-                    <Row>
+                  <div className="viewCardProfileBioDetails">
+                    <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
                         <div className="view_card_content_title">{`${cardDetails?.first_name} ${cardDetails?.last_name}`}</div>
-                        <div>{`${cardDetails?.designation} at ${cardDetails?.company_name}`}</div>
+                        <div className="view_card_content_sub_title">{`${cardDetails?.designation} at ${cardDetails?.company_name}`}</div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <span className="float-end mt-4 mx-4">
+                        <span className="float-end">
                           <Image
                             src={cardDetails.company_logo}
                             roundedCircle
@@ -121,23 +140,24 @@ function ViewDigitalCard() {
                         </span>
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardCompanyBioDetails">
-                    <Row>
+                  </div>
+                  <div className="viewCardCompanyBioDetails">
+                    <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
                         <label className="fw-bold text-black">
                           Company Location
                         </label>
-                        <div className="mx-2">
+                        <div className="view_card_content_sub_title">
                           {cardDetails.company_address}
                         </div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <FaMapLocationDot className="float-end text-black fs-2 mt-3 mx-4" />
+                        <FaMapLocationDot className="float-end text-black fs-2" />
+                        {/* <Image src="../../assets/images/icons/destination.png" /> */}
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardAboutMe">
+                  </div>
+                  <div className="viewCardAboutMe">
                     <Row className="my-3">
                       <label className="fw-bold text-black">About Me</label>
                       <div
@@ -146,56 +166,58 @@ function ViewDigitalCard() {
                         }}
                       />
                     </Row>
-                  </span>
-                  <span className="viewCardProductAndServices">
+                  </div>
+                  <div className="viewCardProductAndServices">
                     <Row className="my-3">
                       <label className="fw-bold text-black">
                         Product And Services
                       </label>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: extractMainContent(productServiceHTML),
+                          __html: productServiceHTML,
                         }}
                       />
-                      <div>Hello</div>
                     </Row>
-                  </span>
-                  <span className="viewCardCompanyInfo">
-                    <Row className="mt-5">
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                  </div>
+                  <div className="viewCardCompanyInfo">
+                    <Row className="mt-1 align-items-center">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">Email</label>
                         <div>{cardDetails.user_email}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Contact No.
                         </label>
                         <div>{cardDetails.contact_number}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Email
                         </label>
                         <div>{cardDetails.company_email}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Website
                         </label>
                         <div>{cardDetails.company_website_url}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Phone
                         </label>
                         <div>{cardDetails.company_email}</div>
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardSocialLinks">
+                  </div>
+                  <div className="viewCardSocialLinks">
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={FacebookCustomIcon}
@@ -207,8 +229,11 @@ function ViewDigitalCard() {
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={InstagramCustomIcon}
@@ -222,8 +247,11 @@ function ViewDigitalCard() {
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={LinkedInCustomIcon}
@@ -235,8 +263,11 @@ function ViewDigitalCard() {
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={WhatsAppCustomIcon}
@@ -250,8 +281,11 @@ function ViewDigitalCard() {
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={YouTubeCustomIcon}
@@ -263,8 +297,11 @@ function ViewDigitalCard() {
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={TikTokCustomIcon}
@@ -278,8 +315,11 @@ function ViewDigitalCard() {
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={LinkedInCustomIcon}
@@ -291,8 +331,11 @@ function ViewDigitalCard() {
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={WeChatCustomIcon}
@@ -306,8 +349,11 @@ function ViewDigitalCard() {
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={LineCustomIcon}
@@ -319,8 +365,11 @@ function ViewDigitalCard() {
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={TelegramCustomIcon}
@@ -333,40 +382,39 @@ function ViewDigitalCard() {
                         </Button>
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardShareLinks">
+                  </div>
+                  <div className="viewCardShareLinks">
                     <Row className="my-3">
-                      <Col lg={4} md={4} sm={4}>
+                      <Col lg={4} md={4} sm={4} xs={3}>
                         <Button
                           className="w-100"
                           size="large"
                           icon={<FaShareAlt />}
                         ></Button>
                       </Col>
-                      <Col lg={8} md={8} sm={8}>
+                      <Col lg={8} md={8} sm={8} xs={9} className="ps-0">
                         <Button
                           className="w-100 bg-black text-white"
                           size="large"
+                          onClick={handleAddToContacts} // Call the function on button click
                         >
                           <FaUserPlus className="fs-3 me-3" /> Add Me To Your
                           Contact
                         </Button>
                       </Col>
                     </Row>
-                  </span>
+                  </div>
 
-                  <span className="viewCardQRCode">
+                  <div className="viewCardQRCode">
                     <center>
-                      <img
-                        src="https://api.byebug.io/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBc0R0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--90ce01c4066d912c4524be593ebf7faed1262824/92d7671f-000e-4005-94ce-095c1ae1e34f.png"
-                        alt="QR Code"
-                      />
+                      <img src={cardDetails.qr_url} alt="QR Code" />
                     </center>
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
           </Col>
+          <Col lg={2} md={0} sm={0}></Col>
         </Row>
       </Container>
     </>

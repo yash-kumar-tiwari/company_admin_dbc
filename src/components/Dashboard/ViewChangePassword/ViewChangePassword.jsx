@@ -32,12 +32,12 @@ function ViewChangePassword() {
 
   return (
     <>
-      <Card
-        type="inner"
-        title={<span className="fw-bold text-center">Change Password</span>}
-        className="view-change-pass-custom-card"
-      >
-        <Card type="inner" className="view-change-pass-custom-card">
+      <div className="changepasscard">
+        <Card
+          type="inner"
+          title={<span className="fw-bold text-center">Change Password</span>}
+          className="view-change-pass-custom-card "
+        >
           <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
             <Col>
               <label className="fw-bold mb-1">Old Password</label>
@@ -118,7 +118,7 @@ function ViewChangePassword() {
             </Row>
           </Form>
         </Card>
-      </Card>
+      </div>
     </>
   );
 }

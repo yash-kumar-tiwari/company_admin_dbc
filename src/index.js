@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@fontsource/roboto"; // Defaults to weight 400
+import "@fontsource/roboto/400.css"; // Specify weight
+import "@fontsource/roboto/400-italic.css"; // Specify weight and style
 import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
