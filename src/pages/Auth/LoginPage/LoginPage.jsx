@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
-import "./util.css";
 import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { loginUser } from "../../../services/apiServices";
 import { validateEmail, validatePassword } from "../../../utils/formValidators";
 import { useNavigate } from "react-router-dom";
+import backgroundImg from "../../../assets/images/mainBgImg.jpg";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,67 +35,69 @@ function Login() {
   };
 
   return (
-    <div className="limiter">
-      <div
-        className="container-login100"
-        style={{ backgroundImage: "url('assets/images/bg-01.jpg')" }}
-      >
-        <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-          <span className="login100-form-title p-b-49">
-            Company Admin Login
-          </span>
+    <>
+      <div className="limiter">
+        <div
+          className="container-login100"
+          style={{ backgroundImage: `url(${backgroundImg})` }}
+        >
+          <div className="wrap-login100 py-5 px-5">
+            <div className="mb-5 fw-bold fs-3 text-center text-white">
+              Company Admin Login
+            </div>
 
-          <Form name="basic" onFinish={onFinish}>
-            <Form.Item
-              name="email"
-              hasFeedback
-              rules={[
-                {
-                  type: "email",
-                  required: true,
-                },
-                { validator: validateEmail },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Enter Your Email"
-              />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              hasFeedback
-              rules={[
-                { required: true, message: "Please input your password!" },
-                { validator: validatePassword },
-              ]}
-            >
-              <Input.Password
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                placeholder="Password"
-              />
-            </Form.Item>
-
-            <Form.Item name="remember" valuePropName="checked">
-              <Button type="link">Forgot password?</Button>
-            </Form.Item>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                shape="round"
-                htmlType="submit"
-                className="w-100"
-                loading={loading}
+            <Form name="basic" onFinish={onFinish}>
+              <Form.Item
+                name="email"
+                hasFeedback
+                rules={[
+                  {
+                    type: "email",
+                    required: true,
+                  },
+                  { validator: validateEmail },
+                ]}
               >
-                Login
-              </Button>
-            </Form.Item>
-          </Form>
+                <Input
+                  prefix={<UserOutlined className="site-form-item-icon" />}
+                  placeholder="Enter Your Email"
+                />
+              </Form.Item>
+
+              <Form.Item
+                name="password"
+                hasFeedback
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                  { validator: validatePassword },
+                ]}
+              >
+                <Input.Password
+                  prefix={<LockOutlined className="site-form-item-icon" />}
+                  placeholder="Password"
+                />
+              </Form.Item>
+
+              <Form.Item name="remember" valuePropName="checked">
+                <Button type="link">Forgot password?</Button>
+              </Form.Item>
+
+              <Form.Item>
+                <Button
+                  type="primary"
+                  shape="round"
+                  htmlType="submit"
+                  className="w-100"
+                  loading={loading}
+                >
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

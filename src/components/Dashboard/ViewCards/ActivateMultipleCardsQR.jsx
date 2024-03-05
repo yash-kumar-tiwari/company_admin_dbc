@@ -36,7 +36,7 @@ function ActivateMultipleCardsQR({ visible, onOk, onCancel, selectedRowKeys }) {
         centered
         title={
           <span className="fw-bold fs-5">
-            <ExclamationCircleFilled className="mx-2 text-primary" />
+            <ExclamationCircleFilled className="mx-2 text-warning" />
             Activate Multiple Card QR
           </span>
         }

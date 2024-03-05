@@ -10,6 +10,7 @@ import {
   Tag,
   Upload,
   Statistic,
+  Modal,
 } from "antd";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./ViewCompanyDetails.css";
@@ -23,7 +24,11 @@ import {
 } from "../../../services/apiServices";
 import { Col, Row } from "react-bootstrap";
 import { Card as CardRB } from "react-bootstrap";
-import { CloseCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  CloseCircleOutlined,
+  ExclamationCircleFilled,
+  UploadOutlined,
+} from "@ant-design/icons";
 import CountUp from "react-countup";
 import { capitalizeAndJoin } from "../../../utils/helpers";
 import ImgCrop from "antd-img-crop";
@@ -50,6 +55,8 @@ function ViewCompanyDetails() {
     latitude: null,
     longitude: null,
   }); // State for storing selected location
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const fileInputRef = useRef(null);
   const searchBoxRef = useRef(null); // Ref for StandaloneSearchBox
 
@@ -177,6 +184,19 @@ function ViewCompanyDetails() {
     image.src = src;
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const confirmSaveChanges = () => {
+    setIsModalVisible(false);
+    form.submit();
   };
 
   return (
@@ -481,8 +501,9 @@ function ViewCompanyDetails() {
                       type="primary"
                       className="w-100"
                       shape="round"
-                      htmlType="submit"
+                      // htmlType="submit"
                       loading={isUpdatingCompany}
+                      onClick={showModal}
                     >
                       Save Changes
                     </Button>
@@ -506,6 +527,31 @@ function ViewCompanyDetails() {
           </LoadScript>
         </Card>
       </Spin>
+
+      <Modal
+        centered
+        title={
+          <span className="fw-bold fs-5">
+            <ExclamationCircleFilled className="mx-2 text-warning" />
+            Do you Want to Save Changes?
+          </span>
+        }
+        open={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel} shape="round" danger>
+            Cancel
+          </Button>,
+          <Button
+            key="confirm"
+            type="primary"
+            onClick={confirmSaveChanges} // Bind confirmSaveChanges function here
+            shape="round"
+          >
+            Confirm
+          </Button>,
+        ]}
+      ></Modal>
     </>
   );
 }

@@ -9,6 +9,7 @@ import {
   Spin,
   Tag,
   Upload,
+  Modal,
 } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
 import "./ViewProfile.css";
@@ -20,7 +21,7 @@ import {
 } from "../../../services/apiServices";
 import { Col, Row } from "react-bootstrap";
 import { Card as CardRB } from "react-bootstrap";
-import { UploadOutlined } from "@ant-design/icons";
+import { ExclamationCircleFilled, UploadOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 
 const { Text, Title, Paragraph } = Typography;
@@ -34,6 +35,7 @@ function ViewProfile() {
   const [profileData, setProfileData] = useState({});
   const [avatarPreview, setAvatarPreview] = useState("");
   const [fileList, setFileList] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinishSubmit = async (values) => {
     console.log("Form values:", values);
@@ -138,6 +140,19 @@ function ViewProfile() {
     image.src = src;
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const confirmSaveChanges = () => {
+    setIsModalVisible(false);
+    form.submit();
   };
 
   return (
@@ -302,8 +317,9 @@ function ViewProfile() {
                       type="primary"
                       className="w-100"
                       shape="round"
-                      htmlType="submit"
+                      // htmlType="submit"
                       loading={isUpdatingProfile}
+                      onClick={showModal}
                     >
                       Save Changes
                     </Button>
@@ -315,6 +331,31 @@ function ViewProfile() {
           </div>
         </Card>
       </Spin>
+
+      <Modal
+        centered
+        title={
+          <span className="fw-bold fs-5">
+            <ExclamationCircleFilled className="mx-2 text-warning" />
+            Do you Want to Save Changes?
+          </span>
+        }
+        open={isModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel} shape="round" danger>
+            Cancel
+          </Button>,
+          <Button
+            key="confirm"
+            type="primary"
+            onClick={confirmSaveChanges}
+            shape="round"
+          >
+            Confirm
+          </Button>,
+        ]}
+      ></Modal>
     </>
   );
 }

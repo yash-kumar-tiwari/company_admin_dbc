@@ -91,7 +91,7 @@ const CompanyDashboardPage = () => {
 
   return (
     <div className="MainBg">
-      <Header
+      {/* <Header
         style={{
           position: "sticky",
           top: 0,
@@ -109,14 +109,14 @@ const CompanyDashboardPage = () => {
           onClick={handleMenuClick}
           style={{ flex: 1, minWidth: 0 }}
         >
-          {/* {items.map((item) => (
+          {items.map((item) => (
             <Menu.Item key={item.key} icon={item.icon}>
               {item.label}
             </Menu.Item>
-          ))} */}
+          ))}
         </Menu>
-      </Header>
-      <Layout>
+      </Header> */}
+      <Layout className="main-dashboard-layout">
         <Sider
           theme="light"
           breakpoint="lg"
@@ -176,8 +176,8 @@ const CompanyDashboardPage = () => {
             <div
               style={{
                 padding: 24,
-                minHeight: 360,
-                background: colorBgContainer,
+                // minHeight: 360,
+                // background: colorBgContainer,
                 borderRadius: borderRadiusLG,
               }}
               className="dashboard-container"

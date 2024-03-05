@@ -30,7 +30,7 @@ const ActivateCardQR = ({ visible, onOk, onCancel, record }) => {
       centered
       title={
         <span className="fw-bold fs-5">
-          <ExclamationCircleFilled className="mx-2 text-primary" />
+          <ExclamationCircleFilled className="mx-2 text-warning" />
           Activate Card QR
         </span>
       }

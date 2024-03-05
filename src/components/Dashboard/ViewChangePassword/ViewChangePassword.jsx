@@ -1,17 +1,26 @@
-import React from "react";
-import { Card, Form, Input, Button, Typography, Spin, message } from "antd";
+import React, { useState } from "react";
+import { Card, Form, Input, Button, Typography, message, Modal } from "antd";
 import "./ViewChangePassword.css";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../../services/apiServices";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
 
 function ViewChangePassword() {
   const navigate = useNavigate();
-
   const [form] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const onFinishSubmit = async (values) => {
     console.log("Form values:", values);
@@ -30,9 +39,14 @@ function ViewChangePassword() {
     }
   };
 
+  const confirmChangePassword = () => {
+    setIsModalVisible(false);
+    form.submit();
+  };
+
   return (
     <>
-      <div className="changepasscard">
+      <div>
         <Card
           type="inner"
           title={<span className="fw-bold text-center">Change Password</span>}
@@ -43,7 +57,6 @@ function ViewChangePassword() {
               <label className="fw-bold mb-1">Old Password</label>
               <Item
                 name="old_password"
-                // label="Old Password"
                 rules={[
                   {
                     required: true,
@@ -59,7 +72,6 @@ function ViewChangePassword() {
               <label className="fw-bold mb-1">New Password</label>
               <Item
                 name="new_password"
-                // label="New Password"
                 rules={[
                   {
                     required: true,
@@ -75,7 +87,6 @@ function ViewChangePassword() {
               <label className="fw-bold mb-1">Confirm Password</label>
               <Item
                 name="confirm_password"
-                // label="Confirm Password"
                 dependencies={["new_password"]}
                 hasFeedback
                 rules={[
@@ -108,7 +119,7 @@ function ViewChangePassword() {
                     type="primary"
                     className="w-100"
                     shape="round"
-                    htmlType="submit"
+                    onClick={showModal}
                   >
                     Change Password
                   </Button>
@@ -118,6 +129,30 @@ function ViewChangePassword() {
             </Row>
           </Form>
         </Card>
+        <Modal
+          centered
+          title={
+            <span className="fw-bold fs-5">
+              <ExclamationCircleFilled className="mx-2 text-warning text-center" />
+              Do you want to Save Changes?
+            </span>
+          }
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="cancel" onClick={handleCancel} shape="round" danger>
+              Cancel
+            </Button>,
+            <Button
+              key="confirm"
+              type="primary"
+              onClick={confirmChangePassword}
+              shape="round"
+            >
+              Confirm
+            </Button>,
+          ]}
+        ></Modal>
       </div>
     </>
   );

@@ -1,17 +1,13 @@
-body {
-  margin: 0;
-  font-family: "Roboto", "sans-serif";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  font-family: "Roboto" !important;
+  margin: 0px;
+  padding: 0px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-.body {
-  background: aliceblue !important;
-}
-label {
+body {
+  margin: 0;
   font-family: "Roboto" !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: aliceblue !important;
 }

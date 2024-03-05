@@ -83,6 +83,26 @@ export const uploadAvatar = async (avatarData) => {
   return response;
 };
 
+// forget password
+export const forgetPassword = async (email) => {
+  const response = await makeJsonApiRequest(
+    "post",
+    `${api_base_url}forgetPassword`,
+    email
+  );
+  return response;
+};
+
+// reset password
+export const resetPassword = async (passwordCredentials) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}resetPassword`,
+    passwordCredentials
+  );
+  return response;
+};
+
 /*----- Card Section -----*/
 
 // card lists

@@ -25,6 +25,7 @@ import {
   createBusinessCard,
   uploadCardProfilePic,
 } from "../../../services/apiServices";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 const ViewBusinessCardPreviewModal = ({
   isVisible,
@@ -108,7 +109,12 @@ const ViewBusinessCardPreviewModal = ({
 
   return (
     <Modal
-      title="Business Card Preview"
+      title={
+        <span className="fw-bold fs-5">
+          <ExclamationCircleFilled className="mx-2 text-primary text-center" />
+          Business Card Preview
+        </span>
+      }
       open={isVisible}
       onCancel={onClose}
       footer={[
