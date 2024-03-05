@@ -160,14 +160,14 @@ const ViewBusinessCardPreviewModal = ({
                   />
                 </div>
                 <div className="viewCardDetails p-4">
-                  <span className="viewCardProfileBioDetails">
-                    <Row>
+                  <div className="viewCardProfileBioDetails">
+                    <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
                         <div className="view_card_content_title">{`${data?.first_name} ${data?.last_name}`}</div>
-                        <div>{`${data?.designation} at ${data?.company_name}`}</div>
+                        <div className="view_card_content_sub_title">{`${data?.designation} at ${data?.company_name}`}</div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <span className="float-end mt-4 mx-4">
+                        <span className="float-end">
                           <Image
                             src={data.company_logo}
                             roundedCircle
@@ -177,21 +177,24 @@ const ViewBusinessCardPreviewModal = ({
                         </span>
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardCompanyBioDetails">
-                    <Row>
+                  </div>
+                  <div className="viewCardCompanyBioDetails">
+                    <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
                         <label className="fw-bold text-black">
                           Company Location
                         </label>
-                        <div className="mx-2">{data.company_address}</div>
+                        <div className="view_card_content_sub_title">
+                          {data.company_address}
+                        </div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <FaMapLocationDot className="float-end text-black fs-2 mt-3 mx-4" />
+                        <FaMapLocationDot className="float-end text-black fs-2" />
+                        {/* <Image src="../../assets/images/icons/destination.png" /> */}
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardAboutMe">
+                  </div>
+                  <div className="viewCardAboutMe">
                     <Row className="my-3">
                       <label className="fw-bold text-black">About Me</label>
                       {/* <div
@@ -199,9 +202,10 @@ const ViewBusinessCardPreviewModal = ({
                           __html: extractMainContent(bioHTML),
                         }}
                       /> */}
+                      <p>About Content</p>
                     </Row>
-                  </span>
-                  <span className="viewCardProductAndServices">
+                  </div>
+                  <div className="viewCardProductAndServices">
                     <Row className="my-3">
                       <label className="fw-bold text-black">
                         Product And Services
@@ -211,45 +215,48 @@ const ViewBusinessCardPreviewModal = ({
                           __html: productServiceHTML,
                         }}
                       /> */}
-                      <div>Hello</div>
+                      <p>Product And Services Content</p>
                     </Row>
-                  </span>
-                  <span className="viewCardCompanyInfo">
-                    <Row className="mt-5">
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                  </div>
+                  <div className="viewCardCompanyInfo">
+                    <Row className="mt-1 align-items-center">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">Email</label>
                         <div>{data.user_email}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Contact No.
                         </label>
                         <div>{data.contact_number}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Email
                         </label>
-                        <div>{"company@gmail.com"}</div>
+                        <div>{data.company_email}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Website
                         </label>
-                        <div>{"www.company.com"}</div>
+                        <div>{data.company_website_url}</div>
                       </Col>
-                      <Col lg={6} md={6} sm={6} className="mb-3">
+                      <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Phone
                         </label>
-                        <div>{"1234567890"}</div>
+                        <div>{data.company_email}</div>
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardSocialLinks">
+                  </div>
+                  <div className="viewCardSocialLinks">
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={FacebookCustomIcon}
@@ -261,8 +268,11 @@ const ViewBusinessCardPreviewModal = ({
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={InstagramCustomIcon}
@@ -276,8 +286,11 @@ const ViewBusinessCardPreviewModal = ({
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={LinkedInCustomIcon}
@@ -289,8 +302,11 @@ const ViewBusinessCardPreviewModal = ({
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={WhatsAppCustomIcon}
@@ -304,8 +320,11 @@ const ViewBusinessCardPreviewModal = ({
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={YouTubeCustomIcon}
@@ -317,8 +336,11 @@ const ViewBusinessCardPreviewModal = ({
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={TikTokCustomIcon}
@@ -332,8 +354,11 @@ const ViewBusinessCardPreviewModal = ({
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={LinkedInCustomIcon}
@@ -345,8 +370,11 @@ const ViewBusinessCardPreviewModal = ({
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={WeChatCustomIcon}
@@ -360,8 +388,11 @@ const ViewBusinessCardPreviewModal = ({
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={LineCustomIcon}
@@ -373,8 +404,11 @@ const ViewBusinessCardPreviewModal = ({
                           </span>
                         </Button>
                       </Col>
-                      <Col lg={6} md={6} sm={6}>
-                        <Button className="w-100" size="large">
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
                           <img
                             className="social_custom_icon float-start"
                             src={TelegramCustomIcon}
@@ -387,17 +421,17 @@ const ViewBusinessCardPreviewModal = ({
                         </Button>
                       </Col>
                     </Row>
-                  </span>
-                  <span className="viewCardShareLinks">
+                  </div>
+                  <div className="viewCardShareLinks">
                     <Row className="my-3">
-                      <Col lg={4} md={4} sm={4}>
+                      <Col lg={4} md={4} sm={4} xs={3}>
                         <Button
                           className="w-100"
                           size="large"
                           icon={<FaShareAlt />}
                         ></Button>
                       </Col>
-                      <Col lg={8} md={8} sm={8}>
+                      <Col lg={8} md={8} sm={8} xs={9} className="ps-0">
                         <Button
                           className="w-100 bg-black text-white"
                           size="large"
@@ -408,97 +442,24 @@ const ViewBusinessCardPreviewModal = ({
                         </Button>
                       </Col>
                     </Row>
-                  </span>
+                  </div>
 
-                  <span className="viewCardQRCode">
+                  <div className="viewCardQRCode">
                     <center>
-                      {/* <img src={cardDetails.qr_url} alt="QR Code" /> */}
+                      <Image
+                        src={"../../../assets/images/static/qr_img.png"}
+                        alt="QR Code"
+                        height={150}
+                        width={150}
+                      />
                     </center>
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
-      {/* <div className="businessCardContainer">
-        {" "}
-        <div className="cardContainer">
-          <div className="cardProfileSection my-2 mx-1 p-2 ">
-            <Image
-              className="profile_image"
-              src={
-                imageUrl ||
-                "https://cf.shopee.ph/file/13ac71187230bae1b72226fa0cd962b1"
-              }
-              roundedCircle
-              alt="Profile"
-            />
-            <div className="profile_name fs-3 fw-bold">{`${data?.first_name} ${data?.last_name}`}</div>
-            <div className="profile_designation fs-5 fw-bold">{`${data?.designation}`}</div>
-          </div>
-          <div className="cardBioSection my-3 mx-1 p-4">
-            <div className="cardBioTitle fs-5 fw-bold mx-2 my-2">About Me</div>
-            <p className="cardBioParagraph mx-2">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </p>
-          </div>
-          <div className="cardCompanySection my-3 mx-1 p-4">
-            <div className="cardCompanyTitle fs-5 fw-bold mx-2 my-2">
-              Company Details
-            </div>
-
-            <Row className=" d-flex flex-col m-1">
-              <Col>
-                <label className="fw-bold">Name : </label>
-                <span> Walking Dreamz</span>
-              </Col>
-              <Col>
-                <label className="fw-bold">Email : </label>
-                <span> yashtiwariwd@gmail.com</span>
-              </Col>
-              <Col>
-                <label className="fw-bold">Phone : </label>
-                <span> 7778889990</span>
-              </Col>
-              <Col>
-                <label className="fw-bold">Website : </label>
-                <span> www.walkingdreamz.com</span>
-              </Col>
-            </Row>
-          </div>
-          <div className="cardSocialSection my-3 mx-1 p-4">
-            <Row>
-              <Col lg={12} md={12} sm={12} className="cardSocialItem mb-1">
-                <FacebookOutlined className="fs-4" />
-                <FaInstagram className="fs-4" />
-                <FaWhatsapp className="fs-4" />
-                <FaLinkedin className="fs-4" />
-                <YoutubeOutlined className="fs-4" />
-                <MdOutlineMail className="fs-4" />
-              </Col>
-              <Col lg={12} md={12} sm={12} className="cardSocialItem mt-2">
-                <WechatOutlined className="fs-4" />
-                <TwitterOutlined className="fs-4" />
-                <TikTokOutlined className="fs-4" />
-                <FaTelegram className="fs-4" />
-                <WeiboOutlined className="fs-4" />
-                <FaLine className="fs-4" />
-              </Col>
-            </Row>
-          </div>
-          <div className="cardQrSection my-3 mx-1 p-4"></div>
-        </div>{" "}
-      </div> */}
     </Modal>
   );
 };
