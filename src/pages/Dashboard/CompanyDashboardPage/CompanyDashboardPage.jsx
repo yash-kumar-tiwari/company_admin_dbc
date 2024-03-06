@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Layout, Menu, message, theme } from "antd";
+import { Button, Layout, Menu, Space, message, theme } from "antd";
 import {
   UserOutlined,
   ProfileOutlined,
@@ -130,12 +130,16 @@ const CompanyDashboardPage = () => {
           style={{ backgroundColor: "aliceblue" }}
         >
           <div className="demo-logo-vertical" />
+          <Space className="fw-bold text-center fs-4 px-5 pt-4 pb-2x">
+            Dashboard
+          </Space>
           <Menu
             theme="light"
             mode="inline"
             defaultSelectedKeys={["1"]}
             onClick={handleMenuClick}
             style={{ backgroundColor: "aliceblue" }}
+            className="mb-2"
           >
             {items.map((item) => (
               <Menu.Item
@@ -169,9 +173,10 @@ const CompanyDashboardPage = () => {
             Hello
           </Header> */}
           <Content
-            style={{
-              margin: "24px 16px 0",
-            }}
+            // style={{
+            //   margin: "24px 16px 0",
+            // }}
+            className="my-5"
           >
             <div
               style={{

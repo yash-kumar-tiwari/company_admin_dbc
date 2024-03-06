@@ -143,3 +143,41 @@ export const compressProfileImage = (file) => {
     });
   });
 };
+
+export const toolbarOptions = [
+  [{ size: ["small", false, "large", "huge"] }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ font: [] }],
+  ["bold", "italic", "underline", "strike"],
+  [{ align: [] }],
+  ["link", "image", "video", "formula"],
+  ["blockquote", "code-block"],
+  [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+  [{ color: [] }, { background: [] }],
+  [{ indent: "-1" }, { indent: "+1" }],
+  ["clean"],
+];
+
+export const formatOptions = [
+  "blockquote",
+  "header",
+  "indent",
+  "list",
+  "align",
+  "direction",
+  "code-block",
+  "background",
+  "bold",
+  "color",
+  "font",
+  "code",
+  "italic",
+  "link",
+  "size",
+  "strike",
+  "underline",
+  "bullet",
+  "formula",
+  "image",
+  "video",
+];

@@ -34,7 +34,9 @@ const ViewBusinessCardPreviewModal = ({
   imageUrl,
   fileList,
   onSuccess,
+  bioHtml,
 }) => {
+  console.log(data);
   const [isCreatingCard, setIsCreatingCard] = useState(false);
 
   const handleSubmitCreateCard = async () => {
@@ -140,8 +142,9 @@ const ViewBusinessCardPreviewModal = ({
       centered
       destroyOnClose
       closable
+      width={650}
     >
-      <Container fluid className="viewDigitalBusinessCardContainer">
+      <Container fluid className="viewPreviewDigitalBusinessCardContainer">
         <Row>
           <Col lg={12} md={12} sm={12} className="my-5">
             <div className="viewBusinessCardContainer">
@@ -197,11 +200,11 @@ const ViewBusinessCardPreviewModal = ({
                   <div className="viewCardAboutMe">
                     <Row className="my-3">
                       <label className="fw-bold text-black">About Me</label>
-                      {/* <div
+                      <div
                         dangerouslySetInnerHTML={{
-                          __html: extractMainContent(bioHTML),
+                          __html: bioHtml,
                         }}
-                      /> */}
+                      />
                       <p>About Content</p>
                     </Row>
                   </div>

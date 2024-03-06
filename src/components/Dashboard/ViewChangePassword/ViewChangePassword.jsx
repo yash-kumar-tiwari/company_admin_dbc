@@ -65,7 +65,7 @@ function ViewChangePassword() {
                 ]}
                 hasFeedback
               >
-                <Input.Password placeholder="Enter Old Password" />
+                <Input.Password placeholder="Enter Old Password" size="large" />
               </Item>
             </Col>
             <Col>
@@ -80,7 +80,7 @@ function ViewChangePassword() {
                 ]}
                 hasFeedback
               >
-                <Input.Password placeholder="Enter New Password" />
+                <Input.Password placeholder="Enter New Password" size="large" />
               </Item>
             </Col>
             <Col>
@@ -108,24 +108,27 @@ function ViewChangePassword() {
                   }),
                 ]}
               >
-                <Input.Password placeholder="Confirm Your New Password" />
+                <Input.Password
+                  placeholder="Confirm Your New Password"
+                  size="large"
+                />
               </Item>
             </Col>
             <Row>
-              <Col lg={3} md={6} sm={6}></Col>
-              <Col lg={6} md={6} sm={6}>
+              <Col lg={4} md={4} sm={3}></Col>
+              <Col lg={4} md={4} sm={6}>
                 <Item>
                   <Button
                     type="primary"
                     className="w-100"
-                    shape="round"
+                    size="large"
                     onClick={showModal}
                   >
                     Change Password
                   </Button>
                 </Item>
               </Col>
-              <Col lg={3} md={6} sm={6}></Col>
+              <Col lg={4} md={4} sm={3}></Col>
             </Row>
           </Form>
         </Card>
@@ -147,7 +150,7 @@ function ViewChangePassword() {
               key="confirm"
               type="primary"
               onClick={confirmChangePassword}
-              shape="round"
+              size="large"
             >
               Confirm
             </Button>,

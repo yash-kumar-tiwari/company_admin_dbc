@@ -28,26 +28,6 @@ function ViewDigitalCard() {
   const [bioHTML, setBioHTML] = useState(null);
   const [productServiceHTML, setProductServiceHTML] = useState(null);
 
-  function extractMainContent(htmlString) {
-    // Check if the HTML string is null or empty
-    if (!htmlString) {
-      return "";
-    }
-
-    // Remove single quotes from the HTML string
-    const cleanHtmlString = htmlString.replace(/'/g, "");
-
-    // Create a temporary div element to parse the HTML string
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = cleanHtmlString;
-
-    // Find and extract the main content from the parsed HTML
-    const mainContentElement = tempDiv.querySelector(".markdown.prose");
-    const mainContent = mainContentElement ? mainContentElement.innerHTML : "";
-
-    return mainContent;
-  }
-
   useEffect(() => {
     async function fetchCard() {
       try {
@@ -57,11 +37,7 @@ function ViewDigitalCard() {
         setCardDetails(response.data.data);
         setImageUrl(response.data.data.profile_picture);
         setBioHTML(JSON.parse(response.data.data.bio));
-        setProductServiceHTML(
-          '\u003c!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"\u003e\n\u003chtml\u003e\u003cbody\u003e\n\u003cp\u003e \u003c/p\u003e\n\u003cp\u003e \u003c/p\u003e\n\u003cp\u003eMultimedia content Dummy Content\u003c/p\u003e\n\u003cp\u003e\u003ciframe style="width: 328px; height: 155px;" title="YouTube video player" src="https://www.youtube.com/embed/zlljnJSTuZA?si=55bEqLnHSQY9z6gD" width="328" height="155" frameborder="0" allowfullscreen="allowfullscreen" data-mce-fragment="1"\u003e\u003c/iframe\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eTech Consultancy:\u003c/strong\u003e Unlock the full potential of your business with our expert Tech Consultancy services. We provide tailored solutions to optimize your IT infrastructure, enhance cybersecurity, and streamline operations for maximum efficiency.\u003c/p\u003e\n\u003cp\u003e\u003cimg style="width: 100%; height: auto;" src="https://api.byebug.io/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbGJ0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--d3e82080a4cf9bd554e0e53a1109c9feb8b47d5d/ttpi.jpg" alt=""\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eDigital Marketing Boost:\u003c/strong\u003e Propel your brand to new heights with our Digital Marketing Boost services. From social media management to SEO strategies, we\'ll help you create a strong online presence and connect with your target audience.\u003c/p\u003e\n\u003cp\u003e\u003cimg style="width: 100%; height: auto;" src="https://api.byebug.io/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbGZ0IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a5af999553dd4fb75baf62d224382e99f82b9780/CIH9k_iqlIMDEAE=.webp" alt=""\u003e\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eCustomer Care Excellence:\u003c/strong\u003e Our commitment to customer satisfaction is unwavering. Experience unparalleled support with our Customer Care Excellence services. Our dedicated team is ready to assist you, ensuring a smooth and hassle-free experience with our products and services.\u003c/p\u003e\n\u003c/body\u003e\u003c/html\u003e\n'
-        );
-        console.log(response.data.data.bio, "bio");
-        console.log(response.data.data.product_service, "pro");
+        setProductServiceHTML(response.data.data.product_service);
       } catch (error) {
         console.error("Error fetching card details:", error);
       }
@@ -162,7 +138,7 @@ function ViewDigitalCard() {
                       <label className="fw-bold text-black">About Me</label>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: extractMainContent(bioHTML),
+                          __html: bioHTML,
                         }}
                       />
                     </Row>

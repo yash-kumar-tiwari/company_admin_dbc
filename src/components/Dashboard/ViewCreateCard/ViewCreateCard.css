@@ -4,3 +4,61 @@
 }
 
 /* Business Card CSS Section */
+.view-create-card-steps .ant-steps-item .ant-steps-item-container {
+  padding: 0;
+}
+.view-create-card-steps .ant-steps-item {
+  background: #e9eaeb;
+  min-height: 50px;
+  margin: 0px 6px;
+  border-radius: 6px;
+}
+.view-create-card-steps .ant-steps-item .ant-steps-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+span.ant-steps-icon svg {
+  margin-top: 11px;
+}
+.view-create-card-steps .ant-steps-item {
+  margin-bottom: 10px;
+}
+.view-create-card-steps .ant-steps-item.ant-steps-item-active {
+  background: #bae7ff;
+  border: 1px solid #bae7ff !important;
+}
+.view-create-card-steps .ant-steps-item::after {
+  content: unset !important;
+}
+form#createCardForm {
+  border: 1px solid #bae7ff;
+  border-radius: 0px;
+  margin: 0px 6px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 25px !important;
+}
+/* .ant-form-item-control-input-content input {
+  height: 44px;
+} */
+.create-card-button-group .ant-form-item-control-input-content,
+.Last-create-card-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quill-editor .ql-container.ql-snow {
+  min-height: 200px;
+}
+@media screen and (max-width: 767px) {
+  .view-create-card-steps span.ant-steps-icon svg {
+    margin-top: 0px;
+  }
+  .view-create-card-steps .ant-steps-item-title {
+    line-height: 48px !important;
+  }
+  .view-create-card-steps .ant-steps-item.ant-steps-item-active::before {
+    height: 48px !important;
+  }
+}

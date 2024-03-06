@@ -30,13 +30,15 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import CountUp from "react-countup";
-import { capitalizeAndJoin } from "../../../utils/helpers";
+import { capitalizeAndJoin, toolbarOptions } from "../../../utils/helpers";
 import ImgCrop from "antd-img-crop";
 import {
   GoogleMap,
   LoadScript,
   StandaloneSearchBox,
 } from "@react-google-maps/api";
+import ReactQuill from "react-quill";
+import { Editor } from "@tinymce/tinymce-react";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -48,6 +50,7 @@ function ViewCompanyDetails() {
   const [isUpdatingCompany, setIsUpdatingCompany] = useState(false);
   const [companyData, setCompanyData] = useState({});
   const [companyLogo, setCompanyLogo] = useState("");
+  const [productServices, setProductServices] = useState(""); // State for product and services
   const [fileList, setFileList] = useState([]); // State for fileList
   // Inside your component function
   const [location, setLocation] = useState({
@@ -81,6 +84,7 @@ function ViewCompanyDetails() {
 
   const onFinishSubmit = async (values) => {
     setIsUpdatingCompany(true);
+    console.log(productServices);
     try {
       const uploadedLogoPath = await handleCompanyLogoUpdate(
         fileList[0]?.originFileObj
@@ -93,6 +97,7 @@ function ViewCompanyDetails() {
         location: location.location,
         latitude: location.latitude,
         longitude: location.longitude,
+        product_service: productServices, // Include product and services in updated values
       };
 
       const response = await editCompanyDetails(updatedValues); // Send updated profile data to API
@@ -199,6 +204,10 @@ function ViewCompanyDetails() {
     form.submit();
   };
 
+  const handleEditorChange = (content, editor) => {
+    setProductServices(content);
+  };
+
   return (
     <>
       <Spin spinning={isFetchingCompany}>
@@ -262,7 +271,7 @@ function ViewCompanyDetails() {
                       borderRadius: "15px",
                     }}
                   >
-                    <Col lg={6}>
+                    <Col lg={6} md={6} sm={6} xs={6}>
                       <Statistic
                         title={
                           <span className="fw-bold text-black">Used Cards</span>
@@ -271,7 +280,7 @@ function ViewCompanyDetails() {
                         formatter={formatter}
                       />
                     </Col>
-                    <Col lg={6}>
+                    <Col lg={6} md={6} sm={6} xs={6}>
                       <Statistic
                         title={
                           <span className="fw-bold text-black">Max Cards</span>
@@ -299,6 +308,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Company Name"
                       defaultValue={companyData?.company_name || "N/A"}
                     />
@@ -321,6 +331,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Company Email"
                       defaultValue={companyData?.company_email || "N/A"}
                     />
@@ -336,6 +347,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Company Description"
                       defaultValue={companyData?.description || "N/A"}
                     />
@@ -354,6 +366,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Company Address"
                       defaultValue={companyData?.company_address || "N/A"}
                     />
@@ -373,6 +386,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Company Contact Number"
                       defaultValue={companyData.company_contact_number || "N/A"}
                     />
@@ -392,6 +406,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Company Website"
                       defaultValue={companyData.company_website || "N/A"}
                     />
@@ -411,6 +426,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       disabled
                       placeholder="Enter Your Contact Person Name"
                       defaultValue={companyData.contact_person_name || "N/A"}
@@ -430,6 +446,7 @@ function ViewCompanyDetails() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       disabled
                       placeholder="Enter Your Contact Person Email"
                       defaultValue={companyData.contact_person_email || "N/A"}
@@ -449,6 +466,7 @@ function ViewCompanyDetails() {
                         {" "}
                         {/* Wrap Input and Button in a parent element */}
                         <Input
+                          size="large"
                           placeholder="Search Location, Places"
                           value={location?.name} // Display the selected place name
                           onChange={(e) =>
@@ -494,13 +512,78 @@ function ViewCompanyDetails() {
               </Row>
 
               <Row>
-                <Col lg={3} md={0} sm={0}></Col>
-                <Col lg={3} md={6} sm={6}>
+                <Col lg={12} md={12} sm={12} className="quill-editor mb-4">
+                  <label className="fw-bold my-1">Product and Services</label>
+                  {/* <ReactQuill
+                    theme="snow"
+                    placeholder="Enter Product And Services Details"
+                    value={productServices}
+                    onChange={handleProductServicesChange}
+                    modules={{
+                      toolbar: toolbarOptions,
+                    }}
+                  /> */}
+                  <Editor
+                    apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
+                    init={{
+                      plugins:
+                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
+                      toolbar:
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                      // tinycomments_mode: "embedded",
+                      // tinycomments_author: "Author name",
+                      mergetags_list: [
+                        { value: "First.Name", title: "First Name" },
+                        { value: "Email", title: "Email" },
+                      ],
+                      ai_request: (request, respondWith) =>
+                        respondWith.string(() =>
+                          Promise.reject("See docs to implement AI Assistant")
+                        ),
+                      images_default_resizing: "scale",
+                      images_resizing: true,
+                      file_picker_types: "image", // Add this line to enable selecting images
+                      file_picker_callback: function (callback, value, meta) {
+                        if (meta.filetype === "image") {
+                          var input = document.createElement("input");
+                          input.setAttribute("type", "file");
+                          input.setAttribute("accept", "image/*");
+
+                          // Trigger the file selection dialog when the input element changes
+                          input.onchange = function () {
+                            var file = this.files[0];
+                            var reader = new FileReader();
+
+                            reader.onload = function (e) {
+                              // Pass the selected file back to the editor
+                              callback(e.target.result, {
+                                alt: file.name, // You can customize this if needed
+                              });
+                            };
+
+                            reader.readAsDataURL(file);
+                          };
+
+                          // Click the input element to open the file selection dialog
+                          input.click();
+                        }
+                      },
+                    }}
+                    initialValue="Welcome to TinyMCE!"
+                    onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
+                  />
+                </Col>
+              </Row>
+
+              <Row>
+                <Col lg={4} md={3} sm={3}></Col>
+                <Col lg={4} md={6} sm={6}>
                   <Item>
                     <Button
                       type="primary"
                       className="w-100"
-                      shape="round"
+                      size="large"
+                      // shape="round"
                       // htmlType="submit"
                       loading={isUpdatingCompany}
                       onClick={showModal}
@@ -509,7 +592,7 @@ function ViewCompanyDetails() {
                     </Button>
                   </Item>
                 </Col>
-                <Col lg={3} md={6} sm={6}>
+                <Col lg={4} md={3} sm={3}>
                   {/* <Item>
                     <Button
                       type="primary"
@@ -521,7 +604,6 @@ function ViewCompanyDetails() {
                     </Button>
                   </Item> */}
                 </Col>
-                <Col lg={3} md={0} sm={0}></Col>
               </Row>
             </Form>
           </LoadScript>

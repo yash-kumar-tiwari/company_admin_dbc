@@ -21,7 +21,11 @@ import ImgCrop from "antd-img-crop";
 import ViewProfilePreviewModal from "./ViewProfilePreviewModal";
 import { FaUser, FaCircleInfo, FaCircleCheck } from "react-icons/fa6";
 import { IoShareSocialSharp } from "react-icons/io5";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
 import ViewCoverPreviewModal from "./ViewCoverPreviewModal";
+import { Editor } from "@tinymce/tinymce-react";
+import { toolbarOptions } from "../../../utils/helpers";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -39,6 +43,7 @@ function ViewCreateCard() {
   const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [coverPicUrl, setCoverPicUrl] = useState("");
   const [coverPicFileList, setCoverPicFileList] = useState([]);
+  const [bioHtml, setBioHtml] = useState("");
 
   const formRef = React.createRef();
 
@@ -133,6 +138,11 @@ function ViewCreateCard() {
     setCurrentStep(step);
   };
 
+  const handleEditorChange = (content, editor) => {
+    console.log(content);
+    setBioHtml(content);
+  };
+
   return (
     <>
       <Card
@@ -140,36 +150,43 @@ function ViewCreateCard() {
         title={<span className="fw-bold text-center">Create Card</span>}
         className="view-profile-custom-card"
       >
-        <Steps type="navigation" current={currentStep} responsive size="small">
-          <Step
-            title="Personal"
-            icon={<FaUser style={{ color: "blue" }} />}
-            onClick={() => handleStepClick(0)}
-            status={currentStep >= 0 ? "finish" : "wait"}
-            style={{ cursor: "pointer" }}
-          />
-          <Step
-            title="Bio"
-            icon={<FaCircleInfo style={{ color: "gray" }} />}
-            onClick={() => handleStepClick(1)}
-            status={currentStep >= 1 ? "finish" : "wait"}
-            style={{ cursor: "pointer" }}
-          />
-          <Step
-            title="Social"
-            icon={<IoShareSocialSharp style={{ color: "orange" }} />}
-            onClick={() => handleStepClick(2)}
-            status={currentStep >= 2 ? "finish" : "wait"}
-            style={{ cursor: "pointer" }}
-          />
-          <Step
-            title="Review"
-            icon={<FaCircleCheck style={{ color: "green" }} />}
-            onClick={() => handleStepClick(3)}
-            status={currentStep === 3 ? "finish" : "wait"}
-            style={{ cursor: "pointer" }}
-          />
-        </Steps>
+        <div className="view-create-card-steps">
+          <Steps
+            type="navigation"
+            current={currentStep}
+            responsive
+            size="small"
+          >
+            <Step
+              title="Personal"
+              icon={<FaUser style={{ color: "blue" }} />}
+              onClick={() => handleStepClick(0)}
+              status={currentStep >= 0 ? "finish" : "wait"}
+              style={{ cursor: "pointer" }}
+            />
+            <Step
+              title="Bio"
+              icon={<FaCircleInfo style={{ color: "gray" }} />}
+              onClick={() => handleStepClick(1)}
+              status={currentStep >= 1 ? "finish" : "wait"}
+              style={{ cursor: "pointer" }}
+            />
+            <Step
+              title="Social"
+              icon={<IoShareSocialSharp style={{ color: "orange" }} />}
+              onClick={() => handleStepClick(2)}
+              status={currentStep >= 2 ? "finish" : "wait"}
+              style={{ cursor: "pointer" }}
+            />
+            <Step
+              title="Review"
+              icon={<FaCircleCheck style={{ color: "green" }} />}
+              onClick={() => handleStepClick(3)}
+              status={currentStep === 3 ? "finish" : "wait"}
+              style={{ cursor: "pointer" }}
+            />
+          </Steps>
+        </div>
         <Form
           ref={formRef}
           className="p-2"
@@ -213,7 +230,7 @@ function ViewCreateCard() {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter First Name" />
+                    <Input placeholder="Enter First Name" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={4} md={12} sm={12}>
@@ -224,7 +241,7 @@ function ViewCreateCard() {
                       { required: true, message: "Please input last name!" },
                     ]}
                   >
-                    <Input placeholder="Enter Last Name" />
+                    <Input placeholder="Enter Last Name" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={4} md={12} sm={12}>
@@ -239,7 +256,7 @@ function ViewCreateCard() {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter Email Address" />
+                    <Input placeholder="Enter Email Address" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
@@ -253,7 +270,7 @@ function ViewCreateCard() {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter Designation" />
+                    <Input placeholder="Enter Designation" size="large" />
                   </Form.Item>
                 </Col>
 
@@ -268,7 +285,7 @@ function ViewCreateCard() {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter Contact Number" />
+                    <Input placeholder="Enter Contact Number" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={6} sm={6}>
@@ -328,21 +345,79 @@ function ViewCreateCard() {
             </div>
           )}
           {currentStep === 1 && (
-            <div
-              style={{
-                overflowY: "scroll",
-                overflowX: "hidden",
-              }}
-            >
+            <div>
               <Col lg={12} md={12} sm={12}>
                 <label className="fw-bold my-1">Bio</label>
                 <Form.Item
                   name="bio"
+                  className="quill-editor"
                   rules={[
                     { required: true, message: "Please input your bio!" },
                   ]}
                 >
-                  <TextArea rows={4} placeholder="Enter Bio Details" />
+                  <Editor
+                    apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
+                    init={{
+                      plugins:
+                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
+                      toolbar:
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                      // tinycomments_mode: "embedded",
+                      // tinycomments_author: "Author name",
+                      mergetags_list: [
+                        { value: "First.Name", title: "First Name" },
+                        { value: "Email", title: "Email" },
+                      ],
+                      ai_request: (request, respondWith) =>
+                        respondWith.string(() =>
+                          Promise.reject("See docs to implement AI Assistant")
+                        ),
+                      images_default_resizing: "scale",
+                      images_resizing: true,
+                      file_picker_types: "image", // Add this line to enable selecting images
+                      file_picker_callback: function (callback, value, meta) {
+                        if (meta.filetype === "image") {
+                          var input = document.createElement("input");
+                          input.setAttribute("type", "file");
+                          input.setAttribute("accept", "image/*");
+
+                          // Trigger the file selection dialog when the input element changes
+                          input.onchange = function () {
+                            var file = this.files[0];
+                            var reader = new FileReader();
+
+                            reader.onload = function (e) {
+                              // Pass the selected file back to the editor
+                              callback(e.target.result, {
+                                alt: file.name, // You can customize this if needed
+                              });
+                            };
+
+                            reader.readAsDataURL(file);
+                          };
+
+                          // Click the input element to open the file selection dialog
+                          input.click();
+                        }
+                      },
+                    }}
+                    // initialValue="Welcome to TinyMCE!"
+                    onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
+                  />
+                  {/* <ReactQuill
+                    theme="snow"
+                    placeholder="Enter Bio Details"
+                    onChange={(value) =>
+                      formRef.current.setFieldsValue({
+                        bio: value ? value : null,
+                      })
+                    }
+                    // Additional props
+                    modules={{
+                      toolbar: toolbarOptions,
+                    }}
+                    // formats={formatOptions}
+                  /> */}
                 </Form.Item>
               </Col>
             </div>
@@ -353,61 +428,64 @@ function ViewCreateCard() {
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Facebook</label>
                   <Form.Item name="fb_link">
-                    <Input placeholder="Enter Facebook Link" />
+                    <Input placeholder="Enter Facebook Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Instagram</label>
                   <Form.Item name="insta_link">
-                    <Input placeholder="Enter Instagram Link" />
+                    <Input placeholder="Enter Instagram Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">LinkedIn</label>
                   <Form.Item name="linkedin_link">
-                    <Input placeholder="Enter LinkedIn Link" />
+                    <Input placeholder="Enter LinkedIn Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Snapchat</label>
                   <Form.Item name="snapchat_link">
-                    <Input placeholder="Enter Snapchat Link" />
+                    <Input placeholder="Enter Snapchat Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">WhatsApp</label>
                   <Form.Item name="whatsapp_number">
-                    <Input placeholder="Enter WhatsApp Number" />
+                    <Input placeholder="Enter WhatsApp Number" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">YouTube</label>
                   <Form.Item name="youtube">
-                    <Input placeholder="Enter YouTube Link" />
+                    <Input placeholder="Enter YouTube Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Xiao Hong Shu</label>
                   <Form.Item name="xiao_hong_shu">
-                    <Input placeholder="Enter Xiao Hong Shu Link" />
+                    <Input
+                      placeholder="Enter Xiao Hong Shu Link"
+                      size="large"
+                    />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">TikTok</label>
                   <Form.Item name="tiktok">
-                    <Input placeholder="Enter TikTok Link" />
+                    <Input placeholder="Enter TikTok Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">WeChat</label>
                   <Form.Item name="wechat">
-                    <Input placeholder="Enter WeChat Link" />
+                    <Input placeholder="Enter WeChat Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Line</label>
                   <Form.Item name="line">
-                    <Input placeholder="Enter Line Link" />
+                    <Input placeholder="Enter Line Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
@@ -434,7 +512,7 @@ function ViewCreateCard() {
           {currentStep === 3 && (
             <div>
               <h2>Review Your Information</h2>
-              <div className="createCard-reviewInformation">
+              <div className="createCard-reviewInformation pt-4 pb-0">
                 <Row>
                   <Col lg={6} md={12} sm={12}>
                     <p>First Name: {businessCardData.first_name}</p>
@@ -442,9 +520,9 @@ function ViewCreateCard() {
                     <p>Email: {businessCardData.user_email}</p>
                     <p>Designation: {businessCardData.designation}</p>
                     <p>Contact Number: {businessCardData.contact_number}</p>
-                    <p>Bio: {businessCardData.bio}</p>
+                    {/* <p>Bio: {businessCardData.bio}</p> */}
                   </Col>
-                  <Col lg={6} md={12} sm={12}>
+                  {/* <Col lg={6} md={12} sm={12}>
                     <p>Facebook Link: {businessCardData.fb_link}</p>
                     <p>Instagram Link: {businessCardData.insta_link}</p>
                     <p>LinkedIn Link: {businessCardData.linkedin_link}</p>
@@ -459,7 +537,7 @@ function ViewCreateCard() {
                     <p>Telegram: {businessCardData.telegram}</p>
                     <p>Webio: {businessCardData.webio}</p>
                     <p>Twitter: {businessCardData.twitter}</p>
-                  </Col>
+                  </Col> */}
                   {/* <Col>
                     {previewImageUrl && ( // Check if profile picture URL is available
                       <div>
@@ -474,35 +552,38 @@ function ViewCreateCard() {
                   </Col> */}
                 </Row>
               </div>
+              <Divider />
+              <div className="Last-create-card-button-group">
+                <Button
+                  style={{ marginRight: 8 }}
+                  onClick={handlePrevStep}
+                  size="large"
+                >
+                  Previous
+                </Button>
 
-              <Button
-                style={{ marginRight: 8 }}
-                onClick={handlePrevStep}
-                shape="round"
-              >
-                Previous
-              </Button>
-
-              <Button type="primary" htmlType="submit" shape="round">
-                Preview Card
-              </Button>
+                <Button type="primary" htmlType="submit" size="large">
+                  Preview Card
+                </Button>
+              </div>
             </div>
           )}
-          <Divider />
+
           <div className="create-card-button-group">
             {currentStep < 3 && (
-              <Col lg={6} md={12} sm={12} className="m-0 p-0">
-                <Form.Item className="m-0 p-0">
+              <Col lg={12} md={12} sm={12} className="m-0 p-0">
+                <Divider />
+                <Form.Item className="m-0 p-0 ">
                   {currentStep > 0 && (
                     <Button
                       style={{ marginRight: 8 }}
                       onClick={handlePrevStep}
-                      shape="round"
+                      size="large"
                     >
                       Previous
                     </Button>
                   )}
-                  <Button type="primary" htmlType="submit" shape="round">
+                  <Button type="primary" htmlType="submit" size="large">
                     Save And Next
                   </Button>
                 </Form.Item>
@@ -523,6 +604,7 @@ function ViewCreateCard() {
           formRef.current.resetFields();
           console.log("Success Message");
         }}
+        bioHtml={bioHtml}
       />
 
       {/* Modal for image preview */}

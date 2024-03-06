@@ -231,6 +231,7 @@ function ViewProfile() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your First Name"
                       defaultValue={profileData.first_name || "N/A"}
                     />
@@ -249,6 +250,7 @@ function ViewProfile() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Last Name"
                       defaultValue={profileData.last_name || "N/A"}
                     />
@@ -265,6 +267,7 @@ function ViewProfile() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Email"
                       defaultValue={profileData.email || "N/A"}
                     />
@@ -283,6 +286,7 @@ function ViewProfile() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Mobile Number"
                       defaultValue={profileData.mobile_number || "N/A"}
                     />
@@ -302,6 +306,7 @@ function ViewProfile() {
                     hasFeedback
                   >
                     <Input
+                      size="large"
                       placeholder="Enter Your Phone Number"
                       defaultValue={profileData.phone_number || "N/A"}
                     />
@@ -316,7 +321,7 @@ function ViewProfile() {
                     <Button
                       type="primary"
                       className="w-100"
-                      shape="round"
+                      size="large"
                       // htmlType="submit"
                       loading={isUpdatingProfile}
                       onClick={showModal}
@@ -343,14 +348,14 @@ function ViewProfile() {
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" onClick={handleCancel} shape="round" danger>
+          <Button key="cancel" onClick={handleCancel} size="large" danger>
             Cancel
           </Button>,
           <Button
             key="confirm"
             type="primary"
             onClick={confirmSaveChanges}
-            shape="round"
+            size="large"
           >
             Confirm
           </Button>,

@@ -203,7 +203,7 @@ export const uploadCompanyLogo = async (imageData) => {
 // edit company details
 export const editCompanyDetails = async (updatedData) => {
   const response = await makeJsonApiRequest(
-    "put",
+    "post",
     `${api_base_url}editCompanyDetails`,
     updatedData
   );
