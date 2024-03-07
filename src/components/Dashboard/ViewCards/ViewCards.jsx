@@ -28,6 +28,7 @@ import { fetchCardsList } from "../../../services/apiServices";
 import ActivateCardQR from "./ActivateCardQR";
 import DeactivateCard from "./DeactivateCard";
 import ActivateMultipleCardsQR from "./ActivateMultipleCardsQR";
+import DeleteCard from "./DeleteCard";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -46,6 +47,7 @@ function ViewCards() {
   const [showDeactivateCardModal, setShowDeactivateCardModal] = useState(false);
   const [showActivateMultipleModal, setShowActivateMultipleModal] =
     useState(false);
+  const [showDeleteCardModal, setShowDeleteCardModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
   const fetchViewCardsData = useCallback(async () => {
@@ -153,7 +155,6 @@ function ViewCards() {
           <Button
             href={text}
             type="primary"
-            shape="round"
             size="small"
             target="_blank"
             rel="noopener noreferrer"
@@ -211,6 +212,13 @@ function ViewCards() {
               >
                 Deactivate Card
               </Menu.Item>
+              <Menu.Item
+                key="3"
+                onClick={() => handleDeleteCardModalOpen(record)}
+              >
+                Delete Card
+              </Menu.Item>
+              <Menu.Item key="4">Edit Card</Menu.Item>
             </Menu>
           }
           trigger={["click"]}
@@ -238,6 +246,11 @@ function ViewCards() {
     setShowActivateMultipleModal(true);
   };
 
+  const handleDeleteCardModalOpen = (record) => {
+    setSelectedRecord(record);
+    setShowDeleteCardModal(true);
+  };
+
   const handleActivateCardQRModalClose = () => {
     // message.success(`Activated ${selectedRecord.first_name}'s card`);
     setShowActivateCardQRModal(false);
@@ -248,8 +261,12 @@ function ViewCards() {
     setShowDeactivateCardModal(false);
   };
 
-  const handleActivateMultipleCardModalClose = (record) => {
+  const handleActivateMultipleCardModalClose = () => {
     setShowActivateMultipleModal(false);
+  };
+
+  const handleDeleteCardModalClose = () => {
+    setShowDeleteCardModal(false);
   };
 
   const components = {
@@ -352,6 +369,17 @@ function ViewCards() {
           }}
           onCancel={() => setShowActivateMultipleModal(false)}
           selectedRowKeys={selectedRowKeys} // Pass the selectedRowKeys to the modal
+        />
+
+        <DeleteCard
+          visible={showDeleteCardModal}
+          onOk={(status) => {
+            handleDeleteCardModalClose();
+            fetchViewCardsData();
+            // console.log(status);
+          }}
+          onCancel={() => setShowDeleteCardModal(false)}
+          record={selectedRecord} // Pass the selectedRowKeys to the modal
         />
       </Spin>
     </>

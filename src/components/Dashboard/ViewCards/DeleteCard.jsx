@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Modal, Button, message } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
-import { activateCardforQRCode } from "../../../services/apiServices";
+import { deleteCard } from "../../../services/apiServices";
 
-const ActivateCardQR = ({ visible, onOk, onCancel, record }) => {
-  const [isActivatingCardQR, setIsActivatingCardQR] = useState(false);
+const DeleteCard = ({ visible, onOk, onCancel, record }) => {
+  const [isDeletingCard, setIsDeletingCard] = useState(false);
 
-  const handleConfirmActivateCardQR = async () => {
-    setIsActivatingCardQR(true);
+  const handleConfirmDeletingCard = async () => {
+    setIsDeletingCard(true);
     try {
       // Make the API call to activate the QR code
-      const response = await activateCardforQRCode(record.id);
+      const response = await deleteCard(record.id);
       if (response.status === 200) {
         message.success(response.data.message);
         onOk(response.data.success); // Close the modal
@@ -18,10 +18,10 @@ const ActivateCardQR = ({ visible, onOk, onCancel, record }) => {
         message.error(response.data.message);
       }
     } catch (error) {
-      console.error("Error activating card:", error);
-      message.error("Failed to activate the card. Please try again later.");
+      console.error("Error Deleting card:", error);
+      message.error("Failed to Delete the Card. Please try again later.");
     } finally {
-      setIsActivatingCardQR(false);
+      setIsDeletingCard(false);
     }
   };
 
@@ -30,37 +30,37 @@ const ActivateCardQR = ({ visible, onOk, onCancel, record }) => {
       centered
       title={
         <span className="fw-bold fs-5">
-          <ExclamationCircleFilled className="mx-2 text-warning" />
-          Activate Card QR
+          <ExclamationCircleFilled className="mx-2 text-danger" />
+          Delete Card
         </span>
       }
       open={visible}
-      //   onOk={handleConfirmActivateCardQR}
+      //   onOk={onOk}
       onCancel={onCancel}
-      //   confirmLoading={isActivatingCardQR}
       footer={[
         <Button key="back" onClick={onCancel}>
           Cancel
         </Button>,
         <Button
+          danger
           key="submit"
           type="primary"
-          onClick={handleConfirmActivateCardQR}
-          loading={isActivatingCardQR}
+          onClick={handleConfirmDeletingCard}
+          loading={isDeletingCard}
         >
-          Activate
+          Delete
         </Button>,
       ]}
     >
       <p className="text-center my-4">
-        Do you want to activate{" "}
+        Do you want to Delete{" "}
         <span className="fw-bold text-black">
           {record && `${record.first_name} ${record.last_name}`} 's
         </span>{" "}
         card?
-      </p>
+      </p>{" "}
     </Modal>
   );
 };
 
-export default ActivateCardQR;
+export default DeleteCard;

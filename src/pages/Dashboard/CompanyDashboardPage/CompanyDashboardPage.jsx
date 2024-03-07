@@ -6,6 +6,7 @@ import {
   CreditCardOutlined,
   LogoutOutlined,
   PlusOutlined,
+  QrcodeOutlined,
 } from "@ant-design/icons";
 import { MdOutlinePassword } from "react-icons/md";
 
@@ -17,6 +18,7 @@ import ViewCreateCard from "../../../components/Dashboard/ViewCreateCard/ViewCre
 import { logoutUser } from "../../../services/apiServices";
 import { useNavigate } from "react-router-dom";
 import "./CompanyDashboardPage.css";
+import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,8 +35,9 @@ const CompanyDashboardPage = () => {
     { key: "1", icon: <ProfileOutlined />, label: "Company Details" },
     { key: "2", icon: <PlusOutlined />, label: "Create Card" },
     { key: "3", icon: <CreditCardOutlined />, label: "Cards" },
-    { key: "4", icon: <UserOutlined />, label: "Profile" },
-    { key: "5", icon: <MdOutlinePassword />, label: "Change Password" },
+    { key: "4", icon: <QrcodeOutlined />, label: "Cards QRs" },
+    { key: "5", icon: <UserOutlined />, label: "Profile" },
+    { key: "6", icon: <MdOutlinePassword />, label: "Change Password" },
     // { key: "4", icon: <LogoutOutlined />, label: "Logout" },
   ];
 
@@ -65,10 +68,16 @@ const CompanyDashboardPage = () => {
       case "4":
         return (
           <>
-            <ViewProfile />
+            <ViewCardsQR />
           </>
         );
       case "5":
+        return (
+          <>
+            <ViewProfile />
+          </>
+        );
+      case "6":
         return (
           <>
             <ViewChangePassword />

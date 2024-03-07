@@ -53,7 +53,7 @@ const DeactivateCard = ({ visible, onOk, onCancel, record }) => {
       <p className="text-center my-4">
         Do you want to Deactivate{" "}
         <span className="fw-bold text-black">
-          {record && record.first_name}'s
+          {record && `${record.first_name} ${record.last_name}`} 's
         </span>{" "}
         card?
       </p>{" "}

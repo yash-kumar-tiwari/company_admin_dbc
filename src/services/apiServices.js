@@ -161,6 +161,25 @@ export const deactivateCard = async (cardID) => {
   return response;
 };
 
+// delete card
+export const deleteCard = async (cardID) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}deleteCard?card_id=${cardID}`,
+    {}
+  );
+  return response;
+};
+
+// view card
+export const fetchViewDigitalCard = async (queries) => {
+  const response = await makeJsonApiRequest(
+    "get",
+    `${card_base_url}cardDetailsForCA?card_id=${queries.companyName}&card_ref=${queries.cardReference}`
+  );
+  return response;
+};
+
 // view card for all
 export const fetchViewDigitalCardAll = async (queries) => {
   const response = await makeJsonApiRequest(
@@ -176,6 +195,12 @@ export const getVCFCardforDigitalCard = async (vcfCardID) => {
     "get",
     `${card_base_url}vcf?card_id=${vcfCardID}`
   );
+  return response;
+};
+
+// cards url lists
+export const fetchCardsUrlList = async () => {
+  const response = await makeJsonApiRequest("get", `${api_base_url}qrCodeList`);
   return response;
 };
 
