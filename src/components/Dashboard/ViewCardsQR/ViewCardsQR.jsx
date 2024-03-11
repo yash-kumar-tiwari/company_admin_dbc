@@ -193,7 +193,7 @@ function ViewCardsQR() {
         open={modalVisible}
         onCancel={handleModalClose}
         footer={[
-          <Button key="close" onClick={handleModalClose}>
+          <Button key="close" onClick={handleModalClose} danger size="large"s>
             Close
           </Button>,
         ]}

@@ -146,7 +146,7 @@ function ViewChangePassword() {
           open={isModalVisible}
           onCancel={handleCancel}
           footer={[
-            <Button key="cancel" onClick={handleCancel} shape="round" danger>
+            <Button key="cancel" onClick={handleCancel} size="large" danger>
               Cancel
             </Button>,
             <Button

@@ -156,17 +156,17 @@ const ViewBusinessCardPreviewModal = ({
           danger
           type="primary"
           key="close"
-          shape="round"
           onClick={onClose}
+          size="large"
         >
           Cancel
         </Button>,
         <Button
           type="primary"
           key="close"
-          shape="round"
           onClick={handleSubmitCreateCard}
           loading={isCreatingCard}
+          size="large"
         >
           Create Card
         </Button>,

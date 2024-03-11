@@ -44,7 +44,7 @@ const DeleteCard = ({ visible, onOk, onCancel, record }) => {
       //   onOk={onOk}
       onCancel={onCancel}
       footer={[
-        <Button key="back" onClick={onCancel}>
+        <Button key="back" onClick={onCancel} size="large">
           Cancel
         </Button>,
         <Button
@@ -53,6 +53,7 @@ const DeleteCard = ({ visible, onOk, onCancel, record }) => {
           type="primary"
           onClick={handleConfirmDeletingCard}
           loading={isDeletingCard}
+          size="large"
         >
           Delete
         </Button>,

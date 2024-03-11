@@ -650,13 +650,14 @@ function ViewCompanyDetails() {
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" onClick={handleCancel} danger>
+          <Button key="cancel" onClick={handleCancel} size="large" danger>
             Cancel
           </Button>,
           <Button
             key="confirm"
             type="primary"
             onClick={confirmSaveChanges} // Bind confirmSaveChanges function here
+            size="large"
           >
             Confirm
           </Button>,
