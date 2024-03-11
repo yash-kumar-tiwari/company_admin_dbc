@@ -23,6 +23,7 @@ import { Col, Row } from "react-bootstrap";
 import { Card as CardRB } from "react-bootstrap";
 import { ExclamationCircleFilled, UploadOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -54,6 +55,8 @@ function ViewProfile() {
       if (response && response.status === 200) {
         message.success(response.data.message);
         fetchViewProfileData();
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }
@@ -98,6 +101,8 @@ function ViewProfile() {
 
         form.setFieldsValue(response.data.data);
         navigate("/dashboard");
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }

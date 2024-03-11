@@ -349,11 +349,11 @@ function ViewCreateCard() {
               <Col lg={12} md={12} sm={12}>
                 <label className="fw-bold my-1">Bio</label>
                 <Form.Item
-                  // name="bio"
+                  name="bio"
                   className="quill-editor"
-                  // rules={[
-                  //   { required: true, message: "Please input your bio!" },
-                  // ]}
+                  rules={[
+                    { required: true, message: "Please input your bio!" },
+                  ]}
                 >
                   <Editor
                     apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"

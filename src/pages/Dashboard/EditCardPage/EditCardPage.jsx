@@ -17,20 +17,20 @@ import ViewChangePassword from "../../../components/Dashboard/ViewChangePassword
 import ViewCreateCard from "../../../components/Dashboard/ViewCreateCard/ViewCreateCard";
 import { logoutUser } from "../../../services/apiServices";
 import { useNavigate } from "react-router-dom";
-import "./CompanyDashboardPage.css";
+// import "./CompanyDashboardPage.css";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const CompanyDashboardPage = () => {
+const EditCardPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const navigate = useNavigate();
 
-  const [selectedTab, setSelectedTab] = useState("1");
+  const [selectedTab, setSelectedTab] = useState("3");
 
   const [showEditCard, setShowEditCard] = useState(false); // State to track whether Edit Card should be displayed
 
@@ -219,4 +219,4 @@ const CompanyDashboardPage = () => {
     </div>
   );
 };
-export default CompanyDashboardPage;
+export default EditCardPage;

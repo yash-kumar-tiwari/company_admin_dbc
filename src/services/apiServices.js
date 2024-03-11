@@ -131,6 +131,16 @@ export const uploadCardProfilePic = async (imageData) => {
   return response;
 };
 
+// upload cover image
+export const uploadCardCoverPic = async (imageData) => {
+  const response = await makeFormDataApiRequest(
+    "post",
+    `${api_base_url}uploadCardCoverPicture`,
+    imageData
+  );
+  return response;
+};
+
 // activate card for QR
 export const activateCardforQRCode = async (cardID) => {
   const response = await makeJsonApiRequest(
@@ -172,10 +182,20 @@ export const deleteCard = async (cardID) => {
 };
 
 // view card
-export const fetchViewDigitalCard = async (queries) => {
+export const fetchViewDigitalCard = async (cardID) => {
   const response = await makeJsonApiRequest(
     "get",
-    `${card_base_url}cardDetailsForCA?card_id=${queries.companyName}&card_ref=${queries.cardReference}`
+    `${api_base_url}cardDetailsForCA?card_id=${cardID}`
+  );
+  return response;
+};
+
+// edit card
+export const editCardDetails = async (updatedData) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}editCard`,
+    updatedData
   );
   return response;
 };

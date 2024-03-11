@@ -33,7 +33,7 @@ import DeleteCard from "./DeleteCard";
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
 
-function ViewCards() {
+function ViewCards({ setShowEditCard }) {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [isFetchingCards, setIsFetchingCards] = useState(false);
@@ -218,7 +218,18 @@ function ViewCards() {
               >
                 Delete Card
               </Menu.Item>
-              <Menu.Item key="4">Edit Card</Menu.Item>
+              <Menu.Item key="4">
+                <NavLink
+                  className="text-decoration-none"
+                  to={{
+                    pathname: `/dashboard/edit-card/${record.id}`,
+                    state: { cardId: record.id },
+                  }}
+                  onClick={() => handleEditCard(record.id)}
+                >
+                  Edit Card
+                </NavLink>
+              </Menu.Item>
             </Menu>
           }
           trigger={["click"]}
@@ -267,6 +278,13 @@ function ViewCards() {
 
   const handleDeleteCardModalClose = () => {
     setShowDeleteCardModal(false);
+  };
+
+  const [selectedCardId, setSelectedCardId] = useState(null);
+
+  const handleEditCard = (cardId) => {
+    setSelectedCardId(cardId);
+    setShowEditCard(true);
   };
 
   const components = {

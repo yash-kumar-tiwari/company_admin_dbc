@@ -9,6 +9,7 @@ import { FaShareAlt } from "react-icons/fa";
 import {
   fetchViewDigitalCardAll,
   getVCFCardforDigitalCard,
+  uploadCardCoverPic,
 } from "../../../services/apiServices";
 
 import WhatsAppCustomIcon from "../../../assets/images/social/whatsapp.png";
@@ -33,10 +34,12 @@ const ViewBusinessCardPreviewModal = ({
   data,
   imageUrl,
   fileList,
+  coverPicFileList,
   onSuccess,
   bioHtml,
 }) => {
   console.log(data);
+  console.log(bioHtml);
   const [isCreatingCard, setIsCreatingCard] = useState(false);
 
   const handleSubmitCreateCard = async () => {
@@ -46,9 +49,17 @@ const ViewBusinessCardPreviewModal = ({
         fileList[0]?.originFileObj
       );
 
+      const uploadedCoverPath = await uploadCardCoverPhoto(
+        coverPicFileList[0]?.originFileObj
+      );
+
+      let bio_content = bioHtml;
+
       const cardDetails = {
         ...data,
         profile_picture: uploadedPhotoPath || "",
+        cover_pic: uploadedCoverPath || "",
+        bio: bioHtml || null,
       };
 
       const response = await createBusinessCard(cardDetails);
@@ -71,6 +82,22 @@ const ViewBusinessCardPreviewModal = ({
     console.log(photoFile);
     try {
       const response = await uploadCardProfilePic(photoFile);
+      console.log(response);
+      if (response.status === 201) {
+        let imagePath = response.data.data;
+        return imagePath;
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      message.error(error);
+    }
+  };
+
+  const uploadCardCoverPhoto = async (photoFile) => {
+    console.log(photoFile);
+    try {
+      const response = await uploadCardCoverPic(photoFile);
       console.log(response);
       if (response.status === 201) {
         let imagePath = response.data.data;

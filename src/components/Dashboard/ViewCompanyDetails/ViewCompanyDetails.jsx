@@ -14,7 +14,7 @@ import {
 } from "antd";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./ViewCompanyDetails.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   editCompanyDetails,
   editProfile,
@@ -39,6 +39,7 @@ import {
 } from "@react-google-maps/api";
 import ReactQuill from "react-quill";
 import { Editor } from "@tinymce/tinymce-react";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -104,6 +105,8 @@ function ViewCompanyDetails() {
       if (response && response.status === 200) {
         message.success(response.data.message);
         fetchViewCompanyData();
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }
@@ -120,12 +123,16 @@ function ViewCompanyDetails() {
     try {
       setIsFetchingCompany(true);
       const response = await fetchCompanyDetails();
+      console.log(response);
       if (response && response.status === 200) {
         // message.success(response.data.message);
         setCompanyData(response.data.data[0]);
         setCompanyLogo(response.data.data[0].company_logo); // Set avatar preview
+        setProductServices(response.data.data[0].product_service);
 
         form.setFieldsValue(response.data.data[0]);
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }
@@ -205,6 +212,12 @@ function ViewCompanyDetails() {
   };
 
   const handleEditorChange = (content, editor) => {
+    console.log(content);
+    setProductServices(content);
+  };
+
+  const handleProductServicesChange = (content) => {
+    console.log(content);
     setProductServices(content);
   };
 
@@ -454,7 +467,7 @@ function ViewCompanyDetails() {
                   </Item>
                 </Col>
                 <Col lg={6} md={12} sm={6}>
-                  <label className="fw-bold my-1">Location</label>
+                  <label className="fw-bold my-1">Update Location</label>
                   <Form.Item name="location">
                     <StandaloneSearchBox
                       onLoad={(ref) => (searchBoxRef.current = ref)}
@@ -509,6 +522,20 @@ function ViewCompanyDetails() {
                     </StandaloneSearchBox>
                   </Form.Item>
                 </Col>
+                <Col lg={6} md={12} sm={6}>
+                  <label className="fw-bold my-1">Current Location</label>
+                  <Form.Item name="location">
+                    <NavLink to={companyData.location} target="_blank">
+                      <Button
+                        type="link"
+                        title="Open Company Location"
+                        className="fw-bold fs-6"
+                      >
+                        {companyData?.company_address}
+                      </Button>
+                    </NavLink>
+                  </Form.Item>
+                </Col>
               </Row>
 
               <Row>
@@ -522,24 +549,27 @@ function ViewCompanyDetails() {
                     modules={{
                       toolbar: toolbarOptions,
                     }}
+                    dangerouslySetInnerHTML={{ __html: productServices }}
                   /> */}
                   <Editor
                     apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
+                    initialValue={
+                      companyData.product_service || "Welcome to TinyMCE!"
+                    }
                     init={{
                       plugins:
-                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
+                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists fontsize fontfamily", // added 'lists' plugin for bullets
                       toolbar:
                         "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                      fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                      font_formats:
+                        "Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,geneva,sans-serif",
                       // tinycomments_mode: "embedded",
                       // tinycomments_author: "Author name",
                       mergetags_list: [
                         { value: "First.Name", title: "First Name" },
                         { value: "Email", title: "Email" },
                       ],
-                      ai_request: (request, respondWith) =>
-                        respondWith.string(() =>
-                          Promise.reject("See docs to implement AI Assistant")
-                        ),
                       images_default_resizing: "scale",
                       images_resizing: true,
                       file_picker_types: "image", // Add this line to enable selecting images
@@ -569,8 +599,7 @@ function ViewCompanyDetails() {
                         }
                       },
                     }}
-                    initialValue="Welcome to TinyMCE!"
-                    onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
+                    onEditorChange={handleEditorChange}
                   />
                 </Col>
               </Row>
@@ -621,14 +650,13 @@ function ViewCompanyDetails() {
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" onClick={handleCancel} shape="round" danger>
+          <Button key="cancel" onClick={handleCancel} danger>
             Cancel
           </Button>,
           <Button
             key="confirm"
             type="primary"
             onClick={confirmSaveChanges} // Bind confirmSaveChanges function here
-            shape="round"
           >
             Confirm
           </Button>,

@@ -138,7 +138,7 @@ function ViewDigitalCard() {
                       <label className="fw-bold text-black">About Me</label>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: bioHTML,
+                          __html: cardDetails.bio,
                         }}
                       />
                     </Row>
@@ -150,7 +150,7 @@ function ViewDigitalCard() {
                       </label>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: productServiceHTML,
+                          __html: cardDetails.product_service,
                         }}
                       />
                     </Row>

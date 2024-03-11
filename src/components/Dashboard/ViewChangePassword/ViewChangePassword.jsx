@@ -5,6 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../../services/apiServices";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -30,6 +31,8 @@ function ViewChangePassword() {
       if (response && response.status === 200) {
         message.success(response.data.message);
         form.resetFields();
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }

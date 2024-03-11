@@ -5,6 +5,7 @@ import CompanyDashboardPage from "./pages/Dashboard/CompanyDashboardPage/Company
 import ViewDigitalCard from "./pages/ViewDigitalCard/ViewDigitalCard";
 import ForgetPasswordPage from "./pages/Auth/ForgetPasswordPage/ForgetPasswordPage";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage/ResetPasswordPage";
+import EditCardPage from "./pages/Dashboard/EditCardPage/EditCardPage";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           element={<ResetPasswordPage />}
         />
         <Route path="/dashboard/*" element={<CompanyDashboardPage />} />
+        <Route path="/dashboard/editcard/:cardID" element={<EditCardPage />} />
         <Route
           path="/view-digital-card/:companyName/:cardReference"
           element={<ViewDigitalCard />}

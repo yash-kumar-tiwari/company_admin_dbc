@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { message } from "antd";
 
 // getAuthenticationToken from localStorage for logged in users
 export const getAuthenticationToken = () => {
@@ -14,12 +14,12 @@ export const getAuthenticationToken = () => {
 // remove authenticationToken from localStorage when logged out & invalid token users
 export const removeAuthenticationToken = () => {
   localStorage.removeItem("user-token");
-  localStorage.removeItem("user-data");
+  localStorage.removeItem("authenticated");
 };
 
 // handle authentication error and navigate to the signin if status 401 from api is returned
 export const handleAuthenticationError = (errorMessage, navigate) => {
-  toast.error(errorMessage);
+  message.error(errorMessage);
   removeAuthenticationToken();
-  navigate("/signin");
+  navigate("/");
 };
