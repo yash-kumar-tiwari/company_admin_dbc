@@ -20,6 +20,7 @@ import {
   uploadAvatar,
   uploadCardCoverPic,
 } from "../../../services/apiServices";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -176,6 +177,8 @@ function ViewEditCard() {
       if (response && response.status === 200) {
         message.success(response.data.message);
         fetchCardData();
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }
@@ -205,38 +208,45 @@ function ViewEditCard() {
     try {
       // Fetch card data from the backend based on the cardID
       const response = await fetchViewDigitalCard(cardID);
-      console.log(response.data.data);
-      setCardDetails(response.data.data);
-      const cardData = response.data.data;
-      setCompID(response.data.data.company_id);
 
-      // Set form fields data using form.setFieldsValue
-      form.setFieldsValue({
-        first_name: cardData.first_name,
-        last_name: cardData.last_name,
-        user_email: cardData.user_email,
-        designation: cardData.designation,
-        contact_number: cardData.contact_number,
-        cover_pic: cardData.cover_pic,
-        profile_picture: cardData.profile_picture,
-        bio: cardData.bio,
-        fb_link: cardData.facebook,
-        insta_link: cardData.instagram,
-        linkedin_link: cardData.linkedin_link,
-        whatsapp: cardData.whatsapp_number,
-        youtube: cardData.youtube,
-        xiao_hong_shu: cardData.xiao_hong_shu,
-        tiktok: cardData.tiktok,
-        wechat: cardData.wechat,
-        line: cardData.line,
-        telegram: cardData.telegram,
-        webio: cardData.webio,
-        twitter: cardData.twitter,
-      });
+      if (response && response.status === 200) {
+        console.log(response.data.data);
+        setCardDetails(response.data.data);
+        const cardData = response.data.data;
+        setCompID(response.data.data.company_id);
 
-      setBusinessCardData(cardData);
-      setBioHtml(cardData.bio || "");
-      setBusinessCardData(response.data.data);
+        // Set form fields data using form.setFieldsValue
+        form.setFieldsValue({
+          first_name: cardData.first_name,
+          last_name: cardData.last_name,
+          user_email: cardData.user_email,
+          designation: cardData.designation,
+          contact_number: cardData.contact_number,
+          cover_pic: cardData.cover_pic,
+          profile_picture: cardData.profile_picture,
+          bio: cardData.bio,
+          fb_link: cardData.facebook,
+          insta_link: cardData.instagram,
+          linkedin_link: cardData.linkedin_link,
+          whatsapp: cardData.whatsapp_number,
+          youtube: cardData.youtube,
+          xiao_hong_shu: cardData.xiao_hong_shu,
+          tiktok: cardData.tiktok,
+          wechat: cardData.wechat,
+          line: cardData.line,
+          telegram: cardData.telegram,
+          webio: cardData.webio,
+          twitter: cardData.twitter,
+        });
+
+        setBusinessCardData(cardData);
+        setBioHtml(cardData.bio || "");
+        setBusinessCardData(response.data.data);
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
+      } else {
+        message.error(response.data.message);
+      }
     } catch (error) {
       console.error("Error fetching card data:", error);
       message.error(error.message);

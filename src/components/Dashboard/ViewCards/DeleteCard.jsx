@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Modal, Button, message } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { deleteCard } from "../../../services/apiServices";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
+import { useNavigate } from "react-router-dom";
 
 const DeleteCard = ({ visible, onOk, onCancel, record }) => {
+  const navigate = useNavigate();
+
   const [isDeletingCard, setIsDeletingCard] = useState(false);
 
   const handleConfirmDeletingCard = async () => {
@@ -14,6 +18,8 @@ const DeleteCard = ({ visible, onOk, onCancel, record }) => {
       if (response.status === 200) {
         message.success(response.data.message);
         onOk(response.data.success); // Close the modal
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }

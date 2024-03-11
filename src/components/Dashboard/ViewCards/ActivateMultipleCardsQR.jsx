@@ -2,8 +2,11 @@ import { Button, Modal, message } from "antd";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import React, { useState } from "react";
 import { activateMultipleCardforQRCode } from "../../../services/apiServices";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
+import { useNavigate } from "react-router-dom";
 
 function ActivateMultipleCardsQR({ visible, onOk, onCancel, selectedRowKeys }) {
+  const navigate = useNavigate();
   const [isActivatingMultipleCardQR, setIsActivatingMultipleCardQR] =
     useState(false);
 
@@ -18,6 +21,8 @@ function ActivateMultipleCardsQR({ visible, onOk, onCancel, selectedRowKeys }) {
       if (response.status === 200) {
         message.success(response.data.message);
         onOk(response.data.success); // Close the modal
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }

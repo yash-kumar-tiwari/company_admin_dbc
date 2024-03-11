@@ -21,6 +21,7 @@ import {
   fetchCardsUrlList,
 } from "../../../services/apiServices";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -44,6 +45,8 @@ function ViewCardsQR() {
         setCardsData(response.data.data);
         form.setFieldsValue(response.data.data);
         navigate("/dashboard");
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }

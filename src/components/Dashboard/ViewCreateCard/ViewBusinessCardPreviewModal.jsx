@@ -27,6 +27,8 @@ import {
   uploadCardProfilePic,
 } from "../../../services/apiServices";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
+import { useNavigate } from "react-router-dom";
 
 const ViewBusinessCardPreviewModal = ({
   isVisible,
@@ -40,6 +42,7 @@ const ViewBusinessCardPreviewModal = ({
 }) => {
   console.log(data);
   console.log(bioHtml);
+  const navigate = useNavigate();
   const [isCreatingCard, setIsCreatingCard] = useState(false);
 
   const handleSubmitCreateCard = async () => {
@@ -66,6 +69,8 @@ const ViewBusinessCardPreviewModal = ({
       if (response.status === 201) {
         message.success(response.data.message);
         onSuccess(cardDetails);
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }

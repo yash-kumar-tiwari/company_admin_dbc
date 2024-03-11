@@ -29,6 +29,7 @@ import ActivateCardQR from "./ActivateCardQR";
 import DeactivateCard from "./DeactivateCard";
 import ActivateMultipleCardsQR from "./ActivateMultipleCardsQR";
 import DeleteCard from "./DeleteCard";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -60,6 +61,8 @@ function ViewCards({ setShowEditCard }) {
 
         form.setFieldsValue(response.data.data);
         navigate("/dashboard");
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
       } else {
         message.error(response.data.message);
       }
