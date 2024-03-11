@@ -55,7 +55,12 @@ function ViewChangePassword() {
           title={<span className="fw-bold text-center">Change Password</span>}
           className="view-change-pass-custom-card "
         >
-          <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinishSubmit}
+            name="changePasswordForm"
+          >
             <Col>
               <label className="fw-bold mb-1">Old Password</label>
               <Item

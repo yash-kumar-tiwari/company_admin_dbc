@@ -2,3 +2,12 @@
   background-color: #bae7ff; /* Change background color of the header */
   overflow-y: auto;
 }
+
+form#editProfileDetailForm {
+  border: 1px solid #bae7ff;
+  border-radius: 0px;
+  margin: 0px 6px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 25px !important;
+}

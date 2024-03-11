@@ -7,3 +7,12 @@
   background-color: rgb(213, 234, 241);
   overflow-y: auto;
 } */
+
+form#editCompanyDetailForm {
+  border: 1px solid #bae7ff;
+  border-radius: 0px;
+  margin: 0px 6px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 25px !important;
+}

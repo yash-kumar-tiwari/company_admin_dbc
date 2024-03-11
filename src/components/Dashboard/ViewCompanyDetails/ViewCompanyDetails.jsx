@@ -230,7 +230,12 @@ function ViewCompanyDetails() {
           className="view-company-details-custom-card"
         >
           <LoadScript googleMapsApiKey={apiKey} libraries={["places"]}>
-            <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={onFinishSubmit}
+              name="editCompanyDetailForm"
+            >
               <Row></Row>
               <Row>
                 {/* <Col lg={2} md={0} sm={0}></Col> */}

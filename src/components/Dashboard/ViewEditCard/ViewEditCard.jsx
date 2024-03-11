@@ -422,7 +422,7 @@ function ViewEditCard() {
                     "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
                   toolbar:
                     "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                  fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                  fontsize_formats: "12pt",
                   font_formats:
                     "Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,geneva,sans-serif",
                   // tinycomments_mode: "embedded",
@@ -459,6 +459,7 @@ function ViewEditCard() {
                       input.click();
                     }
                   },
+                  content_css: "tinymce-5",
                 }}
                 // initialValue="Welcome to TinyMCE!"
                 onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes

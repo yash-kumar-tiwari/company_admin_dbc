@@ -2,3 +2,17 @@
   background-color: #bae7ff; /* Change background color of the header */
   overflow-y: auto;
 }
+/* 
+.ant-table-bordered .ant-table-thead > tr > th,
+.ant-table-bordered .ant-table-tbody > tr > td,
+.ant-table-bordered .ant-table-footer > tr > td {
+  border: 1px solid #bae7ff;
+}
+
+.ant-table-bordered .ant-table-thead > tr > th {
+  border: 1px solid #bae7ff;
+}
+
+.ant-table-bordered .ant-table-footer > tr > td {
+  border: 1px solid #bae7ff;
+} */

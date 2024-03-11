@@ -169,7 +169,12 @@ function ViewProfile() {
           className="view-profile-custom-card"
         >
           <div>
-            <Form form={form} layout="vertical" onFinish={onFinishSubmit}>
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={onFinishSubmit}
+              name="editProfileDetailForm"
+            >
               <Row></Row>
               <Row>
                 <Col lg={2} md={0} sm={0}></Col>
