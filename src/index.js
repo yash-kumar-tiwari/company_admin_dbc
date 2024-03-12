@@ -16,6 +16,7 @@ import enUS from "antd/lib/locale/en_US"; // import English language
 
 import { BrowserRouter } from "react-router-dom";
 import ErrorBoundary from "./pages/Dashboard/Error/ErrorBoundary";
+import { CompanyProvider } from "./contexts/CompanyContext";
 
 // Customize the message placement
 message.config({
@@ -28,9 +29,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <ConfigProvider locale={enUS}>
-      {/* <ErrorBoundary> */}
-      <App />
-      {/* </ErrorBoundary> */}
+      <CompanyProvider>
+        {/* <ErrorBoundary> */}
+        <App />
+        {/* </ErrorBoundary> */}
+      </CompanyProvider>
     </ConfigProvider>
   </BrowserRouter>
 );
