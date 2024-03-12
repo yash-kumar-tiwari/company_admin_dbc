@@ -12,14 +12,18 @@ import {
   Statistic,
   Modal,
 } from "antd";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./ViewCompanyDetails.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   editCompanyDetails,
-  editProfile,
   fetchCompanyDetails,
-  uploadAvatar,
   uploadCompanyLogo,
 } from "../../../services/apiServices";
 import { Col, Row } from "react-bootstrap";
@@ -40,6 +44,8 @@ import {
 import ReactQuill from "react-quill";
 import { Editor } from "@tinymce/tinymce-react";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
+import { CompanyContext } from "../../../contexts/CompanyContext";
+import { editorApiKey } from "../../../utils/constants";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -47,6 +53,10 @@ const { Item } = Form;
 function ViewCompanyDetails() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+
+  const { companyIdCtx, setCompanyIdCtx } = useContext(CompanyContext);
+  // const editorApiKey = "wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn";
+
   const [isFetchingCompany, setIsFetchingCompany] = useState(false);
   const [isUpdatingCompany, setIsUpdatingCompany] = useState(false);
   const [companyData, setCompanyData] = useState({});
@@ -129,6 +139,7 @@ function ViewCompanyDetails() {
         setCompanyData(response.data.data[0]);
         setCompanyLogo(response.data.data[0].company_logo); // Set avatar preview
         setProductServices(response.data.data[0].product_service);
+        setCompanyIdCtx(response.data.data[0].id);
 
         form.setFieldsValue(response.data.data[0]);
       } else if (response.status === 401) {
@@ -142,7 +153,7 @@ function ViewCompanyDetails() {
     } finally {
       setIsFetchingCompany(false);
     }
-  }, [navigate, form]);
+  }, [navigate, form, setCompanyIdCtx]);
 
   const handleCompanyLogoUpdate = async (imageFile) => {
     // Check if there's a new file in fileList
@@ -557,32 +568,33 @@ function ViewCompanyDetails() {
                     dangerouslySetInnerHTML={{ __html: productServices }}
                   /> */}
                   <Editor
-                    apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
-                    initialValue={
-                      companyData.product_service || "Welcome to TinyMCE!"
-                    }
+                    apiKey={editorApiKey}
+                    initialValue={companyData.product_service}
                     init={{
+                      placeholder: "Enter Compnany Product & Services Details",
                       plugins:
-                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists fontsize fontfamily", // added 'lists' plugin for bullets
+                        "anchor media autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker  permanentpen powerpaste mentions tableofcontents footnotes  inlinecss lists fontsize fontfamily",
                       toolbar:
-                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
                       fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
                       font_formats:
                         "Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,geneva,sans-serif",
                       // tinycomments_mode: "embedded",
                       // tinycomments_author: "Author name",
-                      mergetags_list: [
-                        { value: "First.Name", title: "First Name" },
-                        { value: "Email", title: "Email" },
-                      ],
                       images_default_resizing: "scale",
                       images_resizing: true,
-                      file_picker_types: "image", // Add this line to enable selecting images
+                      file_picker_types: "image",
                       file_picker_callback: function (callback, value, meta) {
-                        if (meta.filetype === "image") {
+                        if (
+                          meta.filetype === "image" ||
+                          meta.filetype === "video"
+                        ) {
                           var input = document.createElement("input");
                           input.setAttribute("type", "file");
-                          input.setAttribute("accept", "image/*");
+                          input.setAttribute(
+                            "accept",
+                            meta.filetype === "image" ? "image/*" : "video/*"
+                          );
 
                           // Trigger the file selection dialog when the input element changes
                           input.onchange = function () {
@@ -603,6 +615,8 @@ function ViewCompanyDetails() {
                           input.click();
                         }
                       },
+                      media_live_embeds: true,
+                      media_embeds: true,
                     }}
                     onEditorChange={handleEditorChange}
                   />

@@ -1,8 +1,4 @@
-export const mainLogo = "/assets/images/rentoplaceLogo.png";
-
 export const serverErrorMessage =
   "Server Error... Please try again later or Contact the administrator";
 
-export const loadingSpinBackground = "/assets/images/MainBannerNews.png";
-
-export const noDataAvailableImage = "/assets/images/no-data-available.png";
+export const editorApiKey = "wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn";
