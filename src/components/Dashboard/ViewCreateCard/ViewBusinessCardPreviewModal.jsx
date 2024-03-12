@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./ViewBusinessCardPreviewModal.css";
 
 import { Container, Col, Image, Row } from "react-bootstrap";
-import { Button, Modal, Space, message } from "antd";
+import { Alert, Button, Modal, Space, message } from "antd";
 import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
 import { FaShareAlt } from "react-icons/fa";
+import StaticQR from "../../../assets/images/static/qr_img.png";
 
 import {
+  fetchCompanyDetails,
   fetchViewDigitalCardAll,
   getVCFCardforDigitalCard,
   uploadCardCoverPic,
@@ -29,6 +31,7 @@ import {
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import { useNavigate } from "react-router-dom";
+import { CompanyContext } from "../../../contexts/CompanyContext";
 
 const ViewBusinessCardPreviewModal = ({
   isVisible,
@@ -42,7 +45,13 @@ const ViewBusinessCardPreviewModal = ({
 }) => {
   console.log(data);
   console.log(bioHtml);
+
   const navigate = useNavigate();
+
+  const { companyIdCtx, setCompanyIdCtx } = useContext(CompanyContext);
+  console.log(companyIdCtx);
+
+  const [companyDetails, setCompanyDetails] = useState(null);
   const [isCreatingCard, setIsCreatingCard] = useState(false);
 
   const handleSubmitCreateCard = async () => {
@@ -137,17 +146,50 @@ const ViewBusinessCardPreviewModal = ({
     }
   };
 
-  // const createBusinessCard = async (cardData) => {
-  //   console.log("Card data:", cardData);
-  // };
+  const fetchViewCompanyData = useCallback(async () => {
+    try {
+      const response = await fetchCompanyDetails();
+      console.log(response);
+      if (response && response.status === 200) {
+        // message.success(response.data.message);
+        if (!response.data.data[0]) {
+          return message.error("Error While Fetching Company Details");
+        } else {
+          setCompanyDetails(response.data.data[0]);
+        }
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("API request failed:", error);
+      message.error("Failed to Load Details. Please try again later.");
+    } finally {
+    }
+  }, [navigate, companyIdCtx]);
+
+  useEffect(() => {
+    if (isVisible) {
+      fetchViewCompanyData();
+    }
+  }, [isVisible, companyIdCtx, fetchViewCompanyData]); // Add dependencies as needed
 
   return (
     <Modal
       title={
-        <span className="fw-bold fs-5">
-          <ExclamationCircleFilled className="mx-2 text-primary text-center" />
-          Business Card Preview
-        </span>
+        <>
+          <div className="fw-bold fs-5">
+            <ExclamationCircleFilled className="mx-2 text-primary text-center" />
+            Business Card Preview
+          </div>
+          <div>
+            <Alert
+              message="This is Preview of Card to Be Generated. Some Info is Static for View."
+              type="warning"
+            />
+          </div>
+        </>
       }
       open={isVisible}
       onCancel={onClose}
@@ -220,7 +262,7 @@ const ViewBusinessCardPreviewModal = ({
                           Company Location
                         </label>
                         <div className="view_card_content_sub_title">
-                          {data.company_address}
+                          {companyDetails?.company_address}
                         </div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
@@ -245,12 +287,12 @@ const ViewBusinessCardPreviewModal = ({
                       <label className="fw-bold text-black">
                         Product And Services
                       </label>
-                      {/* <div
+                      <div
                         dangerouslySetInnerHTML={{
-                          __html: productServiceHTML,
+                          __html: companyDetails?.product_service,
                         }}
-                      /> */}
-                      <p>Product And Services Content</p>
+                      />
+                      {/* <p>Product And Services Content</p> */}
                     </Row>
                   </div>
                   <div className="viewCardCompanyInfo">
@@ -269,22 +311,23 @@ const ViewBusinessCardPreviewModal = ({
                         <label className="fw-bold text-black">
                           Company Email
                         </label>
-                        <div>{data.company_email}</div>
+                        <div>{companyDetails?.company_email || "NA"}</div>
                       </Col>
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Website
                         </label>
-                        <div>{data.company_website_url}</div>
+                        <div>{companyDetails?.company_website_url || "NA"}</div>
                       </Col>
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">
                           Company Phone
                         </label>
-                        <div>{data.company_email}</div>
+                        <div>{companyDetails?.company_email || "NA"}</div>
                       </Col>
                     </Row>
                   </div>
+
                   <div className="viewCardSocialLinks">
                     <Row className="my-3">
                       <Col lg={6} md={6} sm={6} xs={6}>
@@ -295,7 +338,7 @@ const ViewBusinessCardPreviewModal = ({
                           <img
                             className="social_custom_icon float-start"
                             src={FacebookCustomIcon}
-                            alt="WhatsApp Icon"
+                            alt="Facebook Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
@@ -303,6 +346,7 @@ const ViewBusinessCardPreviewModal = ({
                           </span>
                         </Button>
                       </Col>
+
                       <Col lg={6} md={6} sm={6} xs={6}>
                         <Button
                           className="w-100 d-flex align-items-center"
@@ -311,7 +355,7 @@ const ViewBusinessCardPreviewModal = ({
                           <img
                             className="social_custom_icon float-start"
                             src={InstagramCustomIcon}
-                            alt="WhatsApp Icon"
+                            alt="Instagram Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
@@ -329,7 +373,7 @@ const ViewBusinessCardPreviewModal = ({
                           <img
                             className="social_custom_icon float-start"
                             src={LinkedInCustomIcon}
-                            alt="WhatsApp Icon"
+                            alt="LinkedIn Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
@@ -363,11 +407,11 @@ const ViewBusinessCardPreviewModal = ({
                           <img
                             className="social_custom_icon float-start"
                             src={YouTubeCustomIcon}
-                            alt="WhatsApp Icon"
+                            alt="YouTube Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
-                            Youtube
+                            YouTube
                           </span>
                         </Button>
                       </Col>
@@ -379,32 +423,16 @@ const ViewBusinessCardPreviewModal = ({
                           <img
                             className="social_custom_icon float-start"
                             src={TikTokCustomIcon}
-                            alt="WhatsApp Icon"
+                            alt="TikTok Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
-                            Tiktok
+                            TikTok
                           </span>
                         </Button>
                       </Col>
                     </Row>
                     <Row className="my-3">
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={LinkedInCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Linkedin
-                          </span>
-                        </Button>
-                      </Col>
                       <Col lg={6} md={6} sm={6} xs={6}>
                         <Button
                           className="w-100 d-flex align-items-center"
@@ -413,11 +441,27 @@ const ViewBusinessCardPreviewModal = ({
                           <img
                             className="social_custom_icon float-start"
                             src={WeChatCustomIcon}
-                            alt="WhatsApp Icon"
+                            alt="WeChat Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
-                            Wechat
+                            WeChat
+                          </span>
+                        </Button>
+                      </Col>
+                      <Col lg={6} md={6} sm={6} xs={6}>
+                        <Button
+                          className="w-100 d-flex align-items-center"
+                          size="large"
+                        >
+                          <img
+                            className="social_custom_icon float-start"
+                            src={LineCustomIcon}
+                            alt="Line Icon"
+                            style={{ maxHeight: "100%", maxWidth: "10%" }}
+                          />
+                          <span className="button-content float-start mx-2">
+                            Line
                           </span>
                         </Button>
                       </Col>
@@ -430,12 +474,12 @@ const ViewBusinessCardPreviewModal = ({
                         >
                           <img
                             className="social_custom_icon float-start"
-                            src={LineCustomIcon}
-                            alt="WhatsApp Icon"
+                            src={TelegramCustomIcon}
+                            alt="Telegram Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
-                            Line
+                            Telegram
                           </span>
                         </Button>
                       </Col>
@@ -446,17 +490,18 @@ const ViewBusinessCardPreviewModal = ({
                         >
                           <img
                             className="social_custom_icon float-start"
-                            src={TelegramCustomIcon}
+                            src={WhatsAppCustomIcon}
                             alt="WhatsApp Icon"
                             style={{ maxHeight: "100%", maxWidth: "10%" }}
                           />
                           <span className="button-content float-start mx-2">
-                            Telegram
+                            WhatsApp
                           </span>
                         </Button>
                       </Col>
                     </Row>
                   </div>
+
                   <div className="viewCardShareLinks">
                     <Row className="my-3">
                       <Col lg={4} md={4} sm={4} xs={3}>
@@ -482,7 +527,7 @@ const ViewBusinessCardPreviewModal = ({
                   <div className="viewCardQRCode">
                     <center>
                       <Image
-                        src={"../../../assets/images/static/qr_img.png"}
+                        src={StaticQR}
                         alt="QR Code"
                         height={150}
                         width={150}
