@@ -17,7 +17,7 @@ body p {
   background-size: cover;
   background-position: center;
   color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
   max-height: 70vh;
   overflow-y: auto;
 }
@@ -27,7 +27,7 @@ body p {
   max-width: 100%;
   overflow-x: hidden;
   background-color: white;
-  color: gray;
+  color: black;
   border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr; /* single column */

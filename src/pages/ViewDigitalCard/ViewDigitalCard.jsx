@@ -19,12 +19,15 @@ import YouTubeCustomIcon from "../../assets/images/social/youtube.png";
 import TwitterCustomIcon from "../../assets/images/social/twitter.png";
 import TikTokCustomIcon from "../../assets/images/social/tiktok.png";
 import FacebookCustomIcon from "../../assets/images/social/facebook.png";
+import XHSCustomIcon from "../../assets/images/social/xhs.png";
+import WeiboCustomIcon from "../../assets/images/social/weibo.png";
 
 function ViewDigitalCard() {
   const { companyName, cardReference } = useParams();
 
   const [cardDetails, setCardDetails] = useState({});
   const [imageUrl, setImageUrl] = useState("");
+  const [coverImg, setCoverImg] = useState("");
   const [bioHTML, setBioHTML] = useState(null);
   const [productServiceHTML, setProductServiceHTML] = useState(null);
 
@@ -36,6 +39,7 @@ function ViewDigitalCard() {
         console.log(response);
         setCardDetails(response.data.data);
         setImageUrl(response.data.data.profile_picture);
+        setCoverImg(response.data.data.cover_pic);
         setBioHTML(JSON.parse(response.data.data.bio));
         setProductServiceHTML(response.data.data.product_service);
       } catch (error) {
@@ -78,14 +82,32 @@ function ViewDigitalCard() {
       <Container fluid className="viewDigitalBusinessCardContainer">
         <Row>
           <Col lg={6} md={0} sm={0}>
-            <h1 className="my-5 mx-5 text-center">
-              Digital Business Card Details
-            </h1>
+            <div className="viewDigitalCard_CompanyBrief">
+              <Image
+                className="viewDigitalCard_CompanyLogo"
+                src={cardDetails.company_logo}
+                height={100}
+                width={100}
+                roundedCircle
+              />
+
+              <div className="viewDigitalCard_Vision">
+                <div className="viewDigitalCard_CompanyVision-1">
+                  View Cards Digitally,
+                </div>
+                <div className="viewDigitalCard_CompanyVision-1">
+                  Access Anytime... Anywhere{" "}
+                </div>
+              </div>
+            </div>
           </Col>
           <Col lg={4} md={12} sm={12} className="my-5">
             <div className="viewBusinessCardContainer">
               <div className="viewCardContainer">
-                <div className="viewCardImagesSection">
+                <div
+                  className="viewCardImagesSection"
+                  style={{ backgroundImage: coverImg }}
+                >
                   <Image
                     className="viewCardImages_profileImage"
                     src={
@@ -137,6 +159,7 @@ function ViewDigitalCard() {
                     <Row className="my-3">
                       <label className="fw-bold text-black">About Me</label>
                       <div
+                        className="html_text_render"
                         dangerouslySetInnerHTML={{
                           __html: cardDetails.bio,
                         }}
@@ -149,6 +172,7 @@ function ViewDigitalCard() {
                         Product And Services
                       </label>
                       <div
+                        className="html_text_render"
                         dangerouslySetInnerHTML={{
                           __html: cardDetails.product_service,
                         }}
@@ -158,207 +182,297 @@ function ViewDigitalCard() {
                   <div className="viewCardCompanyInfo">
                     <Row className="mt-1 align-items-center">
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                        <label className="fw-bold text-black">Email</label>
-                        <div>{cardDetails.user_email}</div>
+                        <label className="fw-bold">Email</label>
+                        <div className="text-muted">
+                          <a
+                            href={`mailto:${cardDetails.user_email}`}
+                            className="html_link"
+                          >
+                            {cardDetails.user_email || "NA"}
+                          </a>
+                        </div>
                       </Col>
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                        <label className="fw-bold text-black">
-                          Contact No.
-                        </label>
-                        <div>{cardDetails.contact_number}</div>
+                        <label className="fw-bold">Contact No.</label>
+                        <div className="text-muted">
+                          <a
+                            href={`tel:${cardDetails.contact_number}`}
+                            className="html_link"
+                          >
+                            {cardDetails.contact_number || "NA"}
+                          </a>
+                        </div>
                       </Col>
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                        <label className="fw-bold text-black">
-                          Company Email
-                        </label>
-                        <div>{cardDetails.company_email}</div>
+                        <label className="fw-bold">Company Email</label>
+                        <div className="text-muted">
+                          <a
+                            href={`mailto:${cardDetails.company_email}`}
+                            className="html_link"
+                          >
+                            {cardDetails.company_email || "NA"}
+                          </a>
+                        </div>
                       </Col>
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                        <label className="fw-bold text-black">
-                          Company Website
-                        </label>
-                        <div>{cardDetails.company_website_url}</div>
+                        <label className="fw-bold">Company Website</label>
+                        <div className="text-muted">
+                          <a
+                            href={cardDetails.company_website}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="html_link"
+                          >
+                            {cardDetails.company_website || "NA"}
+                          </a>
+                        </div>
                       </Col>
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                        <label className="fw-bold text-black">
-                          Company Phone
-                        </label>
-                        <div>{cardDetails.company_email}</div>
+                        <label className="fw-bold">Company Phone</label>
+                        <div className="text-muted">
+                          <a
+                            href={`tel:${cardDetails.company_phone}`}
+                            className="html_link"
+                          >
+                            {cardDetails.company_phone || "NA"}
+                          </a>
+                        </div>
                       </Col>
                     </Row>
                   </div>
-                  <div className="viewCardSocialLinks">
-                    <Row className="my-3">
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={FacebookCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Facebook
-                          </span>
-                        </Button>
-                      </Col>
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={InstagramCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Instagram
-                          </span>
-                        </Button>
-                      </Col>
-                    </Row>
-                    <Row className="my-3">
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={LinkedInCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Linkedin
-                          </span>
-                        </Button>
-                      </Col>
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={WhatsAppCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            WhatsApp
-                          </span>
-                        </Button>
-                      </Col>
-                    </Row>
-                    <Row className="my-3">
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={YouTubeCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Youtube
-                          </span>
-                        </Button>
-                      </Col>
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={TikTokCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Tiktok
-                          </span>
-                        </Button>
-                      </Col>
-                    </Row>
-                    <Row className="my-3">
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={LinkedInCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Linkedin
-                          </span>
-                        </Button>
-                      </Col>
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={WeChatCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Wechat
-                          </span>
-                        </Button>
-                      </Col>
-                    </Row>
-                    <Row className="my-3">
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={LineCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Line
-                          </span>
-                        </Button>
-                      </Col>
-                      <Col lg={6} md={6} sm={6} xs={6}>
-                        <Button
-                          className="w-100 d-flex align-items-center"
-                          size="large"
-                        >
-                          <img
-                            className="social_custom_icon float-start"
-                            src={TelegramCustomIcon}
-                            alt="WhatsApp Icon"
-                            style={{ maxHeight: "100%", maxWidth: "10%" }}
-                          />
-                          <span className="button-content float-start mx-2">
-                            Telegram
-                          </span>
-                        </Button>
-                      </Col>
-                    </Row>
-                  </div>
+                  {cardDetails && (
+                    <div className="viewCardSocialLinks">
+                      <Row className="my-3">
+                        {cardDetails.facebook && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={FacebookCustomIcon}
+                                alt="Facebook Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Facebook
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                        {cardDetails.instagram && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={InstagramCustomIcon}
+                                alt="Instagram Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Instagram
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                      <Row className="my-3">
+                        {cardDetails.linkedin && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={LinkedInCustomIcon}
+                                alt="LinkedIn Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Linkedin
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                        {cardDetails.whatsapp && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={WhatsAppCustomIcon}
+                                alt="WhatsApp Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                WhatsApp
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                      <Row className="my-3">
+                        {cardDetails.youtube && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={YouTubeCustomIcon}
+                                alt="YouTube Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                YouTube
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                        {cardDetails.tiktok && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={TikTokCustomIcon}
+                                alt="TikTok Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                TikTok
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                      <Row className="my-3">
+                        {cardDetails.we_chat && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={WeChatCustomIcon}
+                                alt="WeChat Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                WeChat
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                        {cardDetails.line && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={LineCustomIcon}
+                                alt="Line Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Line
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                      <Row className="my-3">
+                        {cardDetails.telegram && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={TelegramCustomIcon}
+                                alt="Telegram Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Telegram
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                        {cardDetails.xiao_hong_shu && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={XHSCustomIcon}
+                                alt="XHS Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Xiao Hong Shu
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                      <Row className="my-3">
+                        {cardDetails.twitter && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={TwitterCustomIcon}
+                                alt="Twitter Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Twitter
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                        {cardDetails.weibo && (
+                          <Col lg={6} md={6} sm={6} xs={6}>
+                            <Button
+                              className="w-100 d-flex align-items-center"
+                              size="large"
+                            >
+                              <img
+                                className="social_custom_icon float-start"
+                                src={WeiboCustomIcon}
+                                alt="Weibo Icon"
+                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                Weibo
+                              </span>
+                            </Button>
+                          </Col>
+                        )}
+                      </Row>
+                    </div>
+                  )}
+
                   <div className="viewCardShareLinks">
                     <Row className="my-3">
                       <Col lg={4} md={4} sm={4} xs={3}>
@@ -374,7 +488,7 @@ function ViewDigitalCard() {
                           size="large"
                           onClick={handleAddToContacts} // Call the function on button click
                         >
-                          <FaUserPlus className="fs-3 me-3" /> Add Me To Your
+                          <FaUserPlus className="fs-5 me-2" /> Add Me To Your
                           Contact
                         </Button>
                       </Col>
@@ -383,7 +497,9 @@ function ViewDigitalCard() {
 
                   <div className="viewCardQRCode">
                     <center>
-                      <img src={cardDetails.qr_url} alt="QR Code" />
+                      {cardDetails.qr_url && (
+                        <img src={cardDetails.qr_url} alt="QR Code" />
+                      )}
                     </center>
                   </div>
                 </div>

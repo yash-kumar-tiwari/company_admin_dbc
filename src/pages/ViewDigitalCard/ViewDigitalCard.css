@@ -17,7 +17,30 @@ body p {
   background-size: cover;
   background-position: center;
   color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+/* Company Container */
+
+.viewDigitalCard_CompanyBrief {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center text content horizontally */
+}
+
+.viewDigitalCard_CompanyLogo {
+  margin-top: 20vh;
+  margin-bottom: 20vh; /* Adjust margin bottom as needed */
+}
+
+.viewDigitalCard_CompanyVision-1 {
+  /* margin-left: 10vw; */
+  font-size: 24px; /* Adjust font size */
+  font-weight: bold; /* Make the text bold */
+  color: whitesmoke; /* Change text color */
+  text-shadow: 1px 1px 1px whitesmoke(0, 0, 0, 0.2); /* Add a subtle text shadow */
 }
 
 /* Card Container */
@@ -25,7 +48,7 @@ body p {
   max-width: 100%;
   overflow-x: hidden;
   background-color: white;
-  color: gray;
+  color: black;
   border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr; /* single column */
@@ -38,7 +61,7 @@ body p {
   position: relative; /* Ensure positioning context */
   height: 25vh;
   width: 100%;
-  background-image: url("../../assets/images/background/office_cover_photo_01.jpg");
+  /* background-image: url("../../assets/images/background/office_cover_photo_01.jpg"); */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -61,6 +84,17 @@ body p {
   z-index: 2; /* Ensure profile bio stays above the cover and profile image */
 }
 
+/* View Card About Me Section */
+.viewCardAboutMe_bioTxt {
+  font-size: small;
+}
+
+/* View Card Company Info Section */
+.viewCardCompanyInfo {
+  font-size: small;
+}
+
+/* View Card Social Links Section */
 .viewCardSocialLinks {
   width: 100%;
   grid-column: 1;
@@ -78,7 +112,7 @@ body p {
 .view_card_content_sub_title {
   font-size: small;
   font-weight: 400;
-  color: gray;
+  /* color: gray; */
 }
 
 /* .label_title {
@@ -94,4 +128,19 @@ body p {
 
 .social_custom_icon {
   margin-right: 5px; /* Adjust as needed to add spacing between icon and text */
+}
+
+.html_text_render {
+  font-size: small;
+  color: gray;
+}
+
+.html_link {
+  color: gray;
+  text-decoration: none;
+}
+
+.html_link:hover {
+  color: gray;
+  text-decoration: underline;
 }
