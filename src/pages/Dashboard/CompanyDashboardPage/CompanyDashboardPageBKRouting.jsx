@@ -16,7 +16,13 @@ import ViewCards from "../../../components/Dashboard/ViewCards/ViewCards";
 import ViewChangePassword from "../../../components/Dashboard/ViewChangePassword/ViewChangePassword";
 import ViewCreateCard from "../../../components/Dashboard/ViewCreateCard/ViewCreateCard";
 import { logoutUser } from "../../../services/apiServices";
-import { useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./CompanyDashboardPage.css";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
@@ -28,25 +34,88 @@ const CompanyDashboardPage = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [selectedTab, setSelectedTab] = useState("1");
 
-  const [showEditCard, setShowEditCard] = useState(false);
+  const [showEditCard, setShowEditCard] = useState(false); // State to track whether Edit Card should be displayed
 
   const items = [
-    { key: "1", icon: <ProfileOutlined />, label: "Company Details" },
-    { key: "2", icon: <PlusOutlined />, label: "Create Card" },
-    { key: "3", icon: <CreditCardOutlined />, label: "Cards" },
-    { key: "4", icon: <QrcodeOutlined />, label: "Cards QRs" },
-    { key: "5", icon: <UserOutlined />, label: "Profile" },
-    { key: "6", icon: <MdOutlinePassword />, label: "Change Password" },
+    {
+      key: "1",
+      icon: <ProfileOutlined />,
+      label: "Company Details",
+      url: "/company-details",
+    },
+    {
+      key: "2",
+      icon: <PlusOutlined />,
+      label: "Create Card",
+      url: "/create-card",
+    },
+    {
+      key: "3",
+      icon: <CreditCardOutlined />,
+      label: "Cards",
+      url: "/cards",
+    },
+    {
+      key: "4",
+      icon: <QrcodeOutlined />,
+      label: "Cards QRs",
+      url: "/cards-qrs",
+    },
+    {
+      key: "5",
+      icon: <UserOutlined />,
+      label: "Profile",
+      url: "/profile",
+    },
+    {
+      key: "6",
+      icon: <MdOutlinePassword />,
+      label: "Change Password",
+      url: "/change-password",
+    },
   ];
 
-  const handleMenuClick = (e) => {
-    setSelectedTab(e.key);
-    setShowEditCard(false);
+  const handleMenuClick = (url) => {
+    console.log(`/dashboard${url}`);
+    navigate(`/dashboard${url}`);
   };
+
+  let showContent = null;
+
+  console.log(location.pathname);
+  switch (location.pathname) {
+    case "/dashboard/company-details":
+      showContent = <ViewCompanyDetails />;
+      break;
+    case "/dashboard/create-card":
+      showContent = <ViewCreateCard />;
+      break;
+    case "/dashboard/cards":
+      showContent = (
+        <ViewCards
+          showEditCard={showEditCard}
+          setShowEditCard={setShowEditCard}
+        />
+      );
+      break;
+    case "/dashboard/cards-qrs":
+      showContent = <ViewCardsQR />;
+      break;
+    case "/dashboard/profile":
+      showContent = <ViewProfile />;
+      break;
+    case "/dashboard/change-password":
+      showContent = <ViewChangePassword />;
+      break;
+    default:
+      // Redirect to default path if URL path does not match any route
+      navigate("/dashboard/company-details");
+  }
 
   const renderContent = () => {
     switch (selectedTab) {
@@ -66,7 +135,7 @@ const CompanyDashboardPage = () => {
         return (
           <>
             {showEditCard ? (
-              <ViewEditCard setShowEditCard={setShowEditCard} />
+              <ViewEditCard setShowEditCard={setShowEditCard} /> // Render EditCard component if showEditCard is true
             ) : (
               <ViewCards setShowEditCard={setShowEditCard} />
             )}
@@ -127,8 +196,8 @@ const CompanyDashboardPage = () => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={["1"]}
-            onClick={handleMenuClick}
+            // defaultSelectedKeys={["1"]}
+            // onClick={handleMenuClick}
             style={{ backgroundColor: "aliceblue" }}
             className="mb-2"
           >
@@ -138,6 +207,7 @@ const CompanyDashboardPage = () => {
                 icon={item.icon}
                 style={{ borderRadius: "20px" }}
                 className="sider-dashboard-menu-item my-2 fw-bold"
+                onClick={() => handleMenuClick(item.url)}
               >
                 {item.label}
               </Menu.Item>
@@ -155,7 +225,20 @@ const CompanyDashboardPage = () => {
           </Menu>
         </Sider>
         <Layout style={{ backgroundColor: "aliceblue" }}>
-          <Content className="my-5">
+          {/* <Header
+            style={{
+              padding: 0,
+              background: colorBgContainer,
+            }}
+          >
+            Hello
+          </Header> */}
+          <Content
+            // style={{
+            //   margin: "24px 16px 0",
+            // }}
+            className="my-5"
+          >
             <div
               style={{
                 padding: 24,
@@ -165,7 +248,30 @@ const CompanyDashboardPage = () => {
               }}
               className="dashboard-container"
             >
-              {renderContent()}
+              {/* {renderContent()} */}
+              {/* {showContent} */}
+              <Routes>
+                <Route
+                  path="/company-details"
+                  element={<ViewCompanyDetails />}
+                />
+                <Route path="/create-card" element={<ViewCreateCard />} />
+                <Route
+                  path="/cards"
+                  element={
+                    <ViewCards
+                      showEditCard={showEditCard}
+                      setShowEditCard={setShowEditCard}
+                    />
+                  }
+                />
+                <Route path="/cards-qrs" element={<ViewCardsQR />} />
+                <Route path="/profile" element={<ViewProfile />} />
+                <Route
+                  path="/change-password"
+                  element={<ViewChangePassword />}
+                />
+              </Routes>
             </div>
           </Content>
         </Layout>
