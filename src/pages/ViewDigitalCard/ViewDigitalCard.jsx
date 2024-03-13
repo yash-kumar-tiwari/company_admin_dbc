@@ -72,9 +72,35 @@ function ViewDigitalCard() {
     }
   };
 
+  // Inside your component
+  const handleShareButtonClick = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          url: window.location.href,
+        });
+      } else {
+        throw new Error("Web Share API not supported.");
+      }
+    } catch (error) {
+      console.error("Error sharing:", error.message);
+      // Fallback to other methods if Web Share API is not supported
+      // e.g., copying the URL to clipboard
+      // Or display a message to the user indicating the share feature is not supported
+    }
+  };
+
   const openLocationUrl = () => {
     // Open the location URL
     window.open(cardDetails.location, "_blank");
+  };
+
+  // Inside your component
+  const openSocialLink = (link) => {
+    // Extract only the social media platform name from the link
+    const platformName = link.substring(link.lastIndexOf("/") + 1);
+    console.log(platformName);
+    window.open(platformName, "_blank");
   };
 
   return (
@@ -248,6 +274,9 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.facebook)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
@@ -480,6 +509,7 @@ function ViewDigitalCard() {
                           className="w-100"
                           size="large"
                           icon={<FaShareAlt />}
+                          onClick={handleShareButtonClick}
                         ></Button>
                       </Col>
                       <Col lg={8} md={8} sm={8} xs={9} className="ps-0">
