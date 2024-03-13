@@ -225,17 +225,17 @@ function ViewEditCard() {
           cover_pic: cardData.cover_pic,
           profile_picture: cardData.profile_picture,
           bio: cardData.bio,
-          fb_link: cardData.facebook,
-          insta_link: cardData.instagram,
-          linkedin_link: cardData.linkedin_link,
-          whatsapp: cardData.whatsapp_number,
+          facebook: cardData.facebook,
+          instagram: cardData.instagram,
+          linkedin: cardData.linkedin,
+          whatsapp: cardData.whatsapp,
           youtube: cardData.youtube,
           xiao_hong_shu: cardData.xiao_hong_shu,
           tiktok: cardData.tiktok,
-          wechat: cardData.wechat,
+          wechat: cardData.we_chat,
           line: cardData.line,
           telegram: cardData.telegram,
-          webio: cardData.webio,
+          weibo: cardData.weibo,
           twitter: cardData.twitter,
         });
 
@@ -252,7 +252,7 @@ function ViewEditCard() {
       message.error(error.message);
       // Handle error, e.g., show error message
     }
-  }, [cardID, form]);
+  }, [cardID, form, navigate]);
 
   useEffect(() => {
     // Fetch user data when the component mounts
@@ -470,19 +470,19 @@ function ViewEditCard() {
           <Row>
             <Col lg={6} md={12} sm={12}>
               <label className="fw-bold my-1">Facebook</label>
-              <Form.Item name="fb_link">
+              <Form.Item name="facebook">
                 <Input placeholder="Enter Facebook Link" size="large" />
               </Form.Item>
             </Col>
             <Col lg={6} md={12} sm={12}>
               <label className="fw-bold my-1">Instagram</label>
-              <Form.Item name="insta_link">
+              <Form.Item name="instagram">
                 <Input placeholder="Enter Instagram Link" size="large" />
               </Form.Item>
             </Col>
             <Col lg={6} md={12} sm={12}>
               <label className="fw-bold my-1">LinkedIn</label>
-              <Form.Item name="linkedin_link">
+              <Form.Item name="linkedin">
                 <Input placeholder="Enter LinkedIn Link" size="large" />
               </Form.Item>
             </Col>
@@ -530,9 +530,9 @@ function ViewEditCard() {
               </Form.Item>
             </Col>
             <Col lg={6} md={12} sm={12}>
-              <label className="fw-bold my-1">Webio</label>
-              <Form.Item name="webio">
-                <Input placeholder="Enter Webio Link" size="large" />
+              <label className="fw-bold my-1">Weibo</label>
+              <Form.Item name="weibo">
+                <Input placeholder="Enter Weibo Link" size="large" />
               </Form.Item>
             </Col>
             <Col lg={6} md={12} sm={12}>
