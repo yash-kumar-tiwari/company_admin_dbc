@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Layout, Menu, Space, message, theme } from "antd";
 import {
   UserOutlined,
@@ -16,7 +16,7 @@ import ViewCards from "../../../components/Dashboard/ViewCards/ViewCards";
 import ViewChangePassword from "../../../components/Dashboard/ViewChangePassword/ViewChangePassword";
 import ViewCreateCard from "../../../components/Dashboard/ViewCreateCard/ViewCreateCard";
 import { logoutUser } from "../../../services/apiServices";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import "./CompanyDashboardPage.css";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
@@ -24,13 +24,18 @@ import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCar
 const { Header, Content, Footer, Sider } = Layout;
 
 const EditCardPage = () => {
+  const { cardID } = useParams();
+  console.log(cardID);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const navigate = useNavigate();
 
-  const [selectedTab, setSelectedTab] = useState("3");
+  const [previousTab, setPreviousTab] = useState(null);
+  const [selectedTab, setSelectedTab] = useState(
+    previousTab ? previousTab : "3"
+  );
 
   const [showEditCard, setShowEditCard] = useState(false); // State to track whether Edit Card should be displayed
 
@@ -45,6 +50,9 @@ const EditCardPage = () => {
   ];
 
   const handleMenuClick = (e) => {
+    // Update the previousTab before updating the selectedTab
+    setPreviousTab(selectedTab);
+    navigate(`/dashboard`);
     setSelectedTab(e.key);
     setShowEditCard(false); // Close ViewEditCard component when clicking a menu item
   };
@@ -106,33 +114,13 @@ const EditCardPage = () => {
     }
   };
 
+  useEffect(() => {
+    // Initialize previousTab when selectedTab changes
+    setPreviousTab(selectedTab);
+  }, [selectedTab]);
+
   return (
     <div className="MainBg">
-      {/* <Header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["1"]}
-          onClick={handleMenuClick}
-          style={{ flex: 1, minWidth: 0 }}
-        >
-          {items.map((item) => (
-            <Menu.Item key={item.key} icon={item.icon}>
-              {item.label}
-            </Menu.Item>
-          ))}
-        </Menu>
-      </Header> */}
       <Layout className="main-dashboard-layout">
         <Sider
           theme="light"
@@ -153,7 +141,7 @@ const EditCardPage = () => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[previousTab ? previousTab : "3"]}
             onClick={handleMenuClick}
             style={{ backgroundColor: "aliceblue" }}
             className="mb-2"
@@ -181,20 +169,7 @@ const EditCardPage = () => {
           </Menu>
         </Sider>
         <Layout style={{ backgroundColor: "aliceblue" }}>
-          {/* <Header
-            style={{
-              padding: 0,
-              background: colorBgContainer,
-            }}
-          >
-            Hello
-          </Header> */}
-          <Content
-            // style={{
-            //   margin: "24px 16px 0",
-            // }}
-            className="my-5"
-          >
+          <Content className="my-5">
             <div
               style={{
                 padding: 24,
@@ -204,16 +179,10 @@ const EditCardPage = () => {
               }}
               className="dashboard-container"
             >
-              {renderContent()}
+              {/* {renderContent()} */}
+              <ViewEditCard card_id={cardID} />
             </div>
           </Content>
-          {/* <Footer
-            style={{
-              textAlign: "center",
-            }}
-          >
-            Ant Design ©{new Date().getFullYear()} Created by Ant UED
-          </Footer> */}
         </Layout>
       </Layout>
     </div>

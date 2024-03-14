@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Layout, Menu, Space, message, theme } from "antd";
 import {
   UserOutlined,
@@ -30,6 +30,7 @@ const CompanyDashboardPage = () => {
 
   const navigate = useNavigate();
 
+  const [previousTab, setPreviousTab] = useState(null);
   const [selectedTab, setSelectedTab] = useState("1");
 
   const [showEditCard, setShowEditCard] = useState(false);
@@ -44,6 +45,8 @@ const CompanyDashboardPage = () => {
   ];
 
   const handleMenuClick = (e) => {
+    // Update the previousTab before updating the selectedTab
+    setPreviousTab(selectedTab);
     setSelectedTab(e.key);
     setShowEditCard(false);
   };
@@ -65,11 +68,12 @@ const CompanyDashboardPage = () => {
       case "3":
         return (
           <>
-            {showEditCard ? (
+            <ViewCards setShowEditCard={setShowEditCard} />
+            {/* {showEditCard ? (
               <ViewEditCard setShowEditCard={setShowEditCard} />
             ) : (
               <ViewCards setShowEditCard={setShowEditCard} />
-            )}
+            )} */}
           </>
         );
       case "4":
@@ -105,6 +109,19 @@ const CompanyDashboardPage = () => {
     }
   };
 
+  useEffect(() => {
+    // Retrieve the previousTab value from localStorage
+    const previousTab = localStorage.getItem("previousTab");
+    if (previousTab) {
+      setSelectedTab(previousTab);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save the selectedTab value to localStorage
+    localStorage.setItem("previousTab", selectedTab);
+  }, [selectedTab]);
+
   return (
     <div className="MainBg">
       <Layout className="main-dashboard-layout">
@@ -127,7 +144,7 @@ const CompanyDashboardPage = () => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[selectedTab]}
             onClick={handleMenuClick}
             style={{ backgroundColor: "aliceblue" }}
             className="mb-2"

@@ -202,9 +202,9 @@ function ViewCreateCard() {
             contact_number: "",
             cover_pic: "",
             profile_picture: "",
-            fb_link: "",
-            insta_link: "",
-            linkedin_link: "",
+            facebook: "",
+            instagram: "",
+            linkedin: "",
             whatsapp: "",
             youtube: "",
             xiao_hong_shu: "",
@@ -427,19 +427,19 @@ function ViewCreateCard() {
               <Row>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Facebook</label>
-                  <Form.Item name="fb_link">
+                  <Form.Item name="facebook">
                     <Input placeholder="Enter Facebook Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Instagram</label>
-                  <Form.Item name="insta_link">
+                  <Form.Item name="instagram">
                     <Input placeholder="Enter Instagram Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">LinkedIn</label>
-                  <Form.Item name="linkedin_link">
+                  <Form.Item name="linkedin">
                     <Input placeholder="Enter LinkedIn Link" size="large" />
                   </Form.Item>
                 </Col>
@@ -451,7 +451,7 @@ function ViewCreateCard() {
                 </Col> */}
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">WhatsApp</label>
-                  <Form.Item name="whatsapp_number">
+                  <Form.Item name="whatsapp">
                     <Input placeholder="Enter WhatsApp Number" size="large" />
                   </Form.Item>
                 </Col>

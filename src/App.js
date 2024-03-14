@@ -18,7 +18,7 @@ const App = () => {
           element={<ResetPasswordPage />}
         />
         <Route path="/dashboard/*" element={<CompanyDashboardPage />} />
-        <Route path="/dashboard/editcard/:cardID" element={<EditCardPage />} />
+        <Route path="/dashboard/edit-card/:cardID" element={<EditCardPage />} />
         <Route
           path="/view-digital-card/:companyName/:cardReference"
           element={<ViewDigitalCard />}

@@ -26,14 +26,14 @@ const { Text, Title } = Typography;
 const { Item } = Form;
 const { TextArea } = Input;
 
-function ViewEditCard() {
+function ViewEditCard({ card_id }) {
   const navigate = useNavigate();
   const [form] = Form.useForm(); // Create form instance
 
   const params = useParams();
   const urlString = params["*"];
   // Extract the ID after the slash
-  const cardID = urlString.split("/")[1];
+  const cardID = urlString?.split("/")[1];
   //   console.log(cardID);
 
   const [isUpdatingCard, setIsUpdatingCard] = useState(false);
@@ -163,7 +163,8 @@ function ViewEditCard() {
 
       let updatedDetails = {
         ...values,
-        card_id: cardID,
+        // card_id: cardID,
+        card_id: card_id,
         bio: bioHtml,
         profile_picture: uploadedPhotoPath
           ? uploadedPhotoPath
@@ -207,7 +208,8 @@ function ViewEditCard() {
   const fetchCardData = useCallback(async () => {
     try {
       // Fetch card data from the backend based on the cardID
-      const response = await fetchViewDigitalCard(cardID);
+      // const response = await fetchViewDigitalCard(cardID);
+      const response = await fetchViewDigitalCard(card_id);
 
       if (response && response.status === 200) {
         console.log(response.data.data);
@@ -252,7 +254,7 @@ function ViewEditCard() {
       message.error(error.message);
       // Handle error, e.g., show error message
     }
-  }, [cardID, form, navigate]);
+  }, [cardID, form, navigate, card_id]);
 
   useEffect(() => {
     // Fetch user data when the component mounts
