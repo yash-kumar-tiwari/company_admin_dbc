@@ -33,7 +33,29 @@ const { TextArea } = Input;
 const { Step } = Steps;
 
 function ViewCreateCard() {
-  const [businessCardData, setBusinessCardData] = useState({});
+  const [businessCardData, setBusinessCardData] = useState({
+    // Initialize your state with default values
+    first_name: "",
+    last_name: "",
+    user_email: "",
+    designation: "",
+    bio: "",
+    contact_number: "",
+    cover_pic: "",
+    profile_picture: "",
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+    whatsapp: "",
+    youtube: "",
+    xiao_hong_shu: "",
+    tiktok: "",
+    wechat: "",
+    line: "",
+    telegram: "",
+    webio: "",
+    twitter: "",
+  });
   const [isImgPreModalVisible, setIsImgPreModalVisible] = useState(false);
   const [isCoverPicPreModalVisible, setIsCoverPicPreModalVisible] =
     useState(false);
@@ -44,7 +66,9 @@ function ViewCreateCard() {
   const [coverPicUrl, setCoverPicUrl] = useState("");
   const [coverPicFileList, setCoverPicFileList] = useState([]);
   const [bioHtml, setBioHtml] = useState("");
+  const [bioTxtQuill, setBioTxtQuill] = useState("");
 
+  const [form] = Form.useForm(); // Define form instance using useForm hook
   const formRef = React.createRef();
 
   const onChange = ({ fileList: newFileList }) => {
@@ -143,6 +167,11 @@ function ViewCreateCard() {
     setBioHtml(content);
   };
 
+  const handleBioQuillChange = (value) => {
+    console.log(value);
+    setBioTxtQuill(value);
+  };
+
   return (
     <>
       <Card
@@ -188,32 +217,33 @@ function ViewCreateCard() {
           </Steps>
         </div>
         <Form
+          form={form}
           ref={formRef}
           className="p-2"
           name="createCardForm"
           onFinish={onFinish}
           initialValues={{
             // Updated initial values with additional fields
-            first_name: "",
-            last_name: "",
-            user_email: "",
-            designation: "",
-            bio: "",
-            contact_number: "",
-            cover_pic: "",
-            profile_picture: "",
-            facebook: "",
-            instagram: "",
-            linkedin: "",
-            whatsapp: "",
-            youtube: "",
-            xiao_hong_shu: "",
-            tiktok: "",
-            wechat: "",
-            line: "",
-            telegram: "",
-            webio: "",
-            twitter: "",
+            first_name: businessCardData.first_name,
+            last_name: businessCardData.last_name,
+            user_email: businessCardData.user_email,
+            designation: businessCardData.designation,
+            bio: businessCardData.bio,
+            contact_number: businessCardData.contact_number,
+            cover_pic: businessCardData.cover_pic,
+            profile_picture: businessCardData.profile_picture,
+            facebook: businessCardData.facebook,
+            instagram: businessCardData.instagram,
+            linkedin: businessCardData.linkedin,
+            whatsapp: businessCardData.whatsapp,
+            youtube: businessCardData.youtube,
+            xiao_hong_shu: businessCardData.xiao_hong_shu,
+            tiktok: businessCardData.tiktok,
+            wechat: businessCardData.wechat,
+            line: businessCardData.line,
+            telegram: businessCardData.telegram,
+            webio: businessCardData.webio,
+            twitter: businessCardData.twitter,
           }}
         >
           {currentStep === 0 && (
@@ -355,9 +385,10 @@ function ViewCreateCard() {
                   //   { required: true, message: "Please input your bio!" },
                   // ]}
                 >
-                  <Editor
+                  {/* <Editor
                     apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
                     init={{
+                      placeholder: "Enter Bio Details",
                       plugins:
                         "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
                       toolbar:
@@ -403,21 +434,24 @@ function ViewCreateCard() {
                     }}
                     // initialValue="Welcome to TinyMCE!"
                     onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
-                  />
-                  {/* <ReactQuill
+                  /> */}
+                  <ReactQuill
                     theme="snow"
                     placeholder="Enter Bio Details"
-                    onChange={(value) =>
-                      formRef.current.setFieldsValue({
-                        bio: value ? value : null,
-                      })
-                    }
+                    onChange={handleBioQuillChange}
+                    value={bioTxtQuill}
+                    // onChange={(value) => {
+                    //   console.log(value);
+                    //   formRef.current.setFieldsValue({
+                    //     bio: value ? value : null,
+                    //   });
+                    // }}
                     // Additional props
                     modules={{
                       toolbar: toolbarOptions,
                     }}
                     // formats={formatOptions}
-                  /> */}
+                  />
                 </Form.Item>
               </Col>
             </div>
@@ -520,24 +554,7 @@ function ViewCreateCard() {
                     <p>Email: {businessCardData.user_email}</p>
                     <p>Designation: {businessCardData.designation}</p>
                     <p>Contact Number: {businessCardData.contact_number}</p>
-                    {/* <p>Bio: {businessCardData.bio}</p> */}
                   </Col>
-                  {/* <Col lg={6} md={12} sm={12}>
-                    <p>Facebook Link: {businessCardData.fb_link}</p>
-                    <p>Instagram Link: {businessCardData.insta_link}</p>
-                    <p>LinkedIn Link: {businessCardData.linkedin_link}</p>
-                    <p>Snapchat Link: {businessCardData.snapchat_link}</p>
-                    <p>WhatsApp Number: {businessCardData.whatsapp_number}</p>
-                    <p>Website URL: {businessCardData.website_url}</p>
-                    <p>YouTube: {businessCardData.youtube}</p>
-                    <p>Xiao Hong Shu: {businessCardData.xiao_hong_shu}</p>
-                    <p>TikTok: {businessCardData.tiktok}</p>
-                    <p>WeChat: {businessCardData.wechat}</p>
-                    <p>Line: {businessCardData.line}</p>
-                    <p>Telegram: {businessCardData.telegram}</p>
-                    <p>Webio: {businessCardData.webio}</p>
-                    <p>Twitter: {businessCardData.twitter}</p>
-                  </Col> */}
                   {/* <Col>
                     {previewImageUrl && ( // Check if profile picture URL is available
                       <div>
@@ -606,6 +623,7 @@ function ViewCreateCard() {
           console.log("Success Message");
         }}
         bioHtml={bioHtml}
+        bioTxtQuill={bioTxtQuill}
       />
 
       {/* Modal for image preview */}
