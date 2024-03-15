@@ -34,7 +34,11 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import CountUp from "react-countup";
-import { capitalizeAndJoin, toolbarOptions } from "../../../utils/helpers";
+import {
+  capitalizeAndJoin,
+  mysql_real_escape_string,
+  toolbarOptions,
+} from "../../../utils/helpers";
 import ImgCrop from "antd-img-crop";
 import {
   GoogleMap,
@@ -283,7 +287,7 @@ function ViewCompanyDetails() {
                   <label className="fw-bold my-1">Company Name</label>
                   <br />
                   {(
-                    <Text className="p-2 text-primary fw-bold">
+                    <Text className="py-2 text-primary fw-bold">
                       {companyData?.company_name}
                     </Text>
                   ) || (
@@ -545,7 +549,7 @@ function ViewCompanyDetails() {
                       <Button
                         type="link"
                         title="Open Company Location"
-                        className="fw-bold fs-6"
+                        className="fw-bold fs-6 ps-0 pe-0"
                       >
                         {companyData?.company_address}
                       </Button>

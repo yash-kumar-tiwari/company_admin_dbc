@@ -42,6 +42,7 @@ const ViewBusinessCardPreviewModal = ({
   coverPicFileList,
   onSuccess,
   bioHtml,
+  bioTxtQuill,
 }) => {
   console.log(data);
   console.log(bioHtml);
@@ -276,7 +277,7 @@ const ViewBusinessCardPreviewModal = ({
                       <label className="fw-bold text-black">About Me</label>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: bioHtml,
+                          __html: bioTxtQuill,
                         }}
                       />
                       <p>About Content</p>

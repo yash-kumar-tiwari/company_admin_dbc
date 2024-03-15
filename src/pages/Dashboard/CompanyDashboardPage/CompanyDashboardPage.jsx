@@ -7,6 +7,7 @@ import {
   LogoutOutlined,
   PlusOutlined,
   QrcodeOutlined,
+  MenuFoldOutlined,
 } from "@ant-design/icons";
 import { MdOutlinePassword } from "react-icons/md";
 
@@ -143,6 +144,7 @@ const CompanyDashboardPage = () => {
             console.log(collapsed, type);
           }}
           style={{ backgroundColor: "aliceblue" }}
+          // trigger={<MenuFoldOutlined />}
         >
           <div className="demo-logo-vertical" />
           <Space className="fw-bold text-center fs-4 px-5 pt-4 pb-2x">

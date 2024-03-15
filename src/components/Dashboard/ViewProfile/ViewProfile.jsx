@@ -216,11 +216,11 @@ function ViewProfile() {
                   <label className="fw-bold my-1">Company Name</label>
                   <br />
                   {(
-                    <Text className="p-2 text-primary fw-bold">
+                    <Text className="py-2 text-primary fw-bold">
                       {profileData?.company_name}
                     </Text>
                   ) || (
-                    <Text className="p-2 text-danger fw-bold">
+                    <Text className="py-2 text-danger fw-bold">
                       {"Not Available"}
                     </Text>
                   )}
