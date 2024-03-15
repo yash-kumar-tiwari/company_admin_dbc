@@ -4,7 +4,7 @@ import { Form, Input, Button, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { loginUser } from "../../../services/apiServices";
 import { validateEmail, validatePassword } from "../../../utils/formValidators";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import backgroundImg from "../../../assets/images/mainBgImg.jpg";
 
 function Login() {
@@ -79,7 +79,9 @@ function Login() {
               </Form.Item>
 
               <Form.Item name="remember" valuePropName="checked">
-                <Button type="link">Forgot password?</Button>
+                <NavLink to={"/forget-password"}>
+                  <Button type="link">Forgot password?</Button>
+                </NavLink>
               </Form.Item>
 
               <Form.Item>

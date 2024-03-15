@@ -18,6 +18,7 @@ function ForgetPasswordPage() {
       console.log(response);
       if (response && response.status === 200) {
         message.success(response.data.message);
+        navigate("/");
       } else {
         message.error(response.data.message);
       }
