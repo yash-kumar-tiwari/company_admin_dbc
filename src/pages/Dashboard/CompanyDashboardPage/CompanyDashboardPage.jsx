@@ -31,7 +31,8 @@ const CompanyDashboardPage = () => {
   const navigate = useNavigate();
 
   const [previousTab, setPreviousTab] = useState(null);
-  const [selectedTab, setSelectedTab] = useState("1");
+  const [selectedTab, setSelectedTab] = useState(previousTab || "1");
+  const [collapsed, setCollapsed] = useState(false); // State to track sidebar collapsed status
 
   const [showEditCard, setShowEditCard] = useState(false);
 
@@ -49,6 +50,10 @@ const CompanyDashboardPage = () => {
     setPreviousTab(selectedTab);
     setSelectedTab(e.key);
     setShowEditCard(false);
+    if (window.innerWidth < 992) {
+      // Check if screen size is less than 992px (antd's default breakpoint)
+      setCollapsed(true); // Collapse the sidebar after selecting a menu item only on small screens
+    }
   };
 
   const renderContent = () => {
@@ -132,7 +137,9 @@ const CompanyDashboardPage = () => {
           onBreakpoint={(broken) => {
             console.log(broken);
           }}
+          collapsed={collapsed} // Set collapsed state of the Sider
           onCollapse={(collapsed, type) => {
+            setCollapsed(collapsed);
             console.log(collapsed, type);
           }}
           style={{ backgroundColor: "aliceblue" }}
