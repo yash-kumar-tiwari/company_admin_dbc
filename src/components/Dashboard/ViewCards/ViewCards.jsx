@@ -50,6 +50,7 @@ function ViewCards({ setShowEditCard }) {
     useState(false);
   const [showDeleteCardModal, setShowDeleteCardModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [pageSize, setPageSize] = useState(5);
 
   const fetchViewCardsData = useCallback(async () => {
     setIsFetchingCards(true);
@@ -86,8 +87,8 @@ function ViewCards({ setShowEditCard }) {
     selectedRowKeys,
     onChange: handleSelectionChange,
     selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_NONE,
+      // Table.SELECTION_ALL,
+      // Table.SELECTION_NONE,
       {
         key: "activate",
         text: "Activate Cards",
@@ -285,6 +286,11 @@ function ViewCards({ setShowEditCard }) {
 
   const [selectedCardId, setSelectedCardId] = useState(null);
 
+  const handlePageSizeChange = (current, size) => {
+    console.log("New page size:", size);
+    setPageSize(size);
+  };
+
   const handleEditCard = (cardId) => {
     setSelectedCardId(cardId);
     setShowEditCard(true);
@@ -348,7 +354,10 @@ function ViewCards({ setShowEditCard }) {
             rowSelection={rowSelection}
             pagination={{
               position: ["bottomRight"],
-              defaultPageSize: 10,
+              pageSize,
+              pageSizeOptions: ["5", "10", "20", "50"],
+              showSizeChanger: true,
+              onShowSizeChange: handlePageSizeChange,
             }}
             columns={columns}
             dataSource={CardsData}

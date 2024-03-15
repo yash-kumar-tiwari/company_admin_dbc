@@ -32,7 +32,7 @@ function ViewCardsQR() {
   const [isFetchingCardsUrl, setIsFetchingCardsUrl] = useState(false);
   const [CardsData, setCardsData] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedUserData, setSelectedUserData] = useState(null);
 
@@ -83,7 +83,7 @@ function ViewCardsQR() {
   const rowSelection = {
     selectedRowKeys,
     onChange: handleSelectionChange,
-    selections: [Table.SELECTION_ALL, Table.SELECTION_NONE],
+    // selections: [Table.SELECTION_ALL, Table.SELECTION_NONE],
     columnWidth: "5%",
   };
 
@@ -167,23 +167,26 @@ function ViewCardsQR() {
           title={<span className="fw-bold text-center">Cards</span>}
           className="view-cards-qr-custom-card"
         >
-          <Table
-            rowKey={(record) => record.id}
-            bordered
-            loading={isFetchingCardsUrl}
-            size="large"
-            rowSelection={rowSelection}
-            pagination={{
-              position: ["bottomRight"],
-              pageSize,
-              pageSizeOptions: ["10", "20", "50"],
-              showSizeChanger: true,
-              onShowSizeChange: handlePageSizeChange,
-            }}
-            columns={columns}
-            dataSource={CardsData}
-            components={components}
-          />
+          <div className="table-responsive">
+            <Table
+              rowKey={(record) => record.id}
+              bordered
+              loading={isFetchingCardsUrl}
+              size="large"
+              rowSelection={rowSelection}
+              pagination={{
+                position: ["bottomRight"],
+                pageSize,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showSizeChanger: true,
+                onShowSizeChange: handlePageSizeChange,
+              }}
+              columns={columns}
+              dataSource={CardsData}
+              components={components}
+              scroll={{ x: true }} // Add this line to make the table horizontally scrollable
+            />
+          </div>
         </Card>
       </Spin>
       <Modal
@@ -193,9 +196,11 @@ function ViewCardsQR() {
         open={modalVisible}
         onCancel={handleModalClose}
         footer={[
-          <Button key="close" onClick={handleModalClose} danger size="large"s>
-            Close
-          </Button>,
+          <div className="text-center">
+            <Button key="close" onClick={handleModalClose} danger size="large">
+              Close
+            </Button>
+          </div>,
         ]}
       >
         {selectedUserData && (
