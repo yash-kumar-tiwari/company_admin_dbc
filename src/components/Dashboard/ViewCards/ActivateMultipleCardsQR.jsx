@@ -48,18 +48,26 @@ function ActivateMultipleCardsQR({ visible, onOk, onCancel, selectedRowKeys }) {
         open={visible}
         onCancel={onCancel}
         footer={[
-          <Button key="cancel" onClick={onCancel} size="large">
-            Cancel
-          </Button>,
-          <Button
-            key="confirm"
-            type="primary"
-            onClick={handleConfirmActivateCardQR}
-            loading={isActivatingMultipleCardQR}
-            size="large"
-          >
-            Confirm
-          </Button>,
+          <div className="text-center">
+            <Button
+              key="cancel"
+              onClick={onCancel}
+              size="large"
+              className="me-2"
+            >
+              Cancel
+            </Button>
+            <Button
+              key="confirm"
+              type="primary"
+              onClick={handleConfirmActivateCardQR}
+              loading={isActivatingMultipleCardQR}
+              size="large"
+              className="ms-2"
+            >
+              Confirm
+            </Button>
+          </div>,
         ]}
       >
         <p className="text-center my-4">

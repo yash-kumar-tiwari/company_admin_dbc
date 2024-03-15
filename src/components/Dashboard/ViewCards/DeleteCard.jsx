@@ -44,19 +44,23 @@ const DeleteCard = ({ visible, onOk, onCancel, record }) => {
       //   onOk={onOk}
       onCancel={onCancel}
       footer={[
-        <Button key="back" onClick={onCancel} size="large">
-          Cancel
-        </Button>,
-        <Button
-          danger
-          key="submit"
-          type="primary"
-          onClick={handleConfirmDeletingCard}
-          loading={isDeletingCard}
-          size="large"
-        >
-          Delete
-        </Button>,
+        <div className="text-center">
+          <Button key="back" onClick={onCancel} size="large" className="me-2">
+            Cancel
+          </Button>
+
+          <Button
+            danger
+            key="submit"
+            type="primary"
+            onClick={handleConfirmDeletingCard}
+            loading={isDeletingCard}
+            size="large"
+            className="ms-2"
+          >
+            Delete
+          </Button>
+        </div>,
       ]}
     >
       <p className="text-center my-4">

@@ -44,18 +44,22 @@ const ActivateCardQR = ({ visible, onOk, onCancel, record }) => {
       onCancel={onCancel}
       //   confirmLoading={isActivatingCardQR}
       footer={[
-        <Button key="back" onClick={onCancel} size="large">
-          Cancel
-        </Button>,
-        <Button
-          key="submit"
-          type="primary"
-          onClick={handleConfirmActivateCardQR}
-          loading={isActivatingCardQR}
-          size="large"
-        >
-          Activate
-        </Button>,
+        <div className="text-center">
+          <Button key="back" onClick={onCancel} size="large" className="me-2">
+            Cancel
+          </Button>
+
+          <Button
+            key="submit"
+            type="primary"
+            onClick={handleConfirmActivateCardQR}
+            loading={isActivatingCardQR}
+            size="large"
+            className="ms-2"
+          >
+            Activate
+          </Button>
+        </div>,
       ]}
     >
       <p className="text-center my-4">
