@@ -28,7 +28,7 @@ body {
   max-width: 100%;
   overflow-x: hidden; /* Hide horizontal scrollbar */
   padding: 44px 20px; /* Adjust padding for smaller screens */
-  background-image: url("../../../assets/images/bg-01.jpg"); /* Set background image */
+  background-image: url("../../../assets/images/mainBgImgResize70.jpg"); /* Set background image */
   background-size: cover; /* Cover the entire element with the background image */
   background-position: center; /* Center the background image */
   color: white;

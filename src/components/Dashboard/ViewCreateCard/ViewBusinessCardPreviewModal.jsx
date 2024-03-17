@@ -46,6 +46,7 @@ const ViewBusinessCardPreviewModal = ({
 }) => {
   console.log(data);
   console.log(bioHtml);
+  console.log(bioTxtQuill);
 
   const navigate = useNavigate();
 
@@ -72,7 +73,8 @@ const ViewBusinessCardPreviewModal = ({
         ...data,
         profile_picture: uploadedPhotoPath || "",
         cover_pic: uploadedCoverPath || "",
-        bio: bioHtml || null,
+        // bio: bioHtml || null,
+        bio: bioTxtQuill || null,
       };
 
       const response = await createBusinessCard(cardDetails);

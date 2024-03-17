@@ -4,7 +4,7 @@ import { LockOutlined } from "@ant-design/icons";
 import { resetPassword } from "../../../services/apiServices"; // Assuming there's an API service function for resetting password
 import { validatePassword } from "../../../utils/formValidators";
 import { useNavigate, useParams } from "react-router-dom";
-import backgroundImg from "../../../assets/images/mainBgImg.jpg";
+import backgroundImg from "../../../assets/images/mainBgImgResize70.jpg";
 import "./ResetPasswordPage.css";
 
 function ResetPasswordPage() {

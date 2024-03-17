@@ -4,7 +4,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { forgetPassword, loginUser } from "../../../services/apiServices";
 import { validateEmail, validatePassword } from "../../../utils/formValidators";
 import { useNavigate } from "react-router-dom";
-import backgroundImg from "../../../assets/images/mainBgImg.jpg";
+import backgroundImg from "../../../assets/images/mainBgImgResize70.jpg";
 import "./ForgetPasswordPage.css";
 
 function ForgetPasswordPage() {

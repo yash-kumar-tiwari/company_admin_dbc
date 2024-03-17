@@ -5,7 +5,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { loginUser } from "../../../services/apiServices";
 import { validateEmail, validatePassword } from "../../../utils/formValidators";
 import { NavLink, useNavigate } from "react-router-dom";
-import backgroundImg from "../../../assets/images/mainBgImg.jpg";
+import backgroundImg from "../../../assets/images/mainBgImgResize70.jpg";
 
 function Login() {
   const navigate = useNavigate();
