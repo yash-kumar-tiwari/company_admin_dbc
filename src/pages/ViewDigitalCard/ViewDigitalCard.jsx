@@ -268,9 +268,9 @@ function ViewDigitalCard() {
                   </div>
                   {cardDetails && (
                     <div className="viewCardSocialLinks">
-                      <Row className="my-3">
+                      <Row>
                         {cardDetails.facebook && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -291,7 +291,7 @@ function ViewDigitalCard() {
                           </Col>
                         )}
                         {cardDetails.instagram && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -308,10 +308,8 @@ function ViewDigitalCard() {
                             </Button>
                           </Col>
                         )}
-                      </Row>
-                      <Row className="my-3">
                         {cardDetails.linkedin && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -329,7 +327,7 @@ function ViewDigitalCard() {
                           </Col>
                         )}
                         {cardDetails.whatsapp && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -346,10 +344,8 @@ function ViewDigitalCard() {
                             </Button>
                           </Col>
                         )}
-                      </Row>
-                      <Row className="my-3">
                         {cardDetails.youtube && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -367,7 +363,7 @@ function ViewDigitalCard() {
                           </Col>
                         )}
                         {cardDetails.tiktok && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -384,10 +380,8 @@ function ViewDigitalCard() {
                             </Button>
                           </Col>
                         )}
-                      </Row>
-                      <Row className="my-3">
                         {cardDetails.we_chat && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -405,7 +399,7 @@ function ViewDigitalCard() {
                           </Col>
                         )}
                         {cardDetails.line && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -422,10 +416,8 @@ function ViewDigitalCard() {
                             </Button>
                           </Col>
                         )}
-                      </Row>
-                      <Row className="my-3">
                         {cardDetails.telegram && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -443,7 +435,7 @@ function ViewDigitalCard() {
                           </Col>
                         )}
                         {cardDetails.xiao_hong_shu && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -460,10 +452,8 @@ function ViewDigitalCard() {
                             </Button>
                           </Col>
                         )}
-                      </Row>
-                      <Row className="my-3">
                         {cardDetails.twitter && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
@@ -481,7 +471,7 @@ function ViewDigitalCard() {
                           </Col>
                         )}
                         {cardDetails.weibo && (
-                          <Col lg={6} md={6} sm={6} xs={6}>
+                          <Col lg={6} md={6} sm={6} xs={6} className="my-2">
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
