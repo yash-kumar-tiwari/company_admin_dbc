@@ -421,21 +421,12 @@ function ViewEditCard({ card_id }) {
                 initialValue={cardDetails?.bio || "Welcome to TinyMCE!"}
                 init={{
                   plugins:
-                    "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
+                    "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                   toolbar:
-                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                  fontsize_formats: "12pt",
-                  font_formats:
-                    "Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,geneva,sans-serif",
-                  // tinycomments_mode: "embedded",
-                  // tinycomments_author: "Author name",
-                  mergetags_list: [
-                    { value: "First.Name", title: "First Name" },
-                    { value: "Email", title: "Email" },
-                  ],
+                    "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
                   images_default_resizing: "scale",
                   images_resizing: true,
-                  file_picker_types: "image", // Add this line to enable selecting images
+                  file_picker_types: "image",
                   file_picker_callback: function (callback, value, meta) {
                     if (meta.filetype === "image") {
                       var input = document.createElement("input");
@@ -461,10 +452,11 @@ function ViewEditCard({ card_id }) {
                       input.click();
                     }
                   },
+                  media_live_embeds: true,
+                  media_embeds: true,
                   content_css: "tinymce-5",
                 }}
-                // initialValue="Welcome to TinyMCE!"
-                onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
+                onEditorChange={handleEditorChange}
               />
             </Form.Item>
           </Col>
@@ -545,9 +537,15 @@ function ViewEditCard({ card_id }) {
             </Col>
           </Row>
 
-          <Button type="primary" htmlType="submit" size="large">
-            Edit Card Details
-          </Button>
+          <Row>
+            <Col lg={4} md={4} sm={3}></Col>
+            <Col lg={4} md={4} sm={3}>
+              <Button type="primary" htmlType="submit" size="large">
+                Edit Card Details
+              </Button>
+            </Col>
+            <Col lg={4} md={4} sm={3}></Col>
+          </Row>
         </Form>
       </div>
     </Card>

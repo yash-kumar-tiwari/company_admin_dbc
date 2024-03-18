@@ -572,11 +572,6 @@ function ViewCompanyDetails() {
                       "anchor media autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                     toolbar:
                       "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
-                    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-                    font_formats:
-                      "Arial=arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,geneva,sans-serif",
-                    // tinycomments_mode: "embedded",
-                    // tinycomments_author: "Author name",
                     images_default_resizing: "scale",
                     images_resizing: true,
                     file_picker_types: "image",
@@ -613,6 +608,7 @@ function ViewCompanyDetails() {
                     },
                     media_live_embeds: true,
                     media_embeds: true,
+                    content_css: "tinymce-5",
                   }}
                   onEditorChange={handleEditorChange}
                 />

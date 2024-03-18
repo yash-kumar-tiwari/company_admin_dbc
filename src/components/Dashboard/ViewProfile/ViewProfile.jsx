@@ -358,17 +358,26 @@ function ViewProfile() {
         open={isModalVisible}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" onClick={handleCancel} size="large" danger>
-            Cancel
-          </Button>,
-          <Button
-            key="confirm"
-            type="primary"
-            onClick={confirmSaveChanges}
-            size="large"
-          >
-            Confirm
-          </Button>,
+          <div className="text-center">
+            <Button
+              key="cancel"
+              onClick={handleCancel}
+              size="large"
+              danger
+              className="me-2"
+            >
+              Cancel
+            </Button>
+            <Button
+              key="confirm"
+              type="primary"
+              onClick={confirmSaveChanges}
+              size="large"
+              className="ms-2"
+            >
+              Confirm
+            </Button>
+          </div>,
         ]}
       ></Modal>
     </>

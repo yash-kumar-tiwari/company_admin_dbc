@@ -32,30 +32,35 @@ const { Item } = Form;
 const { TextArea } = Input;
 const { Step } = Steps;
 
+// Define initial state for businessCardData
+const initialBusinessCardData = {
+  // Initialize your state with default values
+  first_name: "",
+  last_name: "",
+  user_email: "",
+  designation: "",
+  bio: "",
+  contact_number: "",
+  cover_pic: "",
+  profile_picture: "",
+  facebook: "",
+  instagram: "",
+  linkedin: "",
+  whatsapp: "",
+  youtube: "",
+  xiao_hong_shu: "",
+  tiktok: "",
+  wechat: "",
+  line: "",
+  telegram: "",
+  webio: "",
+  twitter: "",
+};
+
 function ViewCreateCard() {
-  const [businessCardData, setBusinessCardData] = useState({
-    // Initialize your state with default values
-    first_name: "",
-    last_name: "",
-    user_email: "",
-    designation: "",
-    bio: "",
-    contact_number: "",
-    cover_pic: "",
-    profile_picture: "",
-    facebook: "",
-    instagram: "",
-    linkedin: "",
-    whatsapp: "",
-    youtube: "",
-    xiao_hong_shu: "",
-    tiktok: "",
-    wechat: "",
-    line: "",
-    telegram: "",
-    webio: "",
-    twitter: "",
-  });
+  const [businessCardData, setBusinessCardData] = useState(
+    initialBusinessCardData
+  );
   const [isImgPreModalVisible, setIsImgPreModalVisible] = useState(false);
   const [isCoverPicPreModalVisible, setIsCoverPicPreModalVisible] =
     useState(false);
@@ -173,6 +178,11 @@ function ViewCreateCard() {
     setBioTxtQuill(value);
   };
 
+  // Function to reset businessCardData to its initial state
+  const resetBusinessCardData = () => {
+    setBusinessCardData(initialBusinessCardData);
+  };
+
   useEffect(() => {
     // Step 2: Update form completion status based on field values
     const { first_name, last_name, user_email, designation, contact_number } =
@@ -185,6 +195,13 @@ function ViewCreateCard() {
       contact_number !== "";
     setIsFormComplete(isComplete);
   }, [businessCardData]);
+
+  useEffect(() => {
+    // Set the editor content when the Bio tab is selected
+    if (currentStep === 1) {
+      form.setFieldsValue({ bio: bioHtml });
+    }
+  }, [currentStep, bioHtml, form]);
 
   return (
     <>
@@ -407,19 +424,9 @@ function ViewCreateCard() {
                         "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                       toolbar:
                         "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
-                      // tinycomments_mode: "embedded",
-                      // tinycomments_author: "Author name",
-                      mergetags_list: [
-                        { value: "First.Name", title: "First Name" },
-                        { value: "Email", title: "Email" },
-                      ],
-                      ai_request: (request, respondWith) =>
-                        respondWith.string(() =>
-                          Promise.reject("See docs to implement AI Assistant")
-                        ),
                       images_default_resizing: "scale",
                       images_resizing: true,
-                      file_picker_types: "image", // Add this line to enable selecting images
+                      file_picker_types: "image",
                       file_picker_callback: function (callback, value, meta) {
                         if (meta.filetype === "image") {
                           var input = document.createElement("input");
@@ -445,9 +452,12 @@ function ViewCreateCard() {
                           input.click();
                         }
                       },
+                      media_live_embeds: true,
+                      media_embeds: true,
+                      content_css: "tinymce-5",
                     }}
-                    // initialValue="Welcome to TinyMCE!"
-                    onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
+                    onEditorChange={handleEditorChange}
+                    value={bioHtml}
                   />
                   {/* <ReactQuill
                     theme="snow"
@@ -638,9 +648,10 @@ function ViewCreateCard() {
         coverImageUrl={coverPicUrl}
         fileList={fileList} // Pass fileList as a prop
         coverPicFileList={coverPicFileList}
-        onSuccess={() => {
+        onSuccess={(cardDetails) => {
           formRef.current.resetFields();
-          console.log("Success Message");
+          resetBusinessCardData();
+          console.log("Success Message", cardDetails);
         }}
         bioHtml={bioHtml}
         bioTxtQuill={bioTxtQuill}
