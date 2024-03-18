@@ -392,7 +392,7 @@ function ViewCreateCard() {
                       plugins:
                         "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                       toolbar:
-                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table  | addcomment showcomments | typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                        "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
                       // tinycomments_mode: "embedded",
                       // tinycomments_author: "Author name",
                       mergetags_list: [
