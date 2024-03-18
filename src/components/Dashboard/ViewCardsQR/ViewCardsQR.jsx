@@ -161,34 +161,33 @@ function ViewCardsQR() {
 
   return (
     <>
-      <Spin spinning={isFetchingCardsUrl}>
-        <Card
-          type="inner"
-          title={<span className="fw-bold text-center">Cards</span>}
-          className="view-cards-qr-custom-card"
-        >
-          <div className="table-responsive">
-            <Table
-              rowKey={(record) => record.id}
-              bordered
-              loading={isFetchingCardsUrl}
-              size="large"
-              rowSelection={rowSelection}
-              pagination={{
-                position: ["bottomRight"],
-                pageSize,
-                pageSizeOptions: ["5", "10", "20", "50"],
-                showSizeChanger: true,
-                onShowSizeChange: handlePageSizeChange,
-              }}
-              columns={columns}
-              dataSource={CardsData}
-              components={components}
-              scroll={{ x: true }} // Add this line to make the table horizontally scrollable
-            />
-          </div>
-        </Card>
-      </Spin>
+      <Card
+        type="inner"
+        title={<span className="fw-bold text-center">Cards</span>}
+        className="view-cards-qr-custom-card"
+      >
+        <div className="table-responsive">
+          <Table
+            rowKey={(record) => record.id}
+            bordered
+            loading={isFetchingCardsUrl}
+            size="large"
+            rowSelection={rowSelection}
+            pagination={{
+              position: ["bottomRight"],
+              pageSize,
+              pageSizeOptions: ["5", "10", "20", "50"],
+              showSizeChanger: true,
+              onShowSizeChange: handlePageSizeChange,
+            }}
+            columns={columns}
+            dataSource={CardsData}
+            components={components}
+            scroll={{ x: true }} // Add this line to make the table horizontally scrollable
+          />
+        </div>
+      </Card>
+
       <Modal
         title=<span className="fw-bold">
           <ExclamationCircleFilled className="text-primary mx-2" /> QR Details

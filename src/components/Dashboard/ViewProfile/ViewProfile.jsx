@@ -91,8 +91,8 @@ function ViewProfile() {
   };
 
   const fetchViewProfileData = useCallback(async () => {
-    setIsFetchingProfile(true);
     try {
+      setIsFetchingProfile(true);
       const response = await fetchViewProfile();
       if (response && response.status === 200) {
         // message.success(response.data.message);
@@ -109,6 +109,7 @@ function ViewProfile() {
     } catch (error) {
       console.error("API request failed:", error);
       message.error("Failed to Load Details. Please try again later.");
+      setIsFetchingProfile(false);
     } finally {
       setIsFetchingProfile(false);
     }

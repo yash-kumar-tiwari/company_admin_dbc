@@ -53,8 +53,8 @@ function ViewCards({ setShowEditCard }) {
   const [pageSize, setPageSize] = useState(5);
 
   const fetchViewCardsData = useCallback(async () => {
-    setIsFetchingCards(true);
     try {
+      setIsFetchingCards(true);
       const response = await fetchCardsList();
       if (response && response.status === 200) {
         setCardsData(response.data.data);
@@ -70,6 +70,7 @@ function ViewCards({ setShowEditCard }) {
     } catch (error) {
       console.error("API request failed:", error);
       message.error("Failed to Load Details. Please try again later.");
+      setIsFetchingCards(false);
     } finally {
       setIsFetchingCards(false);
     }
@@ -306,112 +307,104 @@ function ViewCards({ setShowEditCard }) {
 
   return (
     <>
-      <Spin spinning={isFetchingCards}>
-        <Card
-          type="inner"
-          title={<span className="fw-bold text-center">Cards</span>}
-          className="view-cards-custom-card"
-        >
-          {selectedUser && (
-            <div className="selected-user-description-section my-2">
-              <Typography.Title level={4} className="mx-2">
-                User Details
-              </Typography.Title>
-              <Descriptions bordered size="small" column={1}>
-                <Descriptions.Item label="Name">{`${selectedUser.first_name} ${selectedUser.last_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Email">
-                  {selectedUser.user_email}
-                </Descriptions.Item>
-                <Descriptions.Item label="Designation">
-                  {selectedUser.designation}
-                </Descriptions.Item>
-                <Descriptions.Item label="Contact Number">
-                  {selectedUser.contact_number}
-                </Descriptions.Item>
-              </Descriptions>
-              <Button
-                className="my-2 mx-2"
-                type="primary"
-                shape="round"
-                size="small"
-                onClick={() => setSelectedUser(null)}
-              >
-                Close
-              </Button>
-            </div>
-          )}
-          <Table
-            rowKey={(record) => record.id} // or the key you are using
-            bordered
-            loading={isFetchingCards}
-            size="large"
-            // title={() => (
-            //   <div className="text-center fw-bold fs-3">
-            //     Own Uploaded Items
-            //   </div>
-            // )}
-            // showHeader={true}
-            rowSelection={rowSelection}
-            pagination={{
-              position: ["bottomRight"],
-              pageSize,
-              pageSizeOptions: ["5", "10", "20", "50"],
-              showSizeChanger: true,
-              onShowSizeChange: handlePageSizeChange,
-            }}
-            columns={columns}
-            dataSource={CardsData}
-            scroll={{
-              x: 1200,
-            }}
-            components={components}
-          />
-        </Card>
-
-        <ActivateCardQR
-          visible={showActivateCardQRModal}
-          onOk={(status) => {
-            handleActivateCardQRModalClose();
-            fetchViewCardsData();
-            // console.log(status);
+      <Card
+        type="inner"
+        title={<span className="fw-bold text-center">Cards</span>}
+        className="view-cards-custom-card"
+      >
+        {selectedUser && (
+          <div className="selected-user-description-section my-2">
+            <Typography.Title level={4} className="mx-2">
+              User Details
+            </Typography.Title>
+            <Descriptions bordered size="small" column={1}>
+              <Descriptions.Item label="Name">{`${selectedUser.first_name} ${selectedUser.last_name}`}</Descriptions.Item>
+              <Descriptions.Item label="Email">
+                {selectedUser.user_email}
+              </Descriptions.Item>
+              <Descriptions.Item label="Designation">
+                {selectedUser.designation}
+              </Descriptions.Item>
+              <Descriptions.Item label="Contact Number">
+                {selectedUser.contact_number}
+              </Descriptions.Item>
+            </Descriptions>
+            <Button
+              className="my-2 mx-2"
+              type="primary"
+              shape="round"
+              size="small"
+              onClick={() => setSelectedUser(null)}
+            >
+              Close
+            </Button>
+          </div>
+        )}
+        <Table
+          rowKey={(record) => record.id} // or the key you are using
+          bordered
+          loading={isFetchingCards}
+          size="large"
+          rowSelection={rowSelection}
+          pagination={{
+            position: ["bottomRight"],
+            pageSize,
+            pageSizeOptions: ["5", "10", "20", "50"],
+            showSizeChanger: true,
+            onShowSizeChange: handlePageSizeChange,
           }}
-          onCancel={() => setShowActivateCardQRModal(false)}
-          record={selectedRecord}
-        />
-
-        <DeactivateCard
-          visible={showDeactivateCardModal}
-          onOk={(status) => {
-            handleDeactivateCardModalClose();
-            fetchViewCardsData();
-            // console.log(status);
+          columns={columns}
+          dataSource={CardsData}
+          scroll={{
+            x: 1200,
           }}
-          onCancel={() => setShowDeactivateCardModal(false)}
-          record={selectedRecord}
+          components={components}
         />
+      </Card>
 
-        <ActivateMultipleCardsQR
-          visible={showActivateMultipleModal}
-          onOk={(status) => {
-            handleActivateMultipleCardModalClose();
-            fetchViewCardsData();
-            // console.log(status);
-          }}
-          onCancel={() => setShowActivateMultipleModal(false)}
-          selectedRowKeys={selectedRowKeys} // Pass the selectedRowKeys to the modal
-        />
+      <ActivateCardQR
+        visible={showActivateCardQRModal}
+        onOk={(status) => {
+          handleActivateCardQRModalClose();
+          fetchViewCardsData();
+          // console.log(status);
+        }}
+        onCancel={() => setShowActivateCardQRModal(false)}
+        record={selectedRecord}
+      />
 
-        <DeleteCard
-          visible={showDeleteCardModal}
-          onOk={(status) => {
-            handleDeleteCardModalClose();
-            fetchViewCardsData();
-            // console.log(status);
-          }}
-          onCancel={() => setShowDeleteCardModal(false)}
-          record={selectedRecord} // Pass the selectedRowKeys to the modal
-        />
-      </Spin>
+      <DeactivateCard
+        visible={showDeactivateCardModal}
+        onOk={(status) => {
+          handleDeactivateCardModalClose();
+          fetchViewCardsData();
+          // console.log(status);
+        }}
+        onCancel={() => setShowDeactivateCardModal(false)}
+        record={selectedRecord}
+      />
+
+      <ActivateMultipleCardsQR
+        visible={showActivateMultipleModal}
+        onOk={(status) => {
+          handleActivateMultipleCardModalClose();
+          fetchViewCardsData();
+          // console.log(status);
+        }}
+        onCancel={() => setShowActivateMultipleModal(false)}
+        selectedRowKeys={selectedRowKeys} // Pass the selectedRowKeys to the modal
+      />
+
+      <DeleteCard
+        visible={showDeleteCardModal}
+        onOk={(status) => {
+          handleDeleteCardModalClose();
+          fetchViewCardsData();
+          // console.log(status);
+        }}
+        onCancel={() => setShowDeleteCardModal(false)}
+        record={selectedRecord} // Pass the selectedRowKeys to the modal
+      />
     </>
   );
 }

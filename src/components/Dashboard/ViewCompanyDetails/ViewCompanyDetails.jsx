@@ -144,6 +144,7 @@ function ViewCompanyDetails() {
     } catch (error) {
       console.error("API request failed:", error);
       message.error("Failed to Load Details. Please try again later.");
+      setIsFetchingCompany(false);
     } finally {
       setIsFetchingCompany(false);
     }
@@ -241,7 +242,6 @@ function ViewCompanyDetails() {
             onFinish={onFinishSubmit}
             name="editCompanyDetailForm"
           >
-            <Row></Row>
             <Row>
               {/* <Col lg={2} md={0} sm={0}></Col> */}
               <Col lg={4} md={6} sm={6} className="my-2">
