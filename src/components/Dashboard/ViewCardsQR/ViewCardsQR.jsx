@@ -14,7 +14,7 @@ import QRCode from "qrcode.react"; // Import QRCode library
 import "./ViewCardsQR.css";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { Col, Row } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
 import { Card as CardRB } from "react-bootstrap";
 import {
   fetchCardsList,
@@ -212,7 +212,7 @@ function ViewCardsQR() {
             {/* <p className="fw-bold">Email: {selectedUserData.email}</p>
             <p className="fw-bold">Phone: {selectedUserData.phone}</p> */}
             <p className="fw-bold my-2">Card QR</p>
-            <QRCode value={selectedUserData.qr_url} />
+            <Image src={selectedUserData.qr_url} />
           </div>
         )}
       </Modal>
