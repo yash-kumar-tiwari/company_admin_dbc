@@ -385,14 +385,14 @@ function ViewCreateCard() {
                   //   { required: true, message: "Please input your bio!" },
                   // ]}
                 >
-                  {/* <Editor
+                  <Editor
                     apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
                     init={{
                       placeholder: "Enter Bio Details",
                       plugins:
-                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount casechange formatpainter pageembed linkchecker tinymcespellchecker permanentpen powerpaste mentions tableofcontents footnotes mergetags autocorrect  inlinecss lists", // added 'lists' plugin for bullets
+                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                       toolbar:
-                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                        "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table  | addcomment showcomments | typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
                       // tinycomments_mode: "embedded",
                       // tinycomments_author: "Author name",
                       mergetags_list: [
@@ -434,8 +434,8 @@ function ViewCreateCard() {
                     }}
                     // initialValue="Welcome to TinyMCE!"
                     onEditorChange={handleEditorChange} // Call handleEditorChange when the editor content changes
-                  /> */}
-                  <ReactQuill
+                  />
+                  {/* <ReactQuill
                     theme="snow"
                     placeholder="Enter Bio Details"
                     onChange={handleBioQuillChange}
@@ -451,7 +451,7 @@ function ViewCreateCard() {
                       toolbar: toolbarOptions,
                     }}
                     // formats={formatOptions}
-                  />
+                  /> */}
                 </Form.Item>
               </Col>
             </div>
@@ -525,19 +525,19 @@ function ViewCreateCard() {
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Telegram</label>
                   <Form.Item name="telegram">
-                    <Input placeholder="Enter Telegram Link" />
+                    <Input placeholder="Enter Telegram Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Weibo</label>
                   <Form.Item name="webio">
-                    <Input placeholder="Enter Weibo Link" />
+                    <Input placeholder="Enter Weibo Link" size="large" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
                   <label className="fw-bold my-1">Twitter</label>
                   <Form.Item name="twitter">
-                    <Input placeholder="Enter Twitter Link" />
+                    <Input placeholder="Enter Twitter Link" size="large" />
                   </Form.Item>
                 </Col>
               </Row>

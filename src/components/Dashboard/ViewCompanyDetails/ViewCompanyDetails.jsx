@@ -109,9 +109,9 @@ function ViewCompanyDetails() {
         ...values,
         company_id: companyData.id,
         company_logo: uploadedLogoPath || companyData.company_logo,
-        location: location.location,
-        latitude: location.latitude,
-        longitude: location.longitude,
+        // location: location.location,
+        // latitude: location.latitude,
+        // longitude: location.longitude,
         product_service: productServices, // Include product and services in updated values
       };
 
@@ -488,7 +488,23 @@ function ViewCompanyDetails() {
                 </Col>
                 <Col lg={6} md={12} sm={6}>
                   <label className="fw-bold my-1">Update Location</label>
-                  <Form.Item name="location">
+                  <Item
+                    name="location"
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: "Please enter your contact person email",
+                    //   },
+                    // ]}
+                    hasFeedback
+                  >
+                    <Input
+                      size="large"
+                      placeholder="Enter Your Google Map Location Link"
+                      defaultValue={companyData.location || "N/A"}
+                    />
+                  </Item>
+                  {/* <Form.Item name="location">
                     <StandaloneSearchBox
                       onLoad={(ref) => (searchBoxRef.current = ref)}
                       onPlacesChanged={() =>
@@ -497,17 +513,16 @@ function ViewCompanyDetails() {
                     >
                       <div>
                         {" "}
-                        {/* Wrap Input and Button in a parent element */}
                         <Input
                           size="large"
                           placeholder="Search Location, Places"
-                          value={location?.name} // Display the selected place name
+                          value={location?.name}
                           onChange={(e) =>
                             setLocation({
                               ...location,
                               location: e.target.value,
                             })
-                          } // Update the location name if manually changed
+                          }
                           addonAfter={
                             <Button
                               danger
@@ -520,27 +535,14 @@ function ViewCompanyDetails() {
                                   longitude: null,
                                 })
                               }
-
-                              // icon={<CloseCircleOutlined />}
                             >
                               Clear
                             </Button>
                           }
                         />
-                        {/* <Button
-                            onClick={() =>
-                              setLocation({
-                                location: "",
-                                latitude: null,
-                                longitude: null,
-                              })
-                            }
-                          >
-                            Clear
-                          </Button> */}
                       </div>
                     </StandaloneSearchBox>
-                  </Form.Item>
+                  </Form.Item> */}
                 </Col>
                 <Col lg={6} md={12} sm={6}>
                   <label className="fw-bold my-1">Current Location</label>
@@ -575,7 +577,7 @@ function ViewCompanyDetails() {
                     apiKey={editorApiKey}
                     initialValue={companyData.product_service}
                     init={{
-                      placeholder: "Enter Compnany Product & Services Details",
+                      placeholder: "Enter Company Product & Services Details",
                       plugins:
                         "anchor media autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                       toolbar:
