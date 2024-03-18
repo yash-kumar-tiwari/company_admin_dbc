@@ -529,9 +529,9 @@ function ViewCreateCard() {
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Webio</label>
+                  <label className="fw-bold my-1">Weibo</label>
                   <Form.Item name="webio">
-                    <Input placeholder="Enter Webio Link" />
+                    <Input placeholder="Enter Weibo Link" />
                   </Form.Item>
                 </Col>
                 <Col lg={6} md={12} sm={12}>
