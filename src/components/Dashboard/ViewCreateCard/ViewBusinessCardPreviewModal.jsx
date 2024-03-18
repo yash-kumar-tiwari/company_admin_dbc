@@ -38,6 +38,7 @@ const ViewBusinessCardPreviewModal = ({
   onClose,
   data,
   imageUrl,
+  coverImageUrl,
   fileList,
   coverPicFileList,
   onSuccess,
@@ -45,8 +46,8 @@ const ViewBusinessCardPreviewModal = ({
   bioTxtQuill,
 }) => {
   console.log(data);
-  console.log(bioHtml);
-  console.log(bioTxtQuill);
+  console.log(fileList);
+  console.log(coverPicFileList);
 
   const navigate = useNavigate();
 
@@ -59,13 +60,19 @@ const ViewBusinessCardPreviewModal = ({
   const handleSubmitCreateCard = async () => {
     setIsCreatingCard(true);
     try {
-      const uploadedPhotoPath = await uploadCardProfilePhoto(
-        fileList[0]?.originFileObj
-      );
+      let uploadedPhotoPath, uploadedCoverPath;
 
-      const uploadedCoverPath = await uploadCardCoverPhoto(
-        coverPicFileList[0]?.originFileObj
-      );
+      if (fileList && fileList.length > 0) {
+        uploadedPhotoPath = await uploadCardProfilePhoto(
+          fileList[0]?.originFileObj
+        );
+      }
+
+      if (coverPicFileList && coverPicFileList.length > 0) {
+        uploadedCoverPath = await uploadCardCoverPhoto(
+          coverPicFileList[0]?.originFileObj
+        );
+      }
 
       let bio_content = bioHtml;
 
@@ -244,7 +251,7 @@ const ViewBusinessCardPreviewModal = ({
                     <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
                         <div className="view_card_content_title">{`${data?.first_name} ${data?.last_name}`}</div>
-                        <div className="view_card_content_sub_title">{`${data?.designation} at ${data?.company_name}`}</div>
+                        <div className="view_card_content_sub_title">{`${data?.designation} at ${companyDetails?.company_name}`}</div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
                         <span className="float-end">

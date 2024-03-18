@@ -67,6 +67,7 @@ function ViewCreateCard() {
   const [coverPicFileList, setCoverPicFileList] = useState([]);
   const [bioHtml, setBioHtml] = useState("");
   const [bioTxtQuill, setBioTxtQuill] = useState("");
+  const [isFormComplete, setIsFormComplete] = useState(false); // Step 1: Define state variable
 
   const [form] = Form.useForm(); // Define form instance using useForm hook
   const formRef = React.createRef();
@@ -171,6 +172,19 @@ function ViewCreateCard() {
     console.log(value);
     setBioTxtQuill(value);
   };
+
+  useEffect(() => {
+    // Step 2: Update form completion status based on field values
+    const { first_name, last_name, user_email, designation, contact_number } =
+      businessCardData;
+    const isComplete =
+      first_name !== "" &&
+      last_name !== "" &&
+      user_email !== "" &&
+      designation !== "" &&
+      contact_number !== "";
+    setIsFormComplete(isComplete);
+  }, [businessCardData]);
 
   return (
     <>
@@ -579,7 +593,12 @@ function ViewCreateCard() {
                   Previous
                 </Button>
 
-                <Button type="primary" htmlType="submit" size="large">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  disabled={!isFormComplete} // Step 3: Use form completion status to disable button
+                >
                   Preview Card
                 </Button>
               </div>
@@ -616,6 +635,7 @@ function ViewCreateCard() {
         onClose={handlePreviewModalClose}
         data={businessCardData}
         imageUrl={previewImageUrl}
+        coverImageUrl={coverPicUrl}
         fileList={fileList} // Pass fileList as a prop
         coverPicFileList={coverPicFileList}
         onSuccess={() => {
