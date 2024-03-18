@@ -144,3 +144,6 @@ body p {
   color: gray;
   text-decoration: underline;
 }
+.viewCardProductAndServices img {
+  width: 100%;
+}
