@@ -6,6 +6,7 @@ import { Alert, Button, Modal, Space, message } from "antd";
 import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
 import { FaShareAlt } from "react-icons/fa";
 import StaticQR from "../../../assets/images/static/qr_img.png";
+import DefaultUserAvatar from "../../../assets/images/static/default-user-avatar.png";
 
 import {
   fetchCompanyDetails,
@@ -236,10 +237,7 @@ const ViewBusinessCardPreviewModal = ({
                 <div className="viewCardImagesSection">
                   <Image
                     className="viewCardImages_profileImage"
-                    src={
-                      imageUrl ||
-                      "https://cf.shopee.ph/file/13ac71187230bae1b72226fa0cd962b1"
-                    }
+                    src={imageUrl || DefaultUserAvatar}
                     roundedCircle
                     alt="Profile"
                     height={150}

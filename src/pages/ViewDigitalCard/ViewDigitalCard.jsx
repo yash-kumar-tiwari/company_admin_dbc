@@ -117,7 +117,7 @@ function ViewDigitalCard() {
         <Row>
           <Col
             lg={6}
-            md={0}
+            md={6}
             sm={0}
             xs={0}
             className="viewDigitalCard_CompanyDetails d-none d-md-block"
@@ -141,7 +141,7 @@ function ViewDigitalCard() {
               </div>
             </div>
           </Col>
-          <Col lg={4} md={12} sm={12} xs={12} className="my-5">
+          <Col lg={4} md={4} sm={12} xs={12} className="my-5">
             <div className="viewBusinessCardContainer">
               <div className="viewCardContainer">
                 <div
@@ -608,7 +608,7 @@ function ViewDigitalCard() {
               </div>
             </div>
           </Col>
-          <Col lg={2} md={0} sm={0} xs={0}></Col>
+          <Col lg={2} md={2} sm={0} xs={0}></Col>
         </Row>
         <footer className="viewDigitalCard_Footer">
           <p className="text-center mt-2">
