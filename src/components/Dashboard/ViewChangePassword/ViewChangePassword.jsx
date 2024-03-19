@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../../services/apiServices";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
+import MidinFooter from "../../MidinFooter/MidinFooter";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -140,6 +141,9 @@ function ViewChangePassword() {
             </Row>
           </Form>
         </Card>
+
+        <MidinFooter />
+
         <Modal
           centered
           title={

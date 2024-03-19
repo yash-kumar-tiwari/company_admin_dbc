@@ -40,6 +40,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import { CompanyContext } from "../../../contexts/CompanyContext";
 import { editorApiKey } from "../../../utils/constants";
+import MidinFooter from "../../MidinFooter/MidinFooter";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -649,6 +650,8 @@ function ViewCompanyDetails() {
           {/* </LoadScript> */}
         </Card>
       </Spin>
+
+      <MidinFooter />
 
       <Modal
         centered

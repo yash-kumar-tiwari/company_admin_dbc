@@ -24,6 +24,7 @@ import { Card as CardRB } from "react-bootstrap";
 import { ExclamationCircleFilled, UploadOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
+import MidinFooter from "../../MidinFooter/MidinFooter";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -347,6 +348,8 @@ function ViewProfile() {
           </div>
         </Card>
       </Spin>
+
+      <MidinFooter />
 
       <Modal
         centered

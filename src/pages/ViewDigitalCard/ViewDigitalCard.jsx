@@ -541,9 +541,12 @@ function ViewDigitalCard() {
           </Col>
           <Col lg={2} md={0} sm={0} xs={0}></Col>
         </Row>
-        <Footer className="viewDigitalCard_Footer text-black">
-          <p>Powered by midin.app</p>
-        </Footer>
+        <footer className="viewDigitalCard_Footer">
+          <p className="text-center mt-2">
+            {" "}
+            © 2024 Powered by midin.app. All Rights Reserved.
+          </p>
+        </footer>
       </Container>
     </>
   );

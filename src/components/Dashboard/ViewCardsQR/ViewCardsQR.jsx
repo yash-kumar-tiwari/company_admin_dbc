@@ -22,6 +22,7 @@ import {
 } from "../../../services/apiServices";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
+import MidinFooter from "../../MidinFooter/MidinFooter";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -187,6 +188,8 @@ function ViewCardsQR() {
           />
         </div>
       </Card>
+
+      <MidinFooter />
 
       <Modal
         title=<span className="fw-bold">

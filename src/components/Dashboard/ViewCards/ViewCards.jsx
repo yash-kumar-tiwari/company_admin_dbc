@@ -30,6 +30,7 @@ import DeactivateCard from "./DeactivateCard";
 import ActivateMultipleCardsQR from "./ActivateMultipleCardsQR";
 import DeleteCard from "./DeleteCard";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
+import MidinFooter from "../../MidinFooter/MidinFooter";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -361,6 +362,8 @@ function ViewCards({ setShowEditCard }) {
           components={components}
         />
       </Card>
+
+      <MidinFooter />
 
       <ActivateCardQR
         visible={showActivateCardQRModal}

@@ -26,6 +26,7 @@ import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
 import ViewCoverPreviewModal from "./ViewCoverPreviewModal";
 import { Editor } from "@tinymce/tinymce-react";
 import { toolbarOptions } from "../../../utils/helpers";
+import MidinFooter from "../../MidinFooter/MidinFooter";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -638,6 +639,8 @@ function ViewCreateCard() {
           </div>
         </Form>
       </Card>
+
+      <MidinFooter />
 
       {/* Your form and other components */}
       <ViewBusinessCardPreviewModal

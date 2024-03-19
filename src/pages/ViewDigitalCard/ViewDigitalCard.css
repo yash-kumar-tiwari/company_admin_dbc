@@ -147,3 +147,10 @@ body p {
 .viewCardProductAndServices img {
   width: 100%;
 }
+
+footer.viewDigitalCard_Footer {
+  background: transparent;
+  padding: 1vh;
+  text-align: center;
+  font-weight: 700;
+}
