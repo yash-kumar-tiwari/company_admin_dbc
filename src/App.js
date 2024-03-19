@@ -20,6 +20,10 @@ const App = () => {
         <Route path="/dashboard/*" element={<CompanyDashboardPage />} />
         <Route path="/dashboard/edit-card/:cardID" element={<EditCardPage />} />
         <Route
+          path="/v/:companyName/:cardReference"
+          element={<ViewDigitalCard />}
+        />
+        <Route
           path="/view-digital-card/:companyName/:cardReference"
           element={<ViewDigitalCard />}
         />

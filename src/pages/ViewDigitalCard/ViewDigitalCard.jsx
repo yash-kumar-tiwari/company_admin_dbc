@@ -21,6 +21,7 @@ import TikTokCustomIcon from "../../assets/images/social/tiktok.png";
 import FacebookCustomIcon from "../../assets/images/social/facebook.png";
 import XHSCustomIcon from "../../assets/images/social/xhs.png";
 import WeiboCustomIcon from "../../assets/images/social/weibo.png";
+import { Footer } from "antd/es/layout/layout";
 
 function ViewDigitalCard() {
   const { companyName, cardReference } = useParams();
@@ -107,11 +108,17 @@ function ViewDigitalCard() {
     <>
       <Container fluid className="viewDigitalBusinessCardContainer">
         <Row>
-          <Col lg={6} md={0} sm={0}>
+          <Col
+            lg={6}
+            md={0}
+            sm={0}
+            xs={0}
+            className="viewDigitalCard_CompanyDetails d-none d-md-block"
+          >
             <div className="viewDigitalCard_CompanyBrief">
               <Image
                 className="viewDigitalCard_CompanyLogo"
-                src={cardDetails.company_logo}
+                src={cardDetails?.company_logo}
                 height={100}
                 width={100}
                 roundedCircle
@@ -127,7 +134,7 @@ function ViewDigitalCard() {
               </div>
             </div>
           </Col>
-          <Col lg={4} md={12} sm={12} className="my-5">
+          <Col lg={4} md={12} sm={12} xs={12} className="my-5">
             <div className="viewBusinessCardContainer">
               <div className="viewCardContainer">
                 <div
@@ -156,7 +163,7 @@ function ViewDigitalCard() {
                       <Col lg={4} md={4} sm={4}>
                         <span className="float-end">
                           <Image
-                            src={cardDetails.company_logo}
+                            src={cardDetails?.company_logo}
                             roundedCircle
                             height={50}
                             width={50}
@@ -172,11 +179,17 @@ function ViewDigitalCard() {
                           Company Location
                         </label>
                         <div className="view_card_content_sub_title">
-                          {cardDetails.company_address}
+                          {cardDetails?.company_address}
                         </div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <FaMapLocationDot className="float-end text-black fs-2" />
+                        <a
+                          href={cardDetails?.location}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <FaMapLocationDot className="float-end text-black fs-2" />
+                        </a>{" "}
                         {/* <Image src="../../assets/images/icons/destination.png" /> */}
                       </Col>
                     </Row>
@@ -187,7 +200,7 @@ function ViewDigitalCard() {
                       <div
                         className="html_text_render"
                         dangerouslySetInnerHTML={{
-                          __html: cardDetails.bio,
+                          __html: cardDetails?.bio,
                         }}
                       />
                     </Row>
@@ -200,7 +213,7 @@ function ViewDigitalCard() {
                       <div
                         className="html_text_render"
                         dangerouslySetInnerHTML={{
-                          __html: cardDetails.product_service,
+                          __html: cardDetails?.product_service,
                         }}
                       />
                     </Row>
@@ -211,10 +224,10 @@ function ViewDigitalCard() {
                         <label className="fw-bold">Email</label>
                         <div className="text-muted">
                           <a
-                            href={`mailto:${cardDetails.user_email}`}
+                            href={`mailto:${cardDetails?.user_email}`}
                             className="html_link"
                           >
-                            {cardDetails.user_email || "NA"}
+                            {cardDetails?.user_email || "NA"}
                           </a>
                         </div>
                       </Col>
@@ -222,10 +235,10 @@ function ViewDigitalCard() {
                         <label className="fw-bold">Contact No.</label>
                         <div className="text-muted">
                           <a
-                            href={`tel:${cardDetails.contact_number}`}
+                            href={`tel:${cardDetails?.contact_number}`}
                             className="html_link"
                           >
-                            {cardDetails.contact_number || "NA"}
+                            {cardDetails?.contact_number || "NA"}
                           </a>
                         </div>
                       </Col>
@@ -233,10 +246,10 @@ function ViewDigitalCard() {
                         <label className="fw-bold">Company Email</label>
                         <div className="text-muted">
                           <a
-                            href={`mailto:${cardDetails.company_email}`}
+                            href={`mailto:${cardDetails?.company_email}`}
                             className="html_link"
                           >
-                            {cardDetails.company_email || "NA"}
+                            {cardDetails?.company_email || "NA"}
                           </a>
                         </div>
                       </Col>
@@ -244,12 +257,12 @@ function ViewDigitalCard() {
                         <label className="fw-bold">Company Website</label>
                         <div className="text-muted">
                           <a
-                            href={cardDetails.company_website}
+                            href={cardDetails?.company_website}
                             target="_blank"
                             rel="noreferrer"
                             className="html_link"
                           >
-                            {cardDetails.company_website || "NA"}
+                            {cardDetails?.company_website || "NA"}
                           </a>
                         </div>
                       </Col>
@@ -257,10 +270,10 @@ function ViewDigitalCard() {
                         <label className="fw-bold">Company Phone</label>
                         <div className="text-muted">
                           <a
-                            href={`tel:${cardDetails.company_phone}`}
+                            href={`tel:${cardDetails?.company_phone}`}
                             className="html_link"
                           >
-                            {cardDetails.company_phone || "NA"}
+                            {cardDetails?.company_phone || "NA"}
                           </a>
                         </div>
                       </Col>
@@ -526,8 +539,11 @@ function ViewDigitalCard() {
               </div>
             </div>
           </Col>
-          <Col lg={2} md={0} sm={0}></Col>
+          <Col lg={2} md={0} sm={0} xs={0}></Col>
         </Row>
+        <Footer className="viewDigitalCard_Footer text-black">
+          <p>Powered by midin.app</p>
+        </Footer>
       </Container>
     </>
   );

@@ -1,7 +1,7 @@
 import { makeFormDataApiRequest, makeJsonApiRequest } from "./apiRequests";
 
-const api_base_url = "http://13.238.219.242/api/v1/companyAdmin/";
-const card_base_url = "http://13.238.219.242/api/v1/";
+const api_base_url = "https://midin.app/api/v1/companyAdmin/";
+const card_base_url = "https://midin.app/api/v1/";
 
 // Function to set authentication token in local storage
 const setAuthToken = (token) => {

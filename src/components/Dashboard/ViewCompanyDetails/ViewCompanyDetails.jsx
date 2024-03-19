@@ -541,7 +541,7 @@ function ViewCompanyDetails() {
                     <Button
                       type="link"
                       title="Open Company Location"
-                      className="fw-bold fs-6 ps-0 pe-0"
+                      className="fw-bold fs-6 ps-0 pe-0 text-wrap"
                     >
                       {companyData?.company_address}
                     </Button>
