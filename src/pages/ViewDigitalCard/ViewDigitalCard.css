@@ -138,6 +138,12 @@ body p {
 .html_link {
   color: gray;
   text-decoration: none;
+  text-wrap: "none";
+}
+
+.company-info-wrap {
+  word-wrap: break-word; /* Enable text wrapping */
+  max-width: 100%; /* Limit the maximum width */
 }
 
 .html_link:hover {

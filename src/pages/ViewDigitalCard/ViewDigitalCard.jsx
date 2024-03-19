@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
 import { FaShareAlt } from "react-icons/fa";
 import "./ViewDigitalCard.css";
 import {
@@ -7,7 +7,7 @@ import {
   getVCFCardforDigitalCard,
 } from "../../services/apiServices";
 import { useParams } from "react-router-dom";
-import { Button, message } from "antd";
+import { Button, Spin, message } from "antd";
 import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
 import WhatsAppCustomIcon from "../../assets/images/social/whatsapp.png";
 import InstagramCustomIcon from "../../assets/images/social/instagram.png";
@@ -22,10 +22,12 @@ import FacebookCustomIcon from "../../assets/images/social/facebook.png";
 import XHSCustomIcon from "../../assets/images/social/xhs.png";
 import WeiboCustomIcon from "../../assets/images/social/weibo.png";
 import { Footer } from "antd/es/layout/layout";
+import { PulseLoader } from "react-spinners";
 
 function ViewDigitalCard() {
   const { companyName, cardReference } = useParams();
 
+  const [isFetchingCard, setIsFetchingCard] = useState(true);
   const [cardDetails, setCardDetails] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [coverImg, setCoverImg] = useState("");
@@ -35,6 +37,7 @@ function ViewDigitalCard() {
   useEffect(() => {
     async function fetchCard() {
       try {
+        setIsFetchingCard(true);
         let queries = { companyName, cardReference };
         const response = await fetchViewDigitalCardAll(queries);
         console.log(response);
@@ -45,6 +48,9 @@ function ViewDigitalCard() {
         setProductServiceHTML(response.data.data.product_service);
       } catch (error) {
         console.error("Error fetching card details:", error);
+        // message.error("Something Went Wrong. Please try again");
+      } finally {
+        setIsFetchingCard(false);
       }
     }
 
@@ -98,10 +104,11 @@ function ViewDigitalCard() {
 
   // Inside your component
   const openSocialLink = (link) => {
+    console.log(link);
     // Extract only the social media platform name from the link
     const platformName = link.substring(link.lastIndexOf("/") + 1);
     console.log(platformName);
-    window.open(platformName, "_blank");
+    window.open(link, "_blank");
   };
 
   return (
@@ -174,7 +181,7 @@ function ViewDigitalCard() {
                   </div>
                   <div className="viewCardCompanyBioDetails">
                     <Row className="align-items-center">
-                      <Col lg={8} md={8} sm={8}>
+                      <Col lg={8} md={8} sm={8} xs={8}>
                         <label className="fw-bold text-black">
                           Company Location
                         </label>
@@ -182,7 +189,7 @@ function ViewDigitalCard() {
                           {cardDetails?.company_address}
                         </div>
                       </Col>
-                      <Col lg={4} md={4} sm={4}>
+                      <Col lg={4} md={4} sm={4} xs={4}>
                         <a
                           href={cardDetails?.location}
                           target="_blank"
@@ -190,7 +197,6 @@ function ViewDigitalCard() {
                         >
                           <FaMapLocationDot className="float-end text-black fs-2" />
                         </a>{" "}
-                        {/* <Image src="../../assets/images/icons/destination.png" /> */}
                       </Col>
                     </Row>
                   </div>
@@ -225,7 +231,7 @@ function ViewDigitalCard() {
                         <div className="text-muted">
                           <a
                             href={`mailto:${cardDetails?.user_email}`}
-                            className="html_link"
+                            className="html_link company-info-wrap"
                           >
                             {cardDetails?.user_email || "NA"}
                           </a>
@@ -236,7 +242,7 @@ function ViewDigitalCard() {
                         <div className="text-muted">
                           <a
                             href={`tel:${cardDetails?.contact_number}`}
-                            className="html_link"
+                            className="html_link company-info-wrap"
                           >
                             {cardDetails?.contact_number || "NA"}
                           </a>
@@ -247,7 +253,7 @@ function ViewDigitalCard() {
                         <div className="text-muted">
                           <a
                             href={`mailto:${cardDetails?.company_email}`}
-                            className="html_link"
+                            className="html_link company-info-wrap"
                           >
                             {cardDetails?.company_email || "NA"}
                           </a>
@@ -260,7 +266,7 @@ function ViewDigitalCard() {
                             href={cardDetails?.company_website}
                             target="_blank"
                             rel="noreferrer"
-                            className="html_link"
+                            className="html_link company-info-wrap"
                           >
                             {cardDetails?.company_website || "NA"}
                           </a>
@@ -271,7 +277,7 @@ function ViewDigitalCard() {
                         <div className="text-muted">
                           <a
                             href={`tel:${cardDetails?.company_phone}`}
-                            className="html_link"
+                            className="html_link company-info-wrap"
                           >
                             {cardDetails?.company_phone || "NA"}
                           </a>
@@ -295,7 +301,10 @@ function ViewDigitalCard() {
                                 className="social_custom_icon float-start"
                                 src={FacebookCustomIcon}
                                 alt="Facebook Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Facebook
@@ -308,12 +317,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.instagram)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={InstagramCustomIcon}
                                 alt="Instagram Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Instagram
@@ -326,12 +341,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.linkedin)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={LinkedInCustomIcon}
                                 alt="LinkedIn Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Linkedin
@@ -344,12 +365,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.whatsapp)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={WhatsAppCustomIcon}
                                 alt="WhatsApp Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 WhatsApp
@@ -362,12 +389,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.youtube)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={YouTubeCustomIcon}
                                 alt="YouTube Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 YouTube
@@ -380,12 +413,16 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() => openSocialLink(cardDetails.tiktok)}
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={TikTokCustomIcon}
                                 alt="TikTok Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 TikTok
@@ -398,12 +435,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.we_chat)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={WeChatCustomIcon}
                                 alt="WeChat Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 WeChat
@@ -416,12 +459,16 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() => openSocialLink(cardDetails.line)}
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={LineCustomIcon}
                                 alt="Line Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Line
@@ -434,12 +481,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.telegram)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={TelegramCustomIcon}
                                 alt="Telegram Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Telegram
@@ -452,12 +505,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.xiao_hong_shu)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={XHSCustomIcon}
                                 alt="XHS Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Xiao Hong Shu
@@ -470,12 +529,18 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() =>
+                                openSocialLink(cardDetails.twitter)
+                              }
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={TwitterCustomIcon}
                                 alt="Twitter Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Twitter
@@ -488,12 +553,16 @@ function ViewDigitalCard() {
                             <Button
                               className="w-100 d-flex align-items-center"
                               size="large"
+                              onClick={() => openSocialLink(cardDetails.weibo)}
                             >
                               <img
                                 className="social_custom_icon float-start"
                                 src={WeiboCustomIcon}
                                 alt="Weibo Icon"
-                                style={{ maxHeight: "100%", maxWidth: "10%" }}
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
                               />
                               <span className="button-content float-start mx-2">
                                 Weibo
