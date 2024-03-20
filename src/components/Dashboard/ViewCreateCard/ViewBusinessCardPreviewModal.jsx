@@ -6,7 +6,7 @@ import { Alert, Button, Modal, Space, message } from "antd";
 import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
 import { FaShareAlt } from "react-icons/fa";
 import StaticQR from "../../../assets/images/static/qr_img.png";
-import DefaultUserAvatar from "../../../assets/images/static/default-user-avatar.png";
+import DefaultUserAvatar from "../../../assets/images/static/default-user.png";
 
 import {
   fetchCompanyDetails,
