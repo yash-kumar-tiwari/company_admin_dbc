@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom";
 import "./CompanyDashboardPage.css";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
+import { Image } from "react-bootstrap";
+import AppLogo from "../../../assets/images/static/app_logo.png";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -148,8 +150,8 @@ const CompanyDashboardPage = () => {
             // trigger={<MenuFoldOutlined />}
           >
             <div className="demo-logo-vertical" />
-            <Space className="fw-bold text-center fs-4 px-5 pt-4 pb-2x">
-              Dashboard
+            <Space className="app-logo-desktop-view p-2">
+              <Image src={AppLogo} width={150} className="text-center" />
             </Space>
             <Menu
               theme="light"
@@ -182,10 +184,15 @@ const CompanyDashboardPage = () => {
             </Menu>
           </Sider>
           <Layout style={{ backgroundColor: "aliceblue" }}>
-            <Content className="my-5">
+            <center className="mt-2">
+              <Space className="app-logo-mobile-view">
+                <Image src={AppLogo} width={150} className="text-center" />
+              </Space>
+            </center>
+            <Content className="mb-5">
               <div
                 style={{
-                  padding: 24,
+                  padding: 16,
                   // minHeight: 360,
                   // background: colorBgContainer,
                   borderRadius: borderRadiusLG,
