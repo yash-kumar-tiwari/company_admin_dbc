@@ -13,7 +13,8 @@ body p {
 }
 
 .viewPreviewDigitalBusinessCardContainer {
-  background-image: url("../../../assets/images/background/abstract_black_01.jpg");
+  background-color: #000;
+  /* background-image: url("../../../assets/images/background/abstract_black_01.jpg"); */
   background-size: cover;
   background-position: center;
   color: white;
