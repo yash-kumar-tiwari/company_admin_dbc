@@ -6,6 +6,7 @@ import ViewDigitalCard from "./pages/ViewDigitalCard/ViewDigitalCard";
 import ForgetPasswordPage from "./pages/Auth/ForgetPasswordPage/ForgetPasswordPage";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage/ResetPasswordPage";
 import EditCardPage from "./pages/Dashboard/EditCardPage/EditCardPage";
+import Page404 from "./pages/Error/404Page/Page404";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           path="/view-digital-card/:companyName/:cardReference"
           element={<ViewDigitalCard />}
         />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </>
   );

@@ -1,18 +1,5 @@
 /* fonts.css */
-@font-face {
-  font-family: "Agrandir";
+/* @font-face {
+  font-family: "Roboto";
   src: url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-Black.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-BlackItalic.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-Bold.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-BoldItalic.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-Italic.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-Light.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-LightItalic.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-Medium.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-MediumItalic.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-Thin.ttf") format("truetype");
-  src: url("../fonts/roboto/Roboto-ThinItalic.ttf") format("truetype");
-
-  /* You can define multiple src for different file formats */
-}
+} */

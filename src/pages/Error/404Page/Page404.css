@@ -1,0 +1,22 @@
+.Page404_Container {
+  background-color: #353839;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.Page404_PNF_logo {
+  height: 50vh;
+}
+
+@media screen and (max-width: 768px) {
+  .Page404_PNF_logo {
+    width: 100%;
+    height: auto;
+  }
+  .contentCenter {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
