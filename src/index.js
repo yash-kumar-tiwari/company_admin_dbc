@@ -6,9 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import "@fontsource/roboto"; // Defaults to weight 400
-import "@fontsource/roboto/400.css"; // Specify weight
-import "@fontsource/roboto/400-italic.css"; // Specify weight and style
+import "./assets/css/fonts.css";
 
 import { ConfigProvider, message } from "antd";
 import { LocaleProvider } from "antd";
