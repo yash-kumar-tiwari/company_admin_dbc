@@ -1,35 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Card,
-  Form,
-  Input,
-  Typography,
-  Upload,
-  message,
-} from "antd";
+import { Avatar, Button, Card, Form, Input, Upload, message } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import { Editor } from "@tinymce/tinymce-react";
-import { UploadOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import {
   editCardDetails,
   fetchViewDigitalCard,
   uploadAvatar,
-  uploadCardCoverPic,
 } from "../../../services/apiServices";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 
-const { Text, Title } = Typography;
-const { Item } = Form;
-const { TextArea } = Input;
-
 function ViewEditCard({ card_id }) {
   const navigate = useNavigate();
-  const [form] = Form.useForm(); // Create form instance
+  const [form] = Form.useForm();
 
   const params = useParams();
   const urlString = params["*"];
@@ -42,16 +27,11 @@ function ViewEditCard({ card_id }) {
   const [cardDetails, setCardDetails] = useState({});
   const [profilePreview, setProfilePreview] = useState("");
   const [fileList, setFileList] = useState([]);
-  const [coverPreview, setCoverPreview] = useState("");
-  const [coverPicList, setCoverPicList] = useState([]);
-
-  const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
   const [bioHtml, setBioHtml] = useState("");
   const [compID, setCompID] = useState("");
 
   const onChange = ({ fileList: newFileList }) => {
     // Assuming only one file is selected
-    console.log(newFileList);
     if (newFileList.length > 0) {
       const newAvatarPreview = URL.createObjectURL(
         newFileList[0].originFileObj
@@ -78,35 +58,6 @@ function ViewEditCard({ card_id }) {
     imgWindow?.document.write(image.outerHTML);
   };
 
-  const onCoverChange = ({ fileList: newFileList }) => {
-    // Assuming only one file is selected
-    console.log(newFileList);
-    if (newFileList.length > 0) {
-      const newAvatarPreview = URL.createObjectURL(
-        newFileList[0].originFileObj
-      );
-      setCoverPreview(newAvatarPreview);
-    } else {
-      setCoverPreview(""); // Clear the preview if no file is selected
-    }
-    setCoverPicList(newFileList);
-  };
-
-  const onCoverPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
-
   const handleProfilePicUpdate = async (imageFile) => {
     // Check if there's a new file in fileList
     if (fileList.length > 0) {
@@ -114,7 +65,6 @@ function ViewEditCard({ card_id }) {
 
       // Upload the file and get the path
       const response = await uploadAvatar(imageFile);
-      console.log(response);
       if (response.status === 201) {
         let imagePath = response.data.data;
         return imagePath;
@@ -128,29 +78,8 @@ function ViewEditCard({ card_id }) {
     }
   };
 
-  const handleCoverPicUpdate = async (imageFile) => {
-    // Check if there's a new file in fileList
-    if (coverPicList.length > 0) {
-      const file = coverPicList[0].originFileObj; // Assuming only one file is selected
-
-      // Upload the file and get the path
-      const response = await uploadCardCoverPic(imageFile);
-      console.log(response);
-      if (response.status === 201) {
-        let imagePath = response.data.data;
-        return imagePath;
-      } else {
-        message.error(response.data.message);
-        return;
-      }
-    } else {
-      // If no new file selected, use the current avatar path
-      return businessCardData.cover_pic || "";
-    }
-  };
-
   const onFinish = async (values) => {
-    console.log("Received values:", values);
+    // console.log("Received values:", values);
     try {
       setIsUpdatingCard(true);
 
@@ -158,24 +87,15 @@ function ViewEditCard({ card_id }) {
         fileList[0]?.originFileObj
       );
 
-      const uploadedCoverPath = await handleCoverPicUpdate(
-        coverPicList[0]?.originFileObj
-      );
-
       let updatedDetails = {
         ...values,
-        // card_id: cardID,
         card_id: card_id,
         bio: bioHtml,
         profile_picture: uploadedPhotoPath
           ? uploadedPhotoPath
           : businessCardData.profile_picture,
-        cover_pic: uploadedCoverPath
-          ? uploadedCoverPath
-          : businessCardData.cover_pic,
       };
-      console.log(updatedDetails);
-      const response = await editCardDetails(updatedDetails); // Send updated profile data to API
+      const response = await editCardDetails(updatedDetails);
       if (response && response.status === 200) {
         message.success(response.data.message);
         fetchCardData();
@@ -193,16 +113,7 @@ function ViewEditCard({ card_id }) {
     }
   };
 
-  const handlePreviewModalOpen = () => {
-    setIsPreviewModalVisible(true);
-  };
-
-  const handlePreviewModalClose = () => {
-    setIsPreviewModalVisible(false);
-  };
-
   const handleEditorChange = (content, editor) => {
-    console.log(content);
     setBioHtml(content);
   };
 
@@ -213,7 +124,6 @@ function ViewEditCard({ card_id }) {
       const response = await fetchViewDigitalCard(card_id);
 
       if (response && response.status === 200) {
-        console.log(response.data.data);
         setCardDetails(response.data.data);
         const cardData = response.data.data;
         setCompID(response.data.data.company_id);

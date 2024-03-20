@@ -1,37 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Form,
-  Input,
-  Typography,
-  Upload,
-  Steps,
-  Divider,
-} from "antd";
+import React, { useState } from "react";
+import { Button, Card, Form, Input, Upload } from "antd";
 import "./ViewCreateCard.css";
-import { useNavigate } from "react-router-dom";
 
-import { Col, Image, Row } from "react-bootstrap";
-import { Card as CardRB } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { UploadOutlined } from "@ant-design/icons";
-import BusinessCard from "./BusinessCard";
 import ViewBusinessCardPreviewModal from "./ViewBusinessCardPreviewModal";
-import ImgCrop from "antd-img-crop";
-import ViewProfilePreviewModal from "./ViewProfilePreviewModal";
-import { FaUser, FaCircleInfo, FaCircleCheck } from "react-icons/fa6";
-import { IoShareSocialSharp } from "react-icons/io5";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
-import ViewCoverPreviewModal from "./ViewCoverPreviewModal";
 import { Editor } from "@tinymce/tinymce-react";
-import { toolbarOptions } from "../../../utils/helpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
-
-const { Text, Title, Paragraph } = Typography;
-const { Item } = Form;
-const { TextArea } = Input;
-const { Step } = Steps;
+import ImgCrop from "antd-img-crop";
 
 const initialBusinessCardData = {
   first_name: "",
@@ -48,9 +25,7 @@ function ViewCreateCard() {
   const [businessCardData, setBusinessCardData] = useState(
     initialBusinessCardData
   );
-  const [isImgPreModalVisible, setIsImgPreModalVisible] = useState(false);
   const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
   const [fileList, setFileList] = useState([]);
   const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [bioHtml, setBioHtml] = useState("");
@@ -64,9 +39,7 @@ function ViewCreateCard() {
   };
 
   const onPreview = async (file) => {
-    console.log(file);
     let src = file.url || file.preview;
-    console.log(src);
 
     if (!src && file.originFileObj) {
       src = await new Promise((resolve) => {
@@ -77,24 +50,11 @@ function ViewCreateCard() {
     }
 
     setPreviewImageUrl(src); // Store the preview image URL
-    handleImgPreModalOpen(); // Open the preview modal
   };
 
   const onFinish = (values) => {
-    console.log("Received values:", values);
     setBusinessCardData({ ...businessCardData, ...values });
-    // Save data to the component or perform any action you need
-    // For demonstration purposes, let's just log the data
-    console.log("All data collected:", businessCardData);
     handlePreviewModalOpen();
-  };
-
-  const handleImgPreModalOpen = () => {
-    setIsImgPreModalVisible(true);
-  };
-
-  const handleImgPreModalClose = () => {
-    setIsImgPreModalVisible(false);
   };
 
   const handlePreviewModalOpen = () => {
@@ -106,18 +66,11 @@ function ViewCreateCard() {
   };
 
   const handleEditorChange = (content, editor) => {
-    console.log(content);
     setBioHtml(content);
   };
 
   const handleBioQuillChange = (value) => {
-    console.log(value);
     setBioTxtQuill(value);
-  };
-
-  // Function to reset businessCardData to its initial state
-  const resetBusinessCardData = () => {
-    setBusinessCardData(initialBusinessCardData);
   };
 
   return (
@@ -133,17 +86,6 @@ function ViewCreateCard() {
           className="p-2"
           name="createCardForm"
           onFinish={onFinish}
-          initialValues={{
-            // Updated initial values with additional fields
-            first_name: businessCardData.first_name,
-            last_name: businessCardData.last_name,
-            user_email: businessCardData.user_email,
-            designation: businessCardData.designation,
-            bio: businessCardData.bio,
-            contact_number: businessCardData.contact_number,
-            cover_pic: businessCardData.cover_pic,
-            profile_picture: businessCardData.profile_picture,
-          }}
         >
           <Row>
             <Col lg={4} md={12} sm={12}>
@@ -334,26 +276,21 @@ function ViewCreateCard() {
 
       <MidinFooter />
 
-      {/* Your form and other components */}
       <ViewBusinessCardPreviewModal
         isVisible={isPreviewModalVisible}
         onClose={handlePreviewModalClose}
         data={businessCardData}
         imageUrl={previewImageUrl}
-        fileList={fileList} // Pass fileList as a prop
+        fileList={fileList}
         onSuccess={(cardDetails) => {
           formRef.current.resetFields();
-          resetBusinessCardData();
-          console.log("Success Message", cardDetails);
+          form.resetFields();
+          setFileList([]);
+          setBioHtml("");
+          // console.log("Success Message", cardDetails);
         }}
         bioHtml={bioHtml}
         bioTxtQuill={bioTxtQuill}
-      />
-
-      <ViewProfilePreviewModal
-        isVisible={isImgPreModalVisible}
-        imageUrl={previewImageUrl}
-        onClose={handleImgPreModalClose}
       />
     </>
   );
