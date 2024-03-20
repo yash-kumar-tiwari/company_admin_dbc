@@ -129,74 +129,76 @@ const CompanyDashboardPage = () => {
   }, [selectedTab]);
 
   return (
-    <div className="MainBg">
-      <Layout className="main-dashboard-layout">
-        <Sider
-          theme="light"
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={(broken) => {
-            console.log(broken);
-          }}
-          collapsed={collapsed} // Set collapsed state of the Sider
-          onCollapse={(collapsed, type) => {
-            setCollapsed(collapsed);
-            console.log(collapsed, type);
-          }}
-          style={{ backgroundColor: "aliceblue" }}
-          // trigger={<MenuFoldOutlined />}
-        >
-          <div className="demo-logo-vertical" />
-          <Space className="fw-bold text-center fs-4 px-5 pt-4 pb-2x">
-            Dashboard
-          </Space>
-          <Menu
+    <>
+      <div className="MainBg">
+        <Layout className="main-dashboard-layout">
+          <Sider
             theme="light"
-            mode="inline"
-            defaultSelectedKeys={[selectedTab]}
-            onClick={handleMenuClick}
+            breakpoint="lg"
+            collapsedWidth="0"
+            onBreakpoint={(broken) => {
+              console.log(broken);
+            }}
+            collapsed={collapsed} // Set collapsed state of the Sider
+            onCollapse={(collapsed, type) => {
+              setCollapsed(collapsed);
+              console.log(collapsed, type);
+            }}
             style={{ backgroundColor: "aliceblue" }}
-            className="mb-2"
+            // trigger={<MenuFoldOutlined />}
           >
-            {items.map((item) => (
-              <Menu.Item
-                key={item.key}
-                icon={item.icon}
-                style={{ borderRadius: "20px" }}
-                className="sider-dashboard-menu-item my-2 fw-bold"
+            <div className="demo-logo-vertical" />
+            <Space className="fw-bold text-center fs-4 px-5 pt-4 pb-2x">
+              Dashboard
+            </Space>
+            <Menu
+              theme="light"
+              mode="inline"
+              defaultSelectedKeys={[selectedTab]}
+              onClick={handleMenuClick}
+              style={{ backgroundColor: "aliceblue" }}
+              className="mb-2"
+            >
+              {items.map((item) => (
+                <Menu.Item
+                  key={item.key}
+                  icon={item.icon}
+                  style={{ borderRadius: "20px" }}
+                  className="sider-dashboard-menu-item my-2 fw-bold"
+                >
+                  {item.label}
+                </Menu.Item>
+              ))}
+              <Button
+                danger
+                type="primary"
+                className="w-100"
+                shape="round"
+                onClick={handleLogout}
+                icon={<LogoutOutlined />}
               >
-                {item.label}
-              </Menu.Item>
-            ))}
-            <Button
-              danger
-              type="primary"
-              className="w-100"
-              shape="round"
-              onClick={handleLogout}
-              icon={<LogoutOutlined />}
-            >
-              Logout
-            </Button>
-          </Menu>
-        </Sider>
-        <Layout style={{ backgroundColor: "aliceblue" }}>
-          <Content className="my-5">
-            <div
-              style={{
-                padding: 24,
-                // minHeight: 360,
-                // background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-              className="dashboard-container"
-            >
-              {renderContent()}
-            </div>
-          </Content>
+                Logout
+              </Button>
+            </Menu>
+          </Sider>
+          <Layout style={{ backgroundColor: "aliceblue" }}>
+            <Content className="my-5">
+              <div
+                style={{
+                  padding: 24,
+                  // minHeight: 360,
+                  // background: colorBgContainer,
+                  borderRadius: borderRadiusLG,
+                }}
+                className="dashboard-container"
+              >
+                {renderContent()}
+              </div>
+            </Content>
+          </Layout>
         </Layout>
-      </Layout>
-    </div>
+      </div>
+    </>
   );
 };
 export default CompanyDashboardPage;
