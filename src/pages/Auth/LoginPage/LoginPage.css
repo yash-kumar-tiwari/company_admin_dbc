@@ -61,7 +61,6 @@ html {
   border: none;
   line-height: 2;
 }
-
 .bgImg {
   object-fit: cover;
   filter: brightness(0.5);

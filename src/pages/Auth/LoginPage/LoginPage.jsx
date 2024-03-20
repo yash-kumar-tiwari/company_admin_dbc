@@ -109,7 +109,6 @@ function Login() {
                 </Form.Item>
                 <Form.Item>
                   <Button
-                    type="primary"
                     shape="round"
                     htmlType="submit"
                     className="btn-login w-100"
