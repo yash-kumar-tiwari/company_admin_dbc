@@ -22,7 +22,7 @@ import "./CompanyDashboardPage.css";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
 import { Image } from "react-bootstrap";
-import AppLogo from "../../../assets/images/static/app_logo.png";
+import AppLogoDark from "../../../assets/images/static/app_logo_dark.png";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -151,7 +151,7 @@ const CompanyDashboardPage = () => {
           >
             <div className="demo-logo-vertical" />
             <Space className="app-logo-desktop-view p-2">
-              <Image src={AppLogo} width={150} className="text-center" />
+              <Image src={AppLogoDark} width={150} className="text-center" />
             </Space>
             <Menu
               theme="light"
@@ -186,7 +186,7 @@ const CompanyDashboardPage = () => {
           <Layout style={{ backgroundColor: "aliceblue" }}>
             <center className="mt-2">
               <Space className="app-logo-mobile-view">
-                <Image src={AppLogo} width={150} className="text-center" />
+                <Image src={AppLogoDark} width={150} className="text-center" />
               </Space>
             </center>
             <Content className="mb-5">
