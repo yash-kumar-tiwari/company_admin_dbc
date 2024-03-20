@@ -23,7 +23,6 @@ import "./ViewCards.css";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { Col, Row } from "react-bootstrap";
-import { Card as CardRB } from "react-bootstrap";
 import { fetchCardsList } from "../../../services/apiServices";
 import ActivateCardQR from "./ActivateCardQR";
 import DeactivateCard from "./DeactivateCard";
@@ -31,6 +30,7 @@ import ActivateMultipleCardsQR from "./ActivateMultipleCardsQR";
 import DeleteCard from "./DeleteCard";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
+import EditCard from "./EditCard";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -50,6 +50,8 @@ function ViewCards({ setShowEditCard }) {
   const [showActivateMultipleModal, setShowActivateMultipleModal] =
     useState(false);
   const [showDeleteCardModal, setShowDeleteCardModal] = useState(false);
+  const [showEditCardModal, setShowEditCardModal] = useState(false);
+  const [editedCardData, setEditedCardData] = useState(null);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [pageSize, setPageSize] = useState(5);
 
@@ -224,8 +226,11 @@ function ViewCards({ setShowEditCard }) {
               >
                 Delete Card
               </Menu.Item>
-              <Menu.Item key="4">
-                <NavLink
+              <Menu.Item
+                key="4"
+                onClick={() => handleEditCardModalOpen(record)}
+              >
+                {/* <NavLink
                   className="text-decoration-none"
                   to={{
                     pathname: `/dashboard/edit-card/${record.id}`,
@@ -234,7 +239,8 @@ function ViewCards({ setShowEditCard }) {
                   onClick={() => handleEditCard(record.id)}
                 >
                   Edit Card
-                </NavLink>
+                </NavLink> */}
+                Edit Card
               </Menu.Item>
             </Menu>
           }
@@ -268,6 +274,14 @@ function ViewCards({ setShowEditCard }) {
     setShowDeleteCardModal(true);
   };
 
+  const handleEditCardModalOpen = (record) => {
+    setSelectedRecord(record);
+    setSelectedCardId(record);
+    setShowEditCardModal(true);
+    const card = CardsData.find((card) => card.id === record);
+    setEditedCardData(card);
+  };
+
   const handleActivateCardQRModalClose = () => {
     // message.success(`Activated ${selectedRecord.first_name}'s card`);
     setShowActivateCardQRModal(false);
@@ -284,6 +298,11 @@ function ViewCards({ setShowEditCard }) {
 
   const handleDeleteCardModalClose = () => {
     setShowDeleteCardModal(false);
+  };
+
+  const handleEditModalClose = () => {
+    setShowEditCardModal(false);
+    setEditedCardData(null);
   };
 
   const [selectedCardId, setSelectedCardId] = useState(null);
@@ -407,6 +426,16 @@ function ViewCards({ setShowEditCard }) {
         }}
         onCancel={() => setShowDeleteCardModal(false)}
         record={selectedRecord} // Pass the selectedRowKeys to the modal
+      />
+
+      <EditCard
+        visible={showEditCardModal}
+        onCancel={handleEditModalClose}
+        onEditSuccess={(info) => {
+          console.log("Edit Card Success");
+        }}
+        record={selectedRecord} // Pass the selectedRowKeys to the modal
+        isUpdating={isUpdatingCards}
       />
     </>
   );
