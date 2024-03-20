@@ -41,7 +41,7 @@ body p {
   position: relative; /* Ensure positioning context */
   height: 25vh;
   width: 100%;
-  background-image: url("../../../assets/images/background/office_cover_photo_01.jpg");
+  background-image: url("../../../assets/images/static/office_cover_photo_01_Resize70.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
