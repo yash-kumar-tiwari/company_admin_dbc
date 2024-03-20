@@ -33,9 +33,7 @@ const { Item } = Form;
 const { TextArea } = Input;
 const { Step } = Steps;
 
-// Define initial state for businessCardData
 const initialBusinessCardData = {
-  // Initialize your state with default values
   first_name: "",
   last_name: "",
   user_email: "",
@@ -44,18 +42,6 @@ const initialBusinessCardData = {
   contact_number: "",
   cover_pic: "",
   profile_picture: "",
-  facebook: "",
-  instagram: "",
-  linkedin: "",
-  whatsapp: "",
-  youtube: "",
-  xiao_hong_shu: "",
-  tiktok: "",
-  wechat: "",
-  line: "",
-  telegram: "",
-  webio: "",
-  twitter: "",
 };
 
 function ViewCreateCard() {
@@ -63,31 +49,24 @@ function ViewCreateCard() {
     initialBusinessCardData
   );
   const [isImgPreModalVisible, setIsImgPreModalVisible] = useState(false);
-  const [isCoverPicPreModalVisible, setIsCoverPicPreModalVisible] =
-    useState(false);
   const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [fileList, setFileList] = useState([]);
   const [previewImageUrl, setPreviewImageUrl] = useState("");
-  const [coverPicUrl, setCoverPicUrl] = useState("");
-  const [coverPicFileList, setCoverPicFileList] = useState([]);
   const [bioHtml, setBioHtml] = useState("");
   const [bioTxtQuill, setBioTxtQuill] = useState("");
-  const [isFormComplete, setIsFormComplete] = useState(false); // Step 1: Define state variable
 
-  const [form] = Form.useForm(); // Define form instance using useForm hook
+  const [form] = Form.useForm();
   const formRef = React.createRef();
 
-  const onChange = ({ fileList: newFileList }) => {
+  const onChange = async ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
 
-  const onCoverPicChange = ({ fileList: newFileList }) => {
-    setCoverPicFileList(newFileList);
-  };
-
   const onPreview = async (file) => {
+    console.log(file);
     let src = file.url || file.preview;
+    console.log(src);
 
     if (!src && file.originFileObj) {
       src = await new Promise((resolve) => {
@@ -101,32 +80,13 @@ function ViewCreateCard() {
     handleImgPreModalOpen(); // Open the preview modal
   };
 
-  const onCoverPicPreview = async (file) => {
-    let src = file.url || file.preview;
-
-    if (!src && file.originFileObj) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-
-    setCoverPicUrl(src); // Store the cover pic URL
-    handleCoverPicPreModalOpen(); // Open the preview modal
-  };
-
   const onFinish = (values) => {
     console.log("Received values:", values);
     setBusinessCardData({ ...businessCardData, ...values });
-    if (currentStep === 3) {
-      // Save data to the component or perform any action you need
-      // For demonstration purposes, let's just log the data
-      console.log("All data collected:", businessCardData);
-      handlePreviewModalOpen();
-    } else {
-      handleNextStep();
-    }
+    // Save data to the component or perform any action you need
+    // For demonstration purposes, let's just log the data
+    console.log("All data collected:", businessCardData);
+    handlePreviewModalOpen();
   };
 
   const handleImgPreModalOpen = () => {
@@ -137,36 +97,12 @@ function ViewCreateCard() {
     setIsImgPreModalVisible(false);
   };
 
-  const handleCoverPicPreModalOpen = () => {
-    setIsCoverPicPreModalVisible(true);
-  };
-
-  const handleCoverPicPreModalClose = () => {
-    setIsCoverPicPreModalVisible(false);
-  };
-
   const handlePreviewModalOpen = () => {
     setIsPreviewModalVisible(true);
   };
 
   const handlePreviewModalClose = () => {
     setIsPreviewModalVisible(false);
-  };
-
-  const handleNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  const handlePrevStep = () => {
-    if (currentStep === 1) {
-      setCurrentStep(0); // Go back to the personal information step
-    } else {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleStepClick = (step) => {
-    setCurrentStep(step);
   };
 
   const handleEditorChange = (content, editor) => {
@@ -184,26 +120,6 @@ function ViewCreateCard() {
     setBusinessCardData(initialBusinessCardData);
   };
 
-  useEffect(() => {
-    // Step 2: Update form completion status based on field values
-    const { first_name, last_name, user_email, designation, contact_number } =
-      businessCardData;
-    const isComplete =
-      first_name !== "" &&
-      last_name !== "" &&
-      user_email !== "" &&
-      designation !== "" &&
-      contact_number !== "";
-    setIsFormComplete(isComplete);
-  }, [businessCardData]);
-
-  useEffect(() => {
-    // Set the editor content when the Bio tab is selected
-    if (currentStep === 1) {
-      form.setFieldsValue({ bio: bioHtml });
-    }
-  }, [currentStep, bioHtml, form]);
-
   return (
     <>
       <Card
@@ -211,43 +127,6 @@ function ViewCreateCard() {
         title={<span className="fw-bold text-center">Create Card</span>}
         className="view-profile-custom-card"
       >
-        <div className="view-create-card-steps">
-          <Steps
-            type="navigation"
-            current={currentStep}
-            responsive
-            size="small"
-          >
-            <Step
-              title="Personal"
-              icon={<FaUser style={{ color: "blue" }} />}
-              onClick={() => handleStepClick(0)}
-              status={currentStep >= 0 ? "finish" : "wait"}
-              style={{ cursor: "pointer" }}
-            />
-            <Step
-              title="Bio"
-              icon={<FaCircleInfo style={{ color: "gray" }} />}
-              onClick={() => handleStepClick(1)}
-              status={currentStep >= 1 ? "finish" : "wait"}
-              style={{ cursor: "pointer" }}
-            />
-            <Step
-              title="Social"
-              icon={<IoShareSocialSharp style={{ color: "orange" }} />}
-              onClick={() => handleStepClick(2)}
-              status={currentStep >= 2 ? "finish" : "wait"}
-              style={{ cursor: "pointer" }}
-            />
-            <Step
-              title="Review"
-              icon={<FaCircleCheck style={{ color: "green" }} />}
-              onClick={() => handleStepClick(3)}
-              status={currentStep === 3 ? "finish" : "wait"}
-              style={{ cursor: "pointer" }}
-            />
-          </Steps>
-        </div>
         <Form
           form={form}
           ref={formRef}
@@ -264,203 +143,158 @@ function ViewCreateCard() {
             contact_number: businessCardData.contact_number,
             cover_pic: businessCardData.cover_pic,
             profile_picture: businessCardData.profile_picture,
-            facebook: businessCardData.facebook,
-            instagram: businessCardData.instagram,
-            linkedin: businessCardData.linkedin,
-            whatsapp: businessCardData.whatsapp,
-            youtube: businessCardData.youtube,
-            xiao_hong_shu: businessCardData.xiao_hong_shu,
-            tiktok: businessCardData.tiktok,
-            wechat: businessCardData.wechat,
-            line: businessCardData.line,
-            telegram: businessCardData.telegram,
-            webio: businessCardData.webio,
-            twitter: businessCardData.twitter,
           }}
         >
-          {currentStep === 0 && (
-            <div>
-              <Row>
-                <Col lg={4} md={12} sm={12}>
-                  <label className="fw-bold my-1">First Name</label>
-                  <Form.Item
-                    name="first_name"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input first name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Enter First Name" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={4} md={12} sm={12}>
-                  <label className="fw-bold my-1">Last Name</label>
-                  <Form.Item
-                    name="last_name"
-                    rules={[
-                      { required: true, message: "Please input last name!" },
-                    ]}
-                  >
-                    <Input placeholder="Enter Last Name" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={4} md={12} sm={12}>
-                  <label className="fw-bold my-1">Email</label>
-                  <Form.Item
-                    name="user_email"
-                    rules={[
-                      { required: true, message: "Please input email!" },
-                      {
-                        type: "email",
-                        message: "Please enter a valid email address!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Enter Email Address" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Designation</label>
-                  <Form.Item
-                    name="designation"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input designation!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Enter Designation" size="large" />
-                  </Form.Item>
-                </Col>
+          <Row>
+            <Col lg={4} md={12} sm={12}>
+              <label className="fw-bold my-1">First Name</label>
+              <Form.Item
+                name="first_name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input first name!",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter First Name" size="large" />
+              </Form.Item>
+            </Col>
+            <Col lg={4} md={12} sm={12}>
+              <label className="fw-bold my-1">Last Name</label>
+              <Form.Item
+                name="last_name"
+                rules={[{ required: true, message: "Please input last name!" }]}
+              >
+                <Input placeholder="Enter Last Name" size="large" />
+              </Form.Item>
+            </Col>
+            <Col lg={4} md={12} sm={12}>
+              <label className="fw-bold my-1">Email</label>
+              <Form.Item
+                name="user_email"
+                rules={[
+                  { required: true, message: "Please input email!" },
+                  {
+                    type: "email",
+                    message: "Please enter a valid email address!",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Email Address" size="large" />
+              </Form.Item>
+            </Col>
+            <Col lg={6} md={12} sm={12}>
+              <label className="fw-bold my-1">Designation</label>
+              <Form.Item
+                name="designation"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input designation!",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Designation" size="large" />
+              </Form.Item>
+            </Col>
 
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Contact Number</label>
-                  <Form.Item
-                    name="contact_number"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input contact number!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Enter Contact Number" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <label className="fw-bold my-1">Profile Picture</label>
-                  <ImgCrop rotationSlider showReset>
-                    <Upload
-                      hasControlInside
-                      // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                      accept="image/*"
-                      listType="picture-card"
-                      fileList={fileList}
-                      onChange={onChange}
-                      onPreview={onPreview}
-                      maxCount={1}
-                      customRequest={({ file, onSuccess }) => {
-                        setTimeout(() => {
-                          onSuccess("ok");
-                        }, 0);
-                      }} // Use customRequest instead of action
-                    >
-                      {fileList.length < 1 && (
-                        <div>
-                          <UploadOutlined />
-                          <div style={{ marginTop: 8 }}>Upload Profile</div>
-                        </div>
-                      )}
-                    </Upload>
-                  </ImgCrop>
-                </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <label className="fw-bold my-1">Cover Picture</label>
-                  <ImgCrop rotationSlider showReset>
-                    <Upload
-                      hasControlInside
-                      accept="image/*"
-                      listType="picture-card"
-                      fileList={coverPicFileList}
-                      onChange={onCoverPicChange}
-                      onPreview={onCoverPicPreview}
-                      maxCount={1}
-                      customRequest={({ file, onSuccess }) => {
-                        setTimeout(() => {
-                          onSuccess("ok");
-                        }, 0);
-                      }}
-                    >
-                      {coverPicFileList.length < 1 && (
-                        <div>
-                          <UploadOutlined />
-                          <div style={{ marginTop: 8 }}>Upload Cover</div>
-                        </div>
-                      )}
-                    </Upload>
-                  </ImgCrop>
-                </Col>
-              </Row>
-            </div>
-          )}
-          {currentStep === 1 && (
-            <div>
-              <Col lg={12} md={12} sm={12}>
-                <label className="fw-bold my-1">Bio</label>
-                <Form.Item
-                  // name="bio"
-                  className="quill-editor"
-                  // rules={[
-                  //   { required: true, message: "Please input your bio!" },
-                  // ]}
+            <Col lg={6} md={12} sm={12}>
+              <label className="fw-bold my-1">Contact Number</label>
+              <Form.Item
+                name="contact_number"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input contact number!",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Contact Number" size="large" />
+              </Form.Item>
+            </Col>
+            <Col lg={6} md={6} sm={6}>
+              <label className="fw-bold my-1">Profile Picture</label>
+              <ImgCrop rotationSlider showReset>
+                <Upload
+                  hasControlInside
+                  // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  accept="image/*"
+                  listType="picture-card"
+                  fileList={fileList}
+                  onChange={onChange}
+                  onPreview={onPreview}
+                  maxCount={1}
+                  customRequest={({ file, onSuccess }) => {
+                    setTimeout(() => {
+                      onSuccess("ok");
+                    }, 0);
+                  }} // Use customRequest instead of action
                 >
-                  <Editor
-                    apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
-                    init={{
-                      placeholder: "Enter Bio Details",
-                      plugins:
-                        "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
-                      toolbar:
-                        "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
-                      images_default_resizing: "scale",
-                      images_resizing: true,
-                      file_picker_types: "image",
-                      file_picker_callback: function (callback, value, meta) {
-                        if (meta.filetype === "image") {
-                          var input = document.createElement("input");
-                          input.setAttribute("type", "file");
-                          input.setAttribute("accept", "image/*");
+                  {fileList.length < 1 && (
+                    <div>
+                      <UploadOutlined />
+                      <div style={{ marginTop: 8 }}>Upload Profile</div>
+                    </div>
+                  )}
+                </Upload>
+              </ImgCrop>
+            </Col>
+          </Row>
 
-                          // Trigger the file selection dialog when the input element changes
-                          input.onchange = function () {
-                            var file = this.files[0];
-                            var reader = new FileReader();
+          <Col lg={12} md={12} sm={12}>
+            <label className="fw-bold my-1">Bio</label>
+            <Form.Item
+              // name="bio"
+              className="quill-editor"
+              // rules={[
+              //   { required: true, message: "Please input your bio!" },
+              // ]}
+            >
+              <Editor
+                apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
+                init={{
+                  placeholder: "Enter Bio Details",
+                  plugins:
+                    "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
+                  toolbar:
+                    "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
+                  images_default_resizing: "scale",
+                  images_resizing: true,
+                  file_picker_types: "image",
+                  file_picker_callback: function (callback, value, meta) {
+                    if (meta.filetype === "image") {
+                      var input = document.createElement("input");
+                      input.setAttribute("type", "file");
+                      input.setAttribute("accept", "image/*");
 
-                            reader.onload = function (e) {
-                              // Pass the selected file back to the editor
-                              callback(e.target.result, {
-                                alt: file.name, // You can customize this if needed
-                              });
-                            };
+                      // Trigger the file selection dialog when the input element changes
+                      input.onchange = function () {
+                        var file = this.files[0];
+                        var reader = new FileReader();
 
-                            reader.readAsDataURL(file);
-                          };
+                        reader.onload = function (e) {
+                          // Pass the selected file back to the editor
+                          callback(e.target.result, {
+                            alt: file.name, // You can customize this if needed
+                          });
+                        };
 
-                          // Click the input element to open the file selection dialog
-                          input.click();
-                        }
-                      },
-                      media_live_embeds: true,
-                      media_embeds: true,
-                      content_css: "tinymce-5",
-                    }}
-                    onEditorChange={handleEditorChange}
-                    value={bioHtml}
-                  />
-                  {/* <ReactQuill
+                        reader.readAsDataURL(file);
+                      };
+
+                      // Click the input element to open the file selection dialog
+                      input.click();
+                    }
+                  },
+                  media_live_embeds: true,
+                  media_embeds: true,
+                  content_css: "tinymce-5",
+                }}
+                onEditorChange={handleEditorChange}
+                value={bioHtml}
+              />
+              {/* <ReactQuill
                     theme="snow"
                     placeholder="Enter Bio Details"
                     onChange={handleBioQuillChange}
@@ -477,166 +311,24 @@ function ViewCreateCard() {
                     }}
                     // formats={formatOptions}
                   /> */}
-                </Form.Item>
-              </Col>
-            </div>
-          )}
-          {currentStep === 2 && (
-            <div>
-              <Row>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Facebook</label>
-                  <Form.Item name="facebook">
-                    <Input placeholder="Enter Facebook Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Instagram</label>
-                  <Form.Item name="instagram">
-                    <Input placeholder="Enter Instagram Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">LinkedIn</label>
-                  <Form.Item name="linkedin">
-                    <Input placeholder="Enter LinkedIn Link" size="large" />
-                  </Form.Item>
-                </Col>
-                {/* <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Snapchat</label>
-                  <Form.Item name="snapchat_link">
-                    <Input placeholder="Enter Snapchat Link" size="large" />
-                  </Form.Item>
-                </Col> */}
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">WhatsApp</label>
-                  <Form.Item name="whatsapp">
-                    <Input placeholder="Enter WhatsApp Number" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">YouTube</label>
-                  <Form.Item name="youtube">
-                    <Input placeholder="Enter YouTube Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Xiao Hong Shu</label>
-                  <Form.Item name="xiao_hong_shu">
-                    <Input
-                      placeholder="Enter Xiao Hong Shu Link"
-                      size="large"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">TikTok</label>
-                  <Form.Item name="tiktok">
-                    <Input placeholder="Enter TikTok Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">WeChat</label>
-                  <Form.Item name="wechat">
-                    <Input placeholder="Enter WeChat Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Line</label>
-                  <Form.Item name="line">
-                    <Input placeholder="Enter Line Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Telegram</label>
-                  <Form.Item name="telegram">
-                    <Input placeholder="Enter Telegram Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Weibo</label>
-                  <Form.Item name="webio">
-                    <Input placeholder="Enter Weibo Link" size="large" />
-                  </Form.Item>
-                </Col>
-                <Col lg={6} md={12} sm={12}>
-                  <label className="fw-bold my-1">Twitter</label>
-                  <Form.Item name="twitter">
-                    <Input placeholder="Enter Twitter Link" size="large" />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </div>
-          )}
-          {currentStep === 3 && (
-            <div>
-              <h2>Review Your Information</h2>
-              <div className="createCard-reviewInformation pt-4 pb-0">
-                <Row>
-                  <Col lg={6} md={12} sm={12}>
-                    <p>First Name: {businessCardData.first_name}</p>
-                    <p>Last Name: {businessCardData.last_name}</p>
-                    <p>Email: {businessCardData.user_email}</p>
-                    <p>Designation: {businessCardData.designation}</p>
-                    <p>Contact Number: {businessCardData.contact_number}</p>
-                  </Col>
-                  {/* <Col>
-                    {previewImageUrl && ( // Check if profile picture URL is available
-                      <div>
-                        <p>Profile Picture:</p>
-                        <Image
-                          src={previewImageUrl}
-                          alt="Profile Picture"
-                          style={{ maxWidth: "100px" }} // Set your desired max width
-                        />
-                      </div>
-                    )}
-                  </Col> */}
-                </Row>
-              </div>
-              <Divider />
-              <div className="Last-create-card-button-group">
-                <Button
-                  style={{ marginRight: 8 }}
-                  onClick={handlePrevStep}
-                  size="large"
-                >
-                  Previous
-                </Button>
+            </Form.Item>
+          </Col>
 
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  size="large"
-                  disabled={!isFormComplete} // Step 3: Use form completion status to disable button
-                >
-                  Preview Card
-                </Button>
-              </div>
-            </div>
-          )}
-
-          <div className="create-card-button-group">
-            {currentStep < 3 && (
-              <Col lg={12} md={12} sm={12} className="m-0 p-0">
-                <Divider />
-                <Form.Item className="m-0 p-0 ">
-                  {currentStep > 0 && (
-                    <Button
-                      style={{ marginRight: 8 }}
-                      onClick={handlePrevStep}
-                      size="large"
-                    >
-                      Previous
-                    </Button>
-                  )}
-                  <Button type="primary" htmlType="submit" size="large">
-                    Save And Next
-                  </Button>
-                </Form.Item>
-              </Col>
-            )}
-          </div>
+          <Row>
+            <Col></Col>
+            <Col>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                className="w-100"
+                // disabled={!isFormComplete}
+              >
+                Preview Card
+              </Button>
+            </Col>
+            <Col></Col>
+          </Row>
         </Form>
       </Card>
 
@@ -648,9 +340,7 @@ function ViewCreateCard() {
         onClose={handlePreviewModalClose}
         data={businessCardData}
         imageUrl={previewImageUrl}
-        coverImageUrl={coverPicUrl}
         fileList={fileList} // Pass fileList as a prop
-        coverPicFileList={coverPicFileList}
         onSuccess={(cardDetails) => {
           formRef.current.resetFields();
           resetBusinessCardData();
@@ -660,17 +350,10 @@ function ViewCreateCard() {
         bioTxtQuill={bioTxtQuill}
       />
 
-      {/* Modal for image preview */}
       <ViewProfilePreviewModal
         isVisible={isImgPreModalVisible}
         imageUrl={previewImageUrl}
         onClose={handleImgPreModalClose}
-      />
-
-      <ViewCoverPreviewModal
-        isVisible={isCoverPicPreModalVisible}
-        imageUrl={coverPicUrl}
-        onClose={handleCoverPicPreModalClose}
       />
     </>
   );

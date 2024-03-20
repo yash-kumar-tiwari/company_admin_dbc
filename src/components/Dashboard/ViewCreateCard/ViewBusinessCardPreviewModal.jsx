@@ -48,7 +48,7 @@ const ViewBusinessCardPreviewModal = ({
 }) => {
   console.log(data);
   console.log(fileList);
-  console.log(coverPicFileList);
+  console.log(bioHtml);
 
   const navigate = useNavigate();
 
@@ -284,7 +284,7 @@ const ViewBusinessCardPreviewModal = ({
                       <label className="fw-bold text-black">About Me</label>
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: bioTxtQuill,
+                          __html: bioHtml,
                         }}
                       />
                       <p>About Content</p>

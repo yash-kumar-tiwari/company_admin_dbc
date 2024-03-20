@@ -228,18 +228,6 @@ function ViewEditCard({ card_id }) {
           cover_pic: cardData.cover_pic,
           profile_picture: cardData.profile_picture,
           bio: cardData.bio,
-          facebook: cardData.facebook,
-          instagram: cardData.instagram,
-          linkedin: cardData.linkedin,
-          whatsapp: cardData.whatsapp,
-          youtube: cardData.youtube,
-          xiao_hong_shu: cardData.xiao_hong_shu,
-          tiktok: cardData.tiktok,
-          wechat: cardData.we_chat,
-          line: cardData.line,
-          telegram: cardData.telegram,
-          weibo: cardData.weibo,
-          twitter: cardData.twitter,
         });
 
         setBusinessCardData(cardData);
@@ -271,77 +259,51 @@ function ViewEditCard({ card_id }) {
       >
         <div
           className="edit-card-form"
-          style={{ overflowY: "auto", height: "500px" }}
+          // style={{ overflowY: "auto", overflowX: "none", height: "500px" }}
         >
-          {/* {console.log(businessCardData)} */}
           <Form
-            form={form} // Pass the form instance to the Form component
+            form={form}
             className="p-2"
             name="editUserForm"
             onFinish={onFinish}
             initialValues={businessCardData}
           >
             <Row>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Profile Picture</label>
-                <br />
-                <ImgCrop rotationSlider showReset>
-                  <Upload
-                    accept="image/*"
-                    onChange={onChange}
-                    onPreview={onPreview}
-                    showUploadList={false}
-                    fileList={fileList} // Pass the fileList prop here
-                    maxCount={1}
-                    customRequest={({ file, onSuccess }) => {
-                      setTimeout(() => {
-                        onSuccess("ok");
-                      }, 0);
-                    }} // Use customRequest instead of action
-                  >
-                    <label htmlFor="avatar-upload">
-                      <Avatar
-                        id="avatar-upload" // This id is used for associating the label with the upload input
-                        size={120}
-                        src={
-                          profilePreview || businessCardData?.profile_picture
-                        }
-                        alt="User Profile Picture"
-                      />
-                    </label>
-                  </Upload>
-                </ImgCrop>
-                <br />{" "}
+              <Col lg={4} md={12} sm={12} xs={12}></Col>
+              <Col lg={4} md={12} sm={12} xs={12}>
+                <center>
+                  <label className="fw-bold my-1">Profile Picture</label>
+                  <br />
+                  <ImgCrop rotationSlider showReset>
+                    <Upload
+                      accept="image/*"
+                      onChange={onChange}
+                      onPreview={onPreview}
+                      showUploadList={false}
+                      fileList={fileList}
+                      maxCount={1}
+                      customRequest={({ file, onSuccess }) => {
+                        setTimeout(() => {
+                          onSuccess("ok");
+                        }, 0);
+                      }}
+                    >
+                      <label htmlFor="avatar-upload">
+                        <Avatar
+                          id="avatar-upload" // This id is used for associating the label with the upload input
+                          size={120}
+                          src={
+                            profilePreview || businessCardData?.profile_picture
+                          }
+                          alt="User Profile Picture"
+                        />
+                      </label>
+                    </Upload>
+                  </ImgCrop>
+                  <br />{" "}
+                </center>
               </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Cover Picture</label>
-                <br />
-                <ImgCrop rotationSlider showReset>
-                  <Upload
-                    accept="image/*"
-                    onChange={onCoverChange}
-                    onPreview={onCoverPreview}
-                    showUploadList={false}
-                    fileList={coverPicList} // Pass the fileList prop here
-                    maxCount={1}
-                    customRequest={({ file, onSuccess }) => {
-                      setTimeout(() => {
-                        onSuccess("ok");
-                      }, 0);
-                    }} // Use customRequest instead of action
-                  >
-                    <label htmlFor="cover-upload">
-                      <Avatar
-                        id="cover-upload" // This id is used for associating the label with the upload input
-                        size={120}
-                        src={coverPreview || businessCardData?.cover_pic}
-                        alt="User Profile Picture"
-                      />
-                    </label>
-                  </Upload>
-                </ImgCrop>
-                <br />{" "}
-              </Col>
+              <Col lg={4} md={12} sm={12} xs={12}></Col>
             </Row>
             <Row>
               <Col lg={4} md={12} sm={12}>
@@ -468,85 +430,14 @@ function ViewEditCard({ card_id }) {
             </Col>
 
             <Row>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Facebook</label>
-                <Form.Item name="facebook">
-                  <Input placeholder="Enter Facebook Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Instagram</label>
-                <Form.Item name="instagram">
-                  <Input placeholder="Enter Instagram Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">LinkedIn</label>
-                <Form.Item name="linkedin">
-                  <Input placeholder="Enter LinkedIn Link" size="large" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">WhatsApp</label>
-                <Form.Item name="whatsapp">
-                  <Input placeholder="Enter WhatsApp Number" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">YouTube</label>
-                <Form.Item name="youtube">
-                  <Input placeholder="Enter YouTube Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Xiao Hong Shu</label>
-                <Form.Item name="xiao_hong_shu">
-                  <Input placeholder="Enter Xiao Hong Shu Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">TikTok</label>
-                <Form.Item name="tiktok">
-                  <Input placeholder="Enter TikTok Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">WeChat</label>
-                <Form.Item name="wechat">
-                  <Input placeholder="Enter WeChat Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Line</label>
-                <Form.Item name="line">
-                  <Input placeholder="Enter Line Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Telegram</label>
-                <Form.Item name="telegram">
-                  <Input placeholder="Enter Telegram Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Weibo</label>
-                <Form.Item name="weibo">
-                  <Input placeholder="Enter Weibo Link" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Twitter</label>
-                <Form.Item name="twitter">
-                  <Input placeholder="Enter Twitter Link" size="large" />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row>
               <Col lg={4} md={4} sm={3}></Col>
               <Col lg={4} md={4} sm={3}>
-                <Button type="primary" htmlType="submit" size="large">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  className="w-100"
+                >
                   Edit Card Details
                 </Button>
               </Col>
