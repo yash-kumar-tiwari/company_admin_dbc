@@ -52,7 +52,7 @@ const EditSocialMediaModal = ({ visible, onCancel, onSave, companyID }) => {
         company_id: companyID,
       };
 
-      const response = await editSocialMediaDetails(updatedValues); // Send updated profile data to API
+      const response = await editSocialMediaDetails(updatedValues);
       if (response && response.status === 200) {
         message.success(response.data.message);
         // fetchSocialMediaData();

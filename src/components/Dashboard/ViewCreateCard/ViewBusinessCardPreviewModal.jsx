@@ -10,10 +10,11 @@ import DefaultUserAvatar from "../../../assets/images/static/default_user.png";
 
 import {
   fetchCompanyDetails,
-  fetchViewDigitalCardAll,
   getVCFCardforDigitalCard,
   uploadCardCoverPic,
 } from "../../../services/apiServices";
+
+import AppMapIcon from "../../../assets/images/static/map_icon.png";
 
 import WhatsAppCustomIcon from "../../../assets/images/social/whatsapp.png";
 import InstagramCustomIcon from "../../../assets/images/social/instagram.png";
@@ -274,35 +275,44 @@ const ViewBusinessCardPreviewModal = ({
                         </div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <FaMapLocationDot className="float-end text-black fs-2" />
-                        {/* <Image src="../../assets/images/icons/destination.png" /> */}
+                        {/* <FaMapLocationDot className="float-end text-black fs-2" /> */}
+                        <Image
+                          src={AppMapIcon}
+                          height={40}
+                          width={40}
+                          className="float-end"
+                        />
                       </Col>
                     </Row>
                   </div>
-                  <div className="viewCardAboutMe">
-                    <Row className="my-3">
-                      <label className="fw-bold text-black">About Me</label>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: bioHtml,
-                        }}
-                      />
-                      <p>About Content</p>
-                    </Row>
-                  </div>
-                  <div className="viewCardProductAndServices">
-                    <Row className="my-3">
-                      <label className="fw-bold text-black">
-                        Product And Services
-                      </label>
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: companyDetails?.product_service,
-                        }}
-                      />
-                      {/* <p>Product And Services Content</p> */}
-                    </Row>
-                  </div>
+                  {bioHtml && (
+                    <div className="viewCardAboutMe">
+                      <Row className="my-3">
+                        <label className="fw-bold text-black">About Me</label>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: bioHtml,
+                          }}
+                        />
+                        <p>About Content</p>
+                      </Row>
+                    </div>
+                  )}
+                  {companyDetails && companyDetails.product_service && (
+                    <div className="viewCardProductAndServices">
+                      <Row className="my-3">
+                        <label className="fw-bold text-black">
+                          Product And Services
+                        </label>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: companyDetails?.product_service,
+                          }}
+                        />
+                        {/* <p>Product And Services Content</p> */}
+                      </Row>
+                    </div>
+                  )}
                   <div className="viewCardCompanyInfo">
                     <Row className="mt-1 align-items-center">
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
@@ -525,8 +535,7 @@ const ViewBusinessCardPreviewModal = ({
                           size="large"
                           onClick={handleAddToContacts} // Call the function on button click
                         >
-                          <FaUserPlus className="fs-3 me-3" /> Add Me To Your
-                          Contact
+                          <FaUserPlus className="fs-3 me-3" /> Save To Phonebook
                         </Button>
                       </Col>
                     </Row>

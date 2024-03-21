@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Image, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import { FaShareAlt } from "react-icons/fa";
 import "./ViewDigitalCard.css";
 import {
@@ -8,7 +8,10 @@ import {
 } from "../../services/apiServices";
 import { useParams } from "react-router-dom";
 import { Button, Spin, message } from "antd";
-import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
+import { FaUserPlus } from "react-icons/fa6";
+
+import AppMapIcon from "../../assets/images/static/map_icon.png";
+
 import WhatsAppCustomIcon from "../../assets/images/social/whatsapp.png";
 import InstagramCustomIcon from "../../assets/images/social/instagram.png";
 import TelegramCustomIcon from "../../assets/images/social/telegram.png";
@@ -21,8 +24,6 @@ import TikTokCustomIcon from "../../assets/images/social/tiktok.png";
 import FacebookCustomIcon from "../../assets/images/social/facebook.png";
 import XHSCustomIcon from "../../assets/images/social/xhs.png";
 import WeiboCustomIcon from "../../assets/images/social/weibo.png";
-import { Footer } from "antd/es/layout/layout";
-import { PulseLoader } from "react-spinners";
 
 function ViewDigitalCard() {
   const { companyName, cardReference } = useParams();
@@ -195,35 +196,39 @@ function ViewDigitalCard() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <FaMapLocationDot className="float-end text-black fs-2" />
+                          <Image src={AppMapIcon} />
                         </a>{" "}
                       </Col>
                     </Row>
                   </div>
-                  <div className="viewCardAboutMe">
-                    <Row className="my-3">
-                      <label className="fw-bold text-black">About Me</label>
-                      <div
-                        className="html_text_render"
-                        dangerouslySetInnerHTML={{
-                          __html: cardDetails?.bio,
-                        }}
-                      />
-                    </Row>
-                  </div>
-                  <div className="viewCardProductAndServices">
-                    <Row className="my-3">
-                      <label className="fw-bold text-black">
-                        Product And Services
-                      </label>
-                      <div
-                        className="html_text_render"
-                        dangerouslySetInnerHTML={{
-                          __html: cardDetails?.product_service,
-                        }}
-                      />
-                    </Row>
-                  </div>
+                  {cardDetails && cardDetails.bio && (
+                    <div className="viewCardAboutMe">
+                      <Row className="my-3">
+                        <label className="fw-bold text-black">About Me</label>
+                        <div
+                          className="html_text_render"
+                          dangerouslySetInnerHTML={{
+                            __html: cardDetails?.bio,
+                          }}
+                        />
+                      </Row>
+                    </div>
+                  )}
+                  {cardDetails && cardDetails.product_service && (
+                    <div className="viewCardProductAndServices">
+                      <Row className="my-3">
+                        <label className="fw-bold text-black">
+                          Product And Services
+                        </label>
+                        <div
+                          className="html_text_render"
+                          dangerouslySetInnerHTML={{
+                            __html: cardDetails?.product_service,
+                          }}
+                        />
+                      </Row>
+                    </div>
+                  )}
                   <div className="viewCardCompanyInfo">
                     <Row className="mt-1 align-items-center">
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
@@ -590,8 +595,7 @@ function ViewDigitalCard() {
                           size="large"
                           onClick={handleAddToContacts} // Call the function on button click
                         >
-                          <FaUserPlus className="fs-5 me-2" /> Add Me To Your
-                          Contact
+                          <FaUserPlus className="fs-5 me-2" /> Save To Phonebook
                         </Button>
                       </Col>
                     </Row>

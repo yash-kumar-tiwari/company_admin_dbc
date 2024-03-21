@@ -4,7 +4,6 @@ import {
   Card,
   Form,
   Input,
-  Typography,
   message,
   Spin,
   Upload,
@@ -33,7 +32,6 @@ import { editorApiKey } from "../../../utils/constants";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 import EditSocialMediaModal from "./EditSocialMediaModal";
 
-const { Text, Title } = Typography;
 const { Item } = Form;
 
 function ViewCompanyDetails() {
