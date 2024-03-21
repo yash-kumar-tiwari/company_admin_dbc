@@ -194,7 +194,12 @@ function ViewDigitalCard() {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Image src={AppMapIcon} />
+                          <Image
+                            src={AppMapIcon}
+                            height={40}
+                            width={40}
+                            className="float-end"
+                          />
                         </a>{" "}
                       </Col>
                     </Row>
