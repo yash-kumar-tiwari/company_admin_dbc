@@ -254,3 +254,22 @@ export const editCompanyDetails = async (updatedData) => {
   );
   return response;
 };
+
+// social media details
+export const fetchSocialMediaDetails = async (companyID) => {
+  const response = await makeJsonApiRequest(
+    "get",
+    `${api_base_url}socialMediaDetails?company_id=${companyID}`
+  );
+  return response;
+};
+
+// edit social media details
+export const editSocialMediaDetails = async (updatedData) => {
+  const response = await makeJsonApiRequest(
+    "put",
+    `${api_base_url}editSocialMedia`,
+    updatedData
+  );
+  return response;
+};

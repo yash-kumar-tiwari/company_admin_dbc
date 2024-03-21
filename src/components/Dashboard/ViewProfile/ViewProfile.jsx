@@ -7,7 +7,6 @@ import {
   Typography,
   message,
   Spin,
-  Tag,
   Upload,
   Modal,
 } from "antd";
@@ -20,13 +19,12 @@ import {
   uploadAvatar,
 } from "../../../services/apiServices";
 import { Col, Row } from "react-bootstrap";
-import { Card as CardRB } from "react-bootstrap";
-import { ExclamationCircleFilled, UploadOutlined } from "@ant-design/icons";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 
-const { Text, Title, Paragraph } = Typography;
+const { Text } = Typography;
 const { Item } = Form;
 
 function ViewProfile() {

@@ -1,5 +1,14 @@
 import { ImageCompressor } from "image-compressor";
 
+// convert words from instagram to Instagram
+export const capitalizeFirstLetter = (string) => {
+  // Replace underscores with spaces
+  const stringWithSpaces = string.replace(/_/g, " ");
+
+  // Capitalize the first letter
+  return stringWithSpaces.charAt(0).toUpperCase() + stringWithSpaces.slice(1);
+};
+
 // convert words from mobile_phone to Mobile Phone
 export function capitalizeAndJoin(words) {
   return words

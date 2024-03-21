@@ -16,3 +16,23 @@ form#editCompanyDetailForm {
   border-bottom-right-radius: 5px;
   padding: 25px !important;
 }
+
+.editCompanySocialMediaForm {
+  max-height: 60vh;
+  overflow-y: auto;
+
+  border: 1px solid #bae7ff;
+  border-radius: 0px;
+  margin: 0px 6px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 25px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .companyDetails_Row1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

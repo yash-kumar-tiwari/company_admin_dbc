@@ -11,18 +11,13 @@ import {
   Statistic,
   Modal,
 } from "antd";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./ViewCompanyDetails.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   editCompanyDetails,
   fetchCompanyDetails,
+  uploadCardCoverPic,
   uploadCompanyLogo,
 } from "../../../services/apiServices";
 import { Col, Row } from "react-bootstrap";
@@ -30,17 +25,13 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import CountUp from "react-countup";
 
 import ImgCrop from "antd-img-crop";
-import {
-  GoogleMap,
-  LoadScript,
-  StandaloneSearchBox,
-} from "@react-google-maps/api";
-import ReactQuill from "react-quill";
+
 import { Editor } from "@tinymce/tinymce-react";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import { CompanyContext } from "../../../contexts/CompanyContext";
 import { editorApiKey } from "../../../utils/constants";
 import MidinFooter from "../../MidinFooter/MidinFooter";
+import EditSocialMediaModal from "./EditSocialMediaModal";
 
 const { Text, Title } = Typography;
 const { Item } = Form;
@@ -50,56 +41,46 @@ function ViewCompanyDetails() {
   const [form] = Form.useForm();
 
   const { companyIdCtx, setCompanyIdCtx } = useContext(CompanyContext);
-  // const editorApiKey = "wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn";
 
   const [isFetchingCompany, setIsFetchingCompany] = useState(false);
   const [isUpdatingCompany, setIsUpdatingCompany] = useState(false);
   const [companyData, setCompanyData] = useState({});
+  const [productServices, setProductServices] = useState("");
   const [companyLogo, setCompanyLogo] = useState("");
-  const [productServices, setProductServices] = useState(""); // State for product and services
-  const [fileList, setFileList] = useState([]); // State for fileList
-  // Inside your component function
-  const [location, setLocation] = useState({
-    location: "",
-    latitude: null,
-    longitude: null,
-  }); // State for storing selected location
+  const [fileList, setFileList] = useState([]);
+  const [coverPicture, setCoverPicture] = useState("");
+  const [coverFileList, setCoverFileList] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const fileInputRef = useRef(null);
-  const searchBoxRef = useRef(null); // Ref for StandaloneSearchBox
-
-  // Handler function for when a location is selected
-  const handlePlaceSelect = (place) => {
-    console.log(place);
-    if (place.geometry && place.geometry.location) {
-      const selectedLocation = {
-        location: place.url,
-        latitude: place.geometry.location.lat(),
-        longitude: place.geometry.location.lng(),
-        name: place.name,
-      };
-      console.log(selectedLocation);
-      setLocation(selectedLocation);
-      form.setFieldsValue({ location: place.formatted_address }); // Update the form field
-    }
-  };
-
-  // Google Maps API key (Replace 'YOUR_API_KEY' with your actual API key)
-  const apiKey = "AIzaSyAz9BzJwfRWIDQTG8JdcJwn1JYJx1V25jg";
+  const [isSocialMediaModalVisible, setIsSocialMediaModalVisible] =
+    useState(false);
 
   const onFinishSubmit = async (values) => {
     setIsUpdatingCompany(true);
-    console.log(productServices);
     try {
-      const uploadedLogoPath = await handleCompanyLogoUpdate(
-        fileList[0]?.originFileObj
-      );
+      let uploadedLogoPath = companyData.company_logo;
+      let uploadedCoverPath = companyData.cover_pic;
+
+      if (fileList && fileList.length > 0 && fileList[0]?.originFileObj) {
+        uploadedLogoPath = await handleCompanyLogoUpdate(
+          fileList[0]?.originFileObj
+        );
+      }
+
+      if (
+        coverFileList &&
+        coverFileList.length > 0 &&
+        coverFileList[0]?.originFileObj
+      ) {
+        uploadedCoverPath = await handleCoverPictureUpdate(
+          coverFileList[0]?.originFileObj
+        );
+      }
 
       const updatedValues = {
         ...values,
         company_id: companyData.id,
         company_logo: uploadedLogoPath || companyData.company_logo,
+        cover_pic: uploadedCoverPath || companyData.cover_pic,
         // location: location.location,
         // latitude: location.latitude,
         // longitude: location.longitude,
@@ -132,7 +113,8 @@ function ViewCompanyDetails() {
       if (response && response.status === 200) {
         // message.success(response.data.message);
         setCompanyData(response.data.data[0]);
-        setCompanyLogo(response.data.data[0].company_logo); // Set avatar preview
+        setCompanyLogo(response.data.data[0].company_logo);
+        setCoverPicture(response.data.data[0].cover_pic);
         setProductServices(response.data.data[0].product_service);
         setCompanyIdCtx(response.data.data[0].id);
 
@@ -171,6 +153,26 @@ function ViewCompanyDetails() {
     }
   };
 
+  const handleCoverPictureUpdate = async (imageFile) => {
+    // Check if there's a new file in fileList
+    if (coverFileList.length > 0) {
+      const file = coverFileList[0].originFileObj; // Assuming only one file is selected
+
+      // Upload the file and get the path
+      const response = await uploadCardCoverPic(imageFile);
+      if (response.status === 201) {
+        let imagePath = response.data.data;
+        return imagePath;
+      } else {
+        message.error(response.data.message);
+        return;
+      }
+    } else {
+      // If no new file selected, use the current avatar path
+      return companyData.cover_pic || "";
+    }
+  };
+
   useEffect(() => {
     fetchViewCompanyData();
   }, [navigate, fetchViewCompanyData]);
@@ -205,6 +207,33 @@ function ViewCompanyDetails() {
     imgWindow?.document.write(image.outerHTML);
   };
 
+  const onCoverChange = ({ fileList: newFileList }) => {
+    if (newFileList.length > 0) {
+      const newAvatarPreview = URL.createObjectURL(
+        newFileList[0].originFileObj
+      );
+      setCoverPicture(newAvatarPreview);
+    } else {
+      setCoverPicture("");
+    }
+    setCoverFileList(newFileList);
+  };
+
+  const onCoverPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -218,13 +247,21 @@ function ViewCompanyDetails() {
     form.submit();
   };
 
-  const handleEditorChange = (content, editor) => {
-    console.log(content);
-    setProductServices(content);
+  const showSocialMediaModal = () => {
+    setIsSocialMediaModalVisible(true);
   };
 
-  const handleProductServicesChange = (content) => {
-    console.log(content);
+  const handleSocialMediaModalCancel = () => {
+    setIsSocialMediaModalVisible(false);
+  };
+
+  const handleSocialMediaModalSave = (details) => {
+    // console.log(details);
+    // Logic to save social media details
+    setIsSocialMediaModalVisible(false);
+  };
+
+  const handleEditorChange = (content, editor) => {
     setProductServices(content);
   };
 
@@ -236,25 +273,54 @@ function ViewCompanyDetails() {
           title={<span className="fw-bold text-center">Company Details</span>}
           className="view-company-details-custom-card"
         >
-          {/* <LoadScript googleMapsApiKey={apiKey} libraries={["places"]}> */}
           <Form
             form={form}
             layout="vertical"
             onFinish={onFinishSubmit}
             name="editCompanyDetailForm"
           >
-            <Row>
-              {/* <Col lg={2} md={0} sm={0}></Col> */}
-              <Col lg={4} md={6} sm={6} className="my-2">
-                <label className="fw-bold my-1">Company Logo</label>
+            <Row className="companyDetails_Row1">
+              <Col lg={4} md={6} sm={6} className="my-3">
+                <div className="centercol">
+                  <label className="fw-bold my-1 w-100">Company Logo</label>
+                  <div>
+                    <ImgCrop rotationSlider showReset>
+                      <Upload
+                        accept="image/*"
+                        onChange={onChange}
+                        onPreview={onPreview}
+                        showUploadList={false}
+                        fileList={fileList}
+                        maxCount={1}
+                        customRequest={({ file, onSuccess }) => {
+                          setTimeout(() => {
+                            onSuccess("ok");
+                          }, 0);
+                        }} // Use customRequest instead of action
+                      >
+                        <label htmlFor="avatar-upload">
+                          <Avatar
+                            id="avatar-upload" // This id is used for associating the label with the upload input
+                            size={120}
+                            src={companyLogo || companyData?.company_logo}
+                            alt="Company Logo"
+                          />
+                        </label>
+                      </Upload>
+                    </ImgCrop>
+                  </div>
+                </div>
+              </Col>
+              <Col lg={4} md={6} sm={6} className="my-3">
+                <label className="fw-bold my-1">Cover Picture</label>
                 <br />
                 <ImgCrop rotationSlider showReset>
                   <Upload
                     accept="image/*"
-                    onChange={onChange}
-                    onPreview={onPreview}
+                    onChange={onCoverChange}
+                    onPreview={onCoverPreview}
                     showUploadList={false}
-                    fileList={fileList} // Pass the fileList prop here
+                    fileList={coverFileList}
                     maxCount={1}
                     customRequest={({ file, onSuccess }) => {
                       setTimeout(() => {
@@ -262,32 +328,20 @@ function ViewCompanyDetails() {
                       }, 0);
                     }} // Use customRequest instead of action
                   >
-                    <label htmlFor="avatar-upload">
+                    <label htmlFor="cover-avatar-upload">
                       <Avatar
-                        id="avatar-upload" // This id is used for associating the label with the upload input
+                        id="cover-avatar-upload" // This id is used for associating the label with the upload input
                         size={120}
-                        src={companyLogo || companyData?.company_logo}
-                        alt="Company Logo"
+                        src={coverPicture || companyData?.cover_pic}
+                        alt="Cover Picture"
                       />
                     </label>
                   </Upload>
                 </ImgCrop>
                 <br />
               </Col>
-              <Col lg={4} md={6} sm={6} className="my-2">
-                <label className="fw-bold my-1">Company Name</label>
-                <br />
-                {(
-                  <Text className="py-2 text-primary fw-bold">
-                    {companyData?.company_name}
-                  </Text>
-                ) || (
-                  <Text className="p-2 text-danger fw-bold">
-                    {"Not Available"}
-                  </Text>
-                )}
-              </Col>
-              <Col lg={4} md={0} sm={0} className="my-2">
+
+              <Col lg={4} md={0} sm={0} className="my-3">
                 <Row
                   className="my-1 p-4"
                   style={{
@@ -479,61 +533,13 @@ function ViewCompanyDetails() {
               </Col>
               <Col lg={6} md={12} sm={6}>
                 <label className="fw-bold my-1">Update Location</label>
-                <Item
-                  name="location"
-                  // rules={[
-                  //   {
-                  //     required: true,
-                  //     message: "Please enter your contact person email",
-                  //   },
-                  // ]}
-                  hasFeedback
-                >
+                <Item name="location" hasFeedback>
                   <Input
                     size="large"
                     placeholder="Enter Your Google Map Location Link"
                     defaultValue={companyData.location || "N/A"}
                   />
                 </Item>
-                {/* <Form.Item name="location">
-                    <StandaloneSearchBox
-                      onLoad={(ref) => (searchBoxRef.current = ref)}
-                      onPlacesChanged={() =>
-                        handlePlaceSelect(searchBoxRef.current.getPlaces()[0])
-                      }
-                    >
-                      <div>
-                        {" "}
-                        <Input
-                          size="large"
-                          placeholder="Search Location, Places"
-                          value={location?.name}
-                          onChange={(e) =>
-                            setLocation({
-                              ...location,
-                              location: e.target.value,
-                            })
-                          }
-                          addonAfter={
-                            <Button
-                              danger
-                              type="text"
-                              title="Clear Location"
-                              onClick={() =>
-                                setLocation({
-                                  location: "",
-                                  latitude: null,
-                                  longitude: null,
-                                })
-                              }
-                            >
-                              Clear
-                            </Button>
-                          }
-                        />
-                      </div>
-                    </StandaloneSearchBox>
-                  </Form.Item> */}
               </Col>
               <Col lg={6} md={12} sm={6}>
                 <label className="fw-bold my-1">Current Location</label>
@@ -554,16 +560,6 @@ function ViewCompanyDetails() {
             <Row>
               <Col lg={12} md={12} sm={12} className="quill-editor mb-4">
                 <label className="fw-bold my-1">Product and Services</label>
-                {/* <ReactQuill
-                    theme="snow"
-                    placeholder="Enter Product And Services Details"
-                    value={productServices}
-                    onChange={handleProductServicesChange}
-                    modules={{
-                      toolbar: toolbarOptions,
-                    }}
-                    dangerouslySetInnerHTML={{ __html: productServices }}
-                  /> */}
                 <Editor
                   apiKey={editorApiKey}
                   initialValue={companyData.product_service}
@@ -617,14 +613,12 @@ function ViewCompanyDetails() {
             </Row>
 
             <Row>
-              <Col lg={4} md={3} sm={3}></Col>
-              <Col lg={4} md={6} sm={6}>
+              <Col lg={6} md={6} sm={6}>
                 <Item>
                   <Button
                     type="primary"
                     className="w-100"
                     size="large"
-                    // shape="round"
                     // htmlType="submit"
                     loading={isUpdatingCompany}
                     onClick={showModal}
@@ -633,21 +627,20 @@ function ViewCompanyDetails() {
                   </Button>
                 </Item>
               </Col>
-              <Col lg={4} md={3} sm={3}>
-                {/* <Item>
-                    <Button
-                      type="primary"
-                      className="w-100"
-                      shape="round"
-                      htmlType="button"
-                    >
-                      Change Password
-                    </Button>
-                  </Item> */}
+              <Col lg={6} md={3} sm={3}>
+                <Item>
+                  <Button
+                    className="w-100"
+                    htmlType="button"
+                    size="large"
+                    onClick={showSocialMediaModal}
+                  >
+                    Edit Social Media
+                  </Button>
+                </Item>
               </Col>
             </Row>
           </Form>
-          {/* </LoadScript> */}
         </Card>
       </Spin>
 
@@ -670,13 +663,20 @@ function ViewCompanyDetails() {
           <Button
             key="confirm"
             type="primary"
-            onClick={confirmSaveChanges} // Bind confirmSaveChanges function here
+            onClick={confirmSaveChanges}
             size="large"
           >
             Confirm
           </Button>,
         ]}
       ></Modal>
+
+      <EditSocialMediaModal
+        visible={isSocialMediaModalVisible}
+        onCancel={handleSocialMediaModalCancel}
+        onSave={handleSocialMediaModalSave}
+        companyID={companyData?.id}
+      />
     </>
   );
 }
