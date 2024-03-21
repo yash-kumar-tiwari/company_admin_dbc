@@ -79,3 +79,49 @@ export const makeFormDataApiRequest = async (
     return error.response;
   }
 };
+
+// Function to make API requests with dynamic form data
+export const makeDynamicFormDataApiRequest = async (
+  method,
+  endpoint,
+  formData = null,
+  token = null
+) => {
+  try {
+    let headers = {};
+    const storedToken = localStorage.getItem("user-token");
+
+    if (storedToken) {
+      headers = {
+        Authorization: `${storedToken}`,
+      };
+    }
+
+    // Create FormData object
+    const requestData = new FormData();
+
+    // If formData is an array, append each file individually with its field name
+    if (Array.isArray(formData)) {
+      formData.forEach((fileObj, index) => {
+        const { file, fieldName } = fileObj;
+        requestData.append(fieldName, file);
+      });
+    } else {
+      // If formData is a single file, append it with its field name
+      const { file, fieldName } = formData;
+      requestData.append(fieldName, file);
+    }
+
+    const config = {
+      method,
+      url: endpoint,
+      data: requestData,
+      headers,
+    };
+
+    const response = await axios(config);
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};

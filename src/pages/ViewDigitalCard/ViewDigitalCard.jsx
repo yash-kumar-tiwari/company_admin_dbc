@@ -11,6 +11,7 @@ import { Button, Spin, message } from "antd";
 import { FaUserPlus } from "react-icons/fa6";
 
 import AppMapIcon from "../../assets/images/static/map_icon.png";
+import DefaultUserAvatar from "../../assets/images/static/default_user.png";
 
 import WhatsAppCustomIcon from "../../assets/images/social/whatsapp.png";
 import InstagramCustomIcon from "../../assets/images/social/instagram.png";
@@ -151,10 +152,7 @@ function ViewDigitalCard() {
                 >
                   <Image
                     className="viewCardImages_profileImage"
-                    src={
-                      imageUrl ||
-                      "https://cf.shopee.ph/file/13ac71187230bae1b72226fa0cd962b1"
-                    }
+                    src={imageUrl || DefaultUserAvatar}
                     roundedCircle
                     alt="Profile"
                     height={150}

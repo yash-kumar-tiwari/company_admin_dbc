@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Form, Input, Upload } from "antd";
+import { Button, Card, Form, Input, Upload, message } from "antd";
 import "./ViewCreateCard.css";
 
 import { Col, Row } from "react-bootstrap";
@@ -9,6 +9,10 @@ import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
 import { Editor } from "@tinymce/tinymce-react";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 import ImgCrop from "antd-img-crop";
+import { downloadSampleExcel } from "../../../utils/constants";
+import { createMultipleBusinessCard } from "../../../services/apiServices";
+import { handleAuthenticationError } from "../../../utils/authHelpers";
+import { useNavigate } from "react-router-dom";
 
 const initialBusinessCardData = {
   first_name: "",
@@ -22,6 +26,8 @@ const initialBusinessCardData = {
 };
 
 function ViewCreateCard() {
+  const navigate = useNavigate();
+
   const [businessCardData, setBusinessCardData] = useState(
     initialBusinessCardData
   );
@@ -57,6 +63,34 @@ function ViewCreateCard() {
     handlePreviewModalOpen();
   };
 
+  const handleExcelUpload = async (file) => {
+    // Check file extension
+    const allowedExtensions = [".xlsx", ".xls"];
+    const fileExtension = file.name
+      .slice(file.name.lastIndexOf("."))
+      .toLowerCase();
+
+    if (!allowedExtensions.includes(fileExtension)) {
+      // File extension not allowed, return with error message
+      message.error("Only .xlsx and .xls files are allowed.");
+      return;
+    }
+    try {
+      let fileData = { file: file, fieldName: "file" };
+      const response = await createMultipleBusinessCard(fileData);
+      if (response.status === 201) {
+        message.success(response.data.message);
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error.message);
+      message.error("Error While Creating Cards from File.", error.message);
+    }
+  };
+
   const handlePreviewModalOpen = () => {
     setIsPreviewModalVisible(true);
   };
@@ -80,6 +114,29 @@ function ViewCreateCard() {
         title={<span className="fw-bold text-center">Create Card</span>}
         className="view-profile-custom-card"
       >
+        <Row>
+          <Col></Col>
+          <Col>
+            <Upload
+              accept=".xlsx, .xls"
+              beforeUpload={handleExcelUpload}
+              showUploadList={false}
+            >
+              <Button type="primary" className="mb-3">
+                Create Multiple Cards
+              </Button>
+            </Upload>
+          </Col>
+          <Col>
+            <a href={downloadSampleExcel} target="_blank" rel="noreferrer">
+              <Button type="primary" className="mb-3">
+                Download Sample File
+              </Button>
+            </a>
+          </Col>
+          <Col></Col>
+        </Row>
+
         <div className="viewCreateCardContainer">
           <Form
             form={form}

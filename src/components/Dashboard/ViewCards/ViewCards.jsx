@@ -23,7 +23,10 @@ import "./ViewCards.css";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { Col, Row } from "react-bootstrap";
-import { fetchCardsList } from "../../../services/apiServices";
+import {
+  exportCardsDetailsFile,
+  fetchCardsList,
+} from "../../../services/apiServices";
 import ActivateCardQR from "./ActivateCardQR";
 import DeactivateCard from "./DeactivateCard";
 import ActivateMultipleCardsQR from "./ActivateMultipleCardsQR";
@@ -31,6 +34,7 @@ import DeleteCard from "./DeleteCard";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 import EditCard from "./EditCard";
+import { saveAs } from "file-saver";
 
 const { Text, Title, Paragraph } = Typography;
 const { Item } = Form;
@@ -325,6 +329,49 @@ function ViewCards({ setShowEditCard }) {
     },
   };
 
+  const handleExportCards = async () => {
+    try {
+      const response = await exportCardsDetailsFile();
+
+      if (response.status === 200) {
+        console.log(response);
+        const contentDispositionHeader = response.headers.get(
+          "Content-Disposition"
+        );
+        console.log(contentDispositionHeader);
+        const filename = contentDispositionHeader
+          .split(";")[1]
+          .trim()
+          .split("=")[1]
+          .replace(/"/g, "");
+
+        // Convert response data to Blob
+        const blob = await response.blob();
+
+        // Create a temporary anchor element
+        const downloadLink = document.createElement("a");
+        downloadLink.href = window.URL.createObjectURL(new Blob([blob]));
+        downloadLink.setAttribute("download", filename);
+
+        // Append anchor to body and programmatically click it
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+
+        // Cleanup
+        document.body.removeChild(downloadLink);
+
+        message.success("File downloaded successfully.");
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error downloading file:", error.message);
+      message.error("Error while downloading file.", error.message);
+    }
+  };
+
   return (
     <>
       <Card
@@ -332,6 +379,10 @@ function ViewCards({ setShowEditCard }) {
         title={<span className="fw-bold text-center">Cards</span>}
         className="view-cards-custom-card"
       >
+        <Button type="primary" className="mb-3" onClick={handleExportCards}>
+          Export Cards
+        </Button>
+
         <div className="viewCardsContainer">
           {selectedUser && (
             <div className="selected-user-description-section my-2">

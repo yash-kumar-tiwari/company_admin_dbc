@@ -19,6 +19,7 @@
     "antd-img-crop": "^4.21.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
+    "file-saver": "^2.0.5",
     "html-to-react": "^1.7.0",
     "image-compressor": "^2.0.3",
     "lexical": "^0.13.1",

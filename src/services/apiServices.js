@@ -1,4 +1,8 @@
-import { makeFormDataApiRequest, makeJsonApiRequest } from "./apiRequests";
+import {
+  makeDynamicFormDataApiRequest,
+  makeFormDataApiRequest,
+  makeJsonApiRequest,
+} from "./apiRequests";
 
 const api_base_url = "https://midin.app/api/v1/companyAdmin/";
 const card_base_url = "https://midin.app/api/v1/";
@@ -121,6 +125,16 @@ export const createBusinessCard = async (cardDetails) => {
   return response;
 };
 
+// crate multiple business card
+export const createMultipleBusinessCard = async (fileData) => {
+  const response = await makeDynamicFormDataApiRequest(
+    "post",
+    `${api_base_url}uploadCreateCardFile`,
+    fileData
+  );
+  return response;
+};
+
 // upload card profile pic
 export const uploadCardProfilePic = async (imageData) => {
   const response = await makeFormDataApiRequest(
@@ -221,6 +235,15 @@ export const getVCFCardforDigitalCard = async (vcfCardID) => {
 // cards url lists
 export const fetchCardsUrlList = async () => {
   const response = await makeJsonApiRequest("get", `${api_base_url}qrCodeList`);
+  return response;
+};
+
+// export card details
+export const exportCardsDetailsFile = async () => {
+  const response = await makeJsonApiRequest(
+    "get",
+    `${api_base_url}exportCardDetail`
+  );
   return response;
 };
 
