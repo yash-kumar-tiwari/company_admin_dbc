@@ -9,6 +9,12 @@
   overflow-x: hidden;
 } */
 
+.viewCardsContainer {
+  height: 60vh;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
 .edit-card-modal-form {
   border: 1px solid #bae7ff;
   border-radius: 0px;

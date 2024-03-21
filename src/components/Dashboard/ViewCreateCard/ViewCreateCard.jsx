@@ -80,163 +80,166 @@ function ViewCreateCard() {
         title={<span className="fw-bold text-center">Create Card</span>}
         className="view-profile-custom-card"
       >
-        <Form
-          form={form}
-          ref={formRef}
-          className="p-2"
-          name="createCardForm"
-          onFinish={onFinish}
-        >
-          <Row>
-            <Col lg={4} md={12} sm={12}>
-              <label className="fw-bold my-1">First Name</label>
-              <Form.Item
-                name="first_name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input first name!",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter First Name" size="large" />
-              </Form.Item>
-            </Col>
-            <Col lg={4} md={12} sm={12}>
-              <label className="fw-bold my-1">Last Name</label>
-              <Form.Item
-                name="last_name"
-                rules={[{ required: true, message: "Please input last name!" }]}
-              >
-                <Input placeholder="Enter Last Name" size="large" />
-              </Form.Item>
-            </Col>
-            <Col lg={4} md={12} sm={12}>
-              <label className="fw-bold my-1">Email</label>
-              <Form.Item
-                name="user_email"
-                rules={[
-                  { required: true, message: "Please input email!" },
-                  {
-                    type: "email",
-                    message: "Please enter a valid email address!",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Email Address" size="large" />
-              </Form.Item>
-            </Col>
-            <Col lg={6} md={12} sm={12}>
-              <label className="fw-bold my-1">Designation</label>
-              <Form.Item
-                name="designation"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input designation!",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Designation" size="large" />
-              </Form.Item>
-            </Col>
-
-            <Col lg={6} md={12} sm={12}>
-              <label className="fw-bold my-1">Contact Number</label>
-              <Form.Item
-                name="contact_number"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input contact number!",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Contact Number" size="large" />
-              </Form.Item>
-            </Col>
-            <Col lg={6} md={6} sm={6}>
-              <label className="fw-bold my-1">Profile Picture</label>
-              <ImgCrop rotationSlider showReset>
-                <Upload
-                  hasControlInside
-                  // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  accept="image/*"
-                  listType="picture-card"
-                  fileList={fileList}
-                  onChange={onChange}
-                  onPreview={onPreview}
-                  maxCount={1}
-                  customRequest={({ file, onSuccess }) => {
-                    setTimeout(() => {
-                      onSuccess("ok");
-                    }, 0);
-                  }} // Use customRequest instead of action
+        <div className="viewCreateCardContainer">
+          <Form
+            form={form}
+            ref={formRef}
+            className="p-2"
+            name="createCardForm"
+            onFinish={onFinish}
+          >
+            <Row>
+              <Col lg={4} md={12} sm={12}>
+                <label className="fw-bold my-1">First Name</label>
+                <Form.Item
+                  name="first_name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input first name!",
+                    },
+                  ]}
                 >
-                  {fileList.length < 1 && (
-                    <div>
-                      <UploadOutlined />
-                      <div style={{ marginTop: 8 }}>Upload Profile</div>
-                    </div>
-                  )}
-                </Upload>
-              </ImgCrop>
-            </Col>
-          </Row>
+                  <Input placeholder="Enter First Name" size="large" />
+                </Form.Item>
+              </Col>
+              <Col lg={4} md={12} sm={12}>
+                <label className="fw-bold my-1">Last Name</label>
+                <Form.Item
+                  name="last_name"
+                  rules={[
+                    { required: true, message: "Please input last name!" },
+                  ]}
+                >
+                  <Input placeholder="Enter Last Name" size="large" />
+                </Form.Item>
+              </Col>
+              <Col lg={4} md={12} sm={12}>
+                <label className="fw-bold my-1">Email</label>
+                <Form.Item
+                  name="user_email"
+                  rules={[
+                    { required: true, message: "Please input email!" },
+                    {
+                      type: "email",
+                      message: "Please enter a valid email address!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Enter Email Address" size="large" />
+                </Form.Item>
+              </Col>
+              <Col lg={6} md={12} sm={12}>
+                <label className="fw-bold my-1">Designation</label>
+                <Form.Item
+                  name="designation"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input designation!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Enter Designation" size="large" />
+                </Form.Item>
+              </Col>
 
-          <Col lg={12} md={12} sm={12}>
-            <label className="fw-bold my-1">Bio</label>
-            <Form.Item
-              // name="bio"
-              className="quill-editor"
-              // rules={[
-              //   { required: true, message: "Please input your bio!" },
-              // ]}
-            >
-              <Editor
-                apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
-                init={{
-                  placeholder: "Enter Bio Details",
-                  plugins:
-                    "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
-                  toolbar:
-                    "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
-                  images_default_resizing: "scale",
-                  images_resizing: true,
-                  file_picker_types: "image",
-                  file_picker_callback: function (callback, value, meta) {
-                    if (meta.filetype === "image") {
-                      var input = document.createElement("input");
-                      input.setAttribute("type", "file");
-                      input.setAttribute("accept", "image/*");
+              <Col lg={6} md={12} sm={12}>
+                <label className="fw-bold my-1">Contact Number</label>
+                <Form.Item
+                  name="contact_number"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input contact number!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Enter Contact Number" size="large" />
+                </Form.Item>
+              </Col>
+              <Col lg={6} md={6} sm={6}>
+                <label className="fw-bold my-1">Profile Picture</label>
+                <ImgCrop rotationSlider showReset>
+                  <Upload
+                    hasControlInside
+                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    accept="image/*"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onChange={onChange}
+                    onPreview={onPreview}
+                    maxCount={1}
+                    customRequest={({ file, onSuccess }) => {
+                      setTimeout(() => {
+                        onSuccess("ok");
+                      }, 0);
+                    }} // Use customRequest instead of action
+                  >
+                    {fileList.length < 1 && (
+                      <div>
+                        <UploadOutlined />
+                        <div style={{ marginTop: 8 }}>Upload Profile</div>
+                      </div>
+                    )}
+                  </Upload>
+                </ImgCrop>
+              </Col>
+            </Row>
 
-                      // Trigger the file selection dialog when the input element changes
-                      input.onchange = function () {
-                        var file = this.files[0];
-                        var reader = new FileReader();
+            <Col lg={12} md={12} sm={12}>
+              <label className="fw-bold my-1">Bio</label>
+              <Form.Item
+                // name="bio"
+                className="quill-editor"
+                // rules={[
+                //   { required: true, message: "Please input your bio!" },
+                // ]}
+              >
+                <Editor
+                  apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
+                  init={{
+                    placeholder: "Enter Bio Details",
+                    plugins:
+                      "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
+                    toolbar:
+                      "undo redo | fontfamily fontsize | bold italic underline | image media | align lineheight | numlist bullist indent outdent | emoticons ",
+                    images_default_resizing: "scale",
+                    images_resizing: true,
+                    file_picker_types: "image",
+                    file_picker_callback: function (callback, value, meta) {
+                      if (meta.filetype === "image") {
+                        var input = document.createElement("input");
+                        input.setAttribute("type", "file");
+                        input.setAttribute("accept", "image/*");
 
-                        reader.onload = function (e) {
-                          // Pass the selected file back to the editor
-                          callback(e.target.result, {
-                            alt: file.name, // You can customize this if needed
-                          });
+                        // Trigger the file selection dialog when the input element changes
+                        input.onchange = function () {
+                          var file = this.files[0];
+                          var reader = new FileReader();
+
+                          reader.onload = function (e) {
+                            // Pass the selected file back to the editor
+                            callback(e.target.result, {
+                              alt: file.name, // You can customize this if needed
+                            });
+                          };
+
+                          reader.readAsDataURL(file);
                         };
 
-                        reader.readAsDataURL(file);
-                      };
-
-                      // Click the input element to open the file selection dialog
-                      input.click();
-                    }
-                  },
-                  media_live_embeds: true,
-                  media_embeds: true,
-                  content_css: "tinymce-5",
-                }}
-                onEditorChange={handleEditorChange}
-                value={bioHtml}
-              />
-              {/* <ReactQuill
+                        // Click the input element to open the file selection dialog
+                        input.click();
+                      }
+                    },
+                    media_live_embeds: true,
+                    media_embeds: true,
+                    content_css: "tinymce-5",
+                  }}
+                  onEditorChange={handleEditorChange}
+                  value={bioHtml}
+                />
+                {/* <ReactQuill
                     theme="snow"
                     placeholder="Enter Bio Details"
                     onChange={handleBioQuillChange}
@@ -253,25 +256,26 @@ function ViewCreateCard() {
                     }}
                     // formats={formatOptions}
                   /> */}
-            </Form.Item>
-          </Col>
-
-          <Row>
-            <Col></Col>
-            <Col>
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
-                className="w-100"
-                // disabled={!isFormComplete}
-              >
-                Preview Card
-              </Button>
+              </Form.Item>
             </Col>
-            <Col></Col>
-          </Row>
-        </Form>
+
+            <Row>
+              <Col></Col>
+              <Col>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  className="w-100"
+                  // disabled={!isFormComplete}
+                >
+                  Preview Card
+                </Button>
+              </Col>
+              <Col></Col>
+            </Row>
+          </Form>
+        </div>
       </Card>
 
       <MidinFooter />

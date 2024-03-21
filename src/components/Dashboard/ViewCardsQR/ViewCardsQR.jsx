@@ -167,7 +167,7 @@ function ViewCardsQR() {
         title={<span className="fw-bold text-center">Cards</span>}
         className="view-cards-qr-custom-card"
       >
-        <div className="table-responsive">
+        <div className="viewCardsQRContainer table-responsive">
           <Table
             rowKey={(record) => record.id}
             bordered

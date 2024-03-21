@@ -168,7 +168,7 @@ function ViewProfile() {
           title={<span className="fw-bold text-center">Profile</span>}
           className="view-profile-custom-card"
         >
-          <div>
+          <div className="viewProfileContainer">
             <Form
               form={form}
               layout="vertical"

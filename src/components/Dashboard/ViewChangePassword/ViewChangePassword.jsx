@@ -56,90 +56,98 @@ function ViewChangePassword() {
           title={<span className="fw-bold text-center">Change Password</span>}
           className="view-change-pass-custom-card "
         >
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={onFinishSubmit}
-            name="changePasswordForm"
-          >
-            <Col>
-              <label className="fw-bold mb-1">Old Password</label>
-              <Item
-                name="old_password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your old password",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input.Password placeholder="Enter Old Password" size="large" />
-              </Item>
-            </Col>
-            <Col>
-              <label className="fw-bold mb-1">New Password</label>
-              <Item
-                name="new_password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please enter your new password",
-                  },
-                ]}
-                hasFeedback
-              >
-                <Input.Password placeholder="Enter New Password" size="large" />
-              </Item>
-            </Col>
-            <Col>
-              <label className="fw-bold mb-1">Confirm Password</label>
-              <Item
-                name="confirm_password"
-                dependencies={["new_password"]}
-                hasFeedback
-                rules={[
-                  {
-                    required: true,
-                    message: "Please confirm your new password",
-                  },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue("new_password") === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(
-                        new Error(
-                          "The two passwords that you entered do not match!"
-                        )
-                      );
+          <div className="viewChangePasswordContainer">
+            <Form
+              form={form}
+              layout="vertical"
+              onFinish={onFinishSubmit}
+              name="changePasswordForm"
+            >
+              <Col>
+                <label className="fw-bold mb-1">Old Password</label>
+                <Item
+                  name="old_password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your old password",
                     },
-                  }),
-                ]}
-              >
-                <Input.Password
-                  placeholder="Confirm Your New Password"
-                  size="large"
-                />
-              </Item>
-            </Col>
-            <Row>
-              <Col lg={4} md={4} sm={3}></Col>
-              <Col lg={4} md={4} sm={6}>
-                <Item>
-                  <Button
-                    type="primary"
-                    className="w-100"
+                  ]}
+                  hasFeedback
+                >
+                  <Input.Password
+                    placeholder="Enter Old Password"
                     size="large"
-                    onClick={showModal}
-                  >
-                    Change Password
-                  </Button>
+                  />
                 </Item>
               </Col>
-              <Col lg={4} md={4} sm={3}></Col>
-            </Row>
-          </Form>
+              <Col>
+                <label className="fw-bold mb-1">New Password</label>
+                <Item
+                  name="new_password"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your new password",
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input.Password
+                    placeholder="Enter New Password"
+                    size="large"
+                  />
+                </Item>
+              </Col>
+              <Col>
+                <label className="fw-bold mb-1">Confirm Password</label>
+                <Item
+                  name="confirm_password"
+                  dependencies={["new_password"]}
+                  hasFeedback
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please confirm your new password",
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue("new_password") === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(
+                          new Error(
+                            "The two passwords that you entered do not match!"
+                          )
+                        );
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password
+                    placeholder="Confirm Your New Password"
+                    size="large"
+                  />
+                </Item>
+              </Col>
+              <Row>
+                <Col lg={4} md={4} sm={3}></Col>
+                <Col lg={4} md={4} sm={6}>
+                  <Item>
+                    <Button
+                      type="primary"
+                      className="w-100"
+                      size="large"
+                      onClick={showModal}
+                    >
+                      Change Password
+                    </Button>
+                  </Item>
+                </Col>
+                <Col lg={4} md={4} sm={3}></Col>
+              </Row>
+            </Form>
+          </div>
         </Card>
 
         <MidinFooter />

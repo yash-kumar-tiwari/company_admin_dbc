@@ -39,6 +39,10 @@ form#createCardForm {
   border-bottom-right-radius: 5px;
   padding: 25px !important;
 }
+.viewCreateCardContainer {
+  max-height: 60vh;
+  overflow-y: auto;
+}
 /* .ant-form-item-control-input-content input {
   height: 44px;
 } */

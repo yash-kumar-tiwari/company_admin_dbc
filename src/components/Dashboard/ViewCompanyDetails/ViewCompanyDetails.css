@@ -1,6 +1,5 @@
 .view-company-details-custom-card .ant-card-head {
   background-color: #bae7ff; /* Change background color of the header */
-  overflow-y: auto;
 }
 
 /* .view-company-details-custom-card .ant-card-body {
@@ -15,6 +14,11 @@ form#editCompanyDetailForm {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 25px !important;
+}
+
+.viewCompanyDetailsContainer {
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .editCompanySocialMediaForm {

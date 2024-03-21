@@ -183,7 +183,7 @@ const CompanyDashboardPage = () => {
               </Button>
             </Menu>
           </Sider>
-          <Layout style={{ backgroundColor: "aliceblue" }}>
+          <Layout>
             <center className="mt-2">
               <Space className="app-logo-mobile-view">
                 <Image src={AppLogoDark} width={150} className="text-center" />

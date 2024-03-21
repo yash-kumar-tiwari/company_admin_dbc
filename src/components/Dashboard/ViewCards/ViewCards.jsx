@@ -332,54 +332,56 @@ function ViewCards({ setShowEditCard }) {
         title={<span className="fw-bold text-center">Cards</span>}
         className="view-cards-custom-card"
       >
-        {selectedUser && (
-          <div className="selected-user-description-section my-2">
-            <Typography.Title level={4} className="mx-2">
-              User Details
-            </Typography.Title>
-            <Descriptions bordered size="small" column={1}>
-              <Descriptions.Item label="Name">{`${selectedUser.first_name} ${selectedUser.last_name}`}</Descriptions.Item>
-              <Descriptions.Item label="Email">
-                {selectedUser.user_email}
-              </Descriptions.Item>
-              <Descriptions.Item label="Designation">
-                {selectedUser.designation}
-              </Descriptions.Item>
-              <Descriptions.Item label="Contact Number">
-                {selectedUser.contact_number}
-              </Descriptions.Item>
-            </Descriptions>
-            <Button
-              className="my-2 mx-2"
-              type="primary"
-              shape="round"
-              size="small"
-              onClick={() => setSelectedUser(null)}
-            >
-              Close
-            </Button>
-          </div>
-        )}
-        <Table
-          rowKey={(record) => record.id} // or the key you are using
-          bordered
-          loading={isFetchingCards}
-          size="large"
-          rowSelection={rowSelection}
-          pagination={{
-            position: ["bottomRight"],
-            pageSize,
-            pageSizeOptions: ["5", "10", "20", "50"],
-            showSizeChanger: true,
-            onShowSizeChange: handlePageSizeChange,
-          }}
-          columns={columns}
-          dataSource={CardsData}
-          scroll={{
-            x: 1200,
-          }}
-          components={components}
-        />
+        <div className="viewCardsContainer">
+          {selectedUser && (
+            <div className="selected-user-description-section my-2">
+              <Typography.Title level={4} className="mx-2">
+                User Details
+              </Typography.Title>
+              <Descriptions bordered size="small" column={1}>
+                <Descriptions.Item label="Name">{`${selectedUser.first_name} ${selectedUser.last_name}`}</Descriptions.Item>
+                <Descriptions.Item label="Email">
+                  {selectedUser.user_email}
+                </Descriptions.Item>
+                <Descriptions.Item label="Designation">
+                  {selectedUser.designation}
+                </Descriptions.Item>
+                <Descriptions.Item label="Contact Number">
+                  {selectedUser.contact_number}
+                </Descriptions.Item>
+              </Descriptions>
+              <Button
+                className="my-2 mx-2"
+                type="primary"
+                shape="round"
+                size="small"
+                onClick={() => setSelectedUser(null)}
+              >
+                Close
+              </Button>
+            </div>
+          )}
+          <Table
+            rowKey={(record) => record.id} // or the key you are using
+            bordered
+            loading={isFetchingCards}
+            size="large"
+            rowSelection={rowSelection}
+            pagination={{
+              position: ["bottomRight"],
+              pageSize,
+              pageSizeOptions: ["5", "10", "20", "50"],
+              showSizeChanger: true,
+              onShowSizeChange: handlePageSizeChange,
+            }}
+            columns={columns}
+            dataSource={CardsData}
+            scroll={{
+              x: 1200,
+            }}
+            components={components}
+          />
+        </div>
       </Card>
 
       <MidinFooter />

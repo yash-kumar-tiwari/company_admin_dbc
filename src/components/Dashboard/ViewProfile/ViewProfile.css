@@ -11,3 +11,8 @@ form#editProfileDetailForm {
   border-bottom-right-radius: 5px;
   padding: 25px !important;
 }
+
+.viewProfileContainer {
+  max-height: 60vh;
+  overflow-y: auto;
+}
