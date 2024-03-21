@@ -23,6 +23,7 @@ import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
 import { Image } from "react-bootstrap";
 import AppLogoDark from "../../../assets/images/static/app_logo_dark.png";
+import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -135,7 +136,7 @@ const CompanyDashboardPage = () => {
       <div className="MainBg">
         <Layout className="main-dashboard-layout">
           <Sider
-            theme="light"
+            theme="dark"
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={(broken) => {
@@ -146,27 +147,27 @@ const CompanyDashboardPage = () => {
               setCollapsed(collapsed);
               console.log(collapsed, type);
             }}
-            style={{ backgroundColor: "aliceblue" }}
+            style={{ backgroundColor: "#272C3B" }}
             // trigger={<MenuFoldOutlined />}
           >
             <div className="demo-logo-vertical" />
             <Space className="app-logo-desktop-view p-2">
-              <Image src={AppLogoDark} width={150} className="text-center" />
+              <Image src={AppLogoLight} width={150} className="text-center" />
             </Space>
             <Menu
-              theme="light"
+              theme="dark"
               mode="inline"
               defaultSelectedKeys={[selectedTab]}
               onClick={handleMenuClick}
-              style={{ backgroundColor: "aliceblue" }}
+              style={{ backgroundColor: "#272C3B" }}
               className="mb-2"
             >
               {items.map((item) => (
                 <Menu.Item
                   key={item.key}
                   icon={item.icon}
-                  style={{ borderRadius: "20px" }}
-                  className="sider-dashboard-menu-item my-2 fw-bold"
+                  style={{ borderRadius: "20px", color: "#12A0A2" }}
+                  className="sider-dashboard-menu-item my-2 fw-semibold"
                 >
                   {item.label}
                 </Menu.Item>
@@ -183,13 +184,13 @@ const CompanyDashboardPage = () => {
               </Button>
             </Menu>
           </Sider>
-          <Layout>
+          <Layout style={{ backgroundColor: "#F5F4F8" }}>
             <center className="mt-2">
               <Space className="app-logo-mobile-view">
                 <Image src={AppLogoDark} width={150} className="text-center" />
               </Space>
             </center>
-            <Content className="mb-5">
+            <Content style={{ backgroundColor: "#F5F4F8" }}>
               <div
                 style={{
                   padding: 16,

@@ -1,10 +1,10 @@
 .view-profile-custom-card .ant-card-head {
-  background-color: #bae7ff; /* Change background color of the header */
+  background-color: #12a1a3; /* Change background color of the header */
   overflow-y: auto;
 }
 
 form#editProfileDetailForm {
-  border: 1px solid #bae7ff;
+  border: 1px solid #12a1a3;
   border-radius: 0px;
   margin: 0px 6px;
   border-bottom-left-radius: 5px;
@@ -13,6 +13,6 @@ form#editProfileDetailForm {
 }
 
 .viewProfileContainer {
-  max-height: 60vh;
+  max-height: 68vh;
   overflow-y: auto;
 }

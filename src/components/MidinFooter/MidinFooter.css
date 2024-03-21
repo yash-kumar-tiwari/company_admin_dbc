@@ -2,5 +2,8 @@ footer.main-app-footer {
   background: transparent;
   text-align: center;
   font-weight: 700;
-  padding: 1vh;
+}
+
+.main-app-footer-text {
+  color: #12a1a3;
 }
