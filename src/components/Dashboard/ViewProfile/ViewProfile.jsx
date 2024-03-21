@@ -162,7 +162,7 @@ function ViewProfile() {
 
   return (
     <>
-      <Spin spinning={isFetchingProfile}>
+      <Spin spinning={isFetchingProfile} size="large">
         <Card
           type="inner"
           title={<span className="fw-bold text-center">Profile</span>}

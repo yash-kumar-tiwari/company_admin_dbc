@@ -333,42 +333,24 @@ function ViewCards({ setShowEditCard }) {
     try {
       const response = await exportCardsDetailsFile();
 
-      if (response.status === 200) {
-        console.log(response);
-        const contentDispositionHeader = response.headers.get(
-          "Content-Disposition"
-        );
-        console.log(contentDispositionHeader);
-        const filename = contentDispositionHeader
-          .split(";")[1]
-          .trim()
-          .split("=")[1]
-          .replace(/"/g, "");
-
-        // Convert response data to Blob
-        const blob = await response.blob();
-
-        // Create a temporary anchor element
-        const downloadLink = document.createElement("a");
-        downloadLink.href = window.URL.createObjectURL(new Blob([blob]));
-        downloadLink.setAttribute("download", filename);
-
-        // Append anchor to body and programmatically click it
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-
-        // Cleanup
-        document.body.removeChild(downloadLink);
-
-        message.success("File downloaded successfully.");
-      } else if (response.status === 401) {
-        handleAuthenticationError(response.data.message, navigate);
-      } else {
-        message.error(response.data.message);
+      if (!response.data.fileUrl) {
+        throw new Error("File URL is missing in the response.");
       }
+
+      const fileUrl = response.data.fileUrl;
+
+      const downloadLink = document.createElement("a");
+      downloadLink.href = fileUrl;
+      downloadLink.setAttribute("download", "card_details.xlsx");
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+
+      document.body.removeChild(downloadLink);
+      message.success("File downloaded successfully.");
     } catch (error) {
       console.error("Error downloading file:", error.message);
-      message.error("Error while downloading file.", error.message);
+      message.error("Error while downloading file: " + error.message);
     }
   };
 
@@ -384,54 +366,56 @@ function ViewCards({ setShowEditCard }) {
         </Button>
 
         <div className="viewCardsContainer">
-          {selectedUser && (
-            <div className="selected-user-description-section my-2">
-              <Typography.Title level={4} className="mx-2">
-                User Details
-              </Typography.Title>
-              <Descriptions bordered size="small" column={1}>
-                <Descriptions.Item label="Name">{`${selectedUser.first_name} ${selectedUser.last_name}`}</Descriptions.Item>
-                <Descriptions.Item label="Email">
-                  {selectedUser.user_email}
-                </Descriptions.Item>
-                <Descriptions.Item label="Designation">
-                  {selectedUser.designation}
-                </Descriptions.Item>
-                <Descriptions.Item label="Contact Number">
-                  {selectedUser.contact_number}
-                </Descriptions.Item>
-              </Descriptions>
-              <Button
-                className="my-2 mx-2"
-                type="primary"
-                shape="round"
-                size="small"
-                onClick={() => setSelectedUser(null)}
-              >
-                Close
-              </Button>
-            </div>
-          )}
-          <Table
-            rowKey={(record) => record.id} // or the key you are using
-            bordered
-            loading={isFetchingCards}
-            size="large"
-            rowSelection={rowSelection}
-            pagination={{
-              position: ["bottomRight"],
-              pageSize,
-              pageSizeOptions: ["5", "10", "20", "50"],
-              showSizeChanger: true,
-              onShowSizeChange: handlePageSizeChange,
-            }}
-            columns={columns}
-            dataSource={CardsData}
-            scroll={{
-              x: 1200,
-            }}
-            components={components}
-          />
+          <Spin spinning={isFetchingCards} size="large">
+            {selectedUser && (
+              <div className="selected-user-description-section my-2">
+                <Typography.Title level={4} className="mx-2">
+                  User Details
+                </Typography.Title>
+                <Descriptions bordered size="small" column={1}>
+                  <Descriptions.Item label="Name">{`${selectedUser.first_name} ${selectedUser.last_name}`}</Descriptions.Item>
+                  <Descriptions.Item label="Email">
+                    {selectedUser.user_email}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Designation">
+                    {selectedUser.designation}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Contact Number">
+                    {selectedUser.contact_number}
+                  </Descriptions.Item>
+                </Descriptions>
+                <Button
+                  className="my-2 mx-2"
+                  type="primary"
+                  shape="round"
+                  size="small"
+                  onClick={() => setSelectedUser(null)}
+                >
+                  Close
+                </Button>
+              </div>
+            )}
+            <Table
+              rowKey={(record) => record.id} // or the key you are using
+              bordered
+              // loading={isFetchingCards}
+              size="large"
+              rowSelection={rowSelection}
+              pagination={{
+                position: ["bottomRight"],
+                pageSize,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showSizeChanger: true,
+                onShowSizeChange: handlePageSizeChange,
+              }}
+              columns={columns}
+              dataSource={CardsData}
+              scroll={{
+                x: 1200,
+              }}
+              components={components}
+            />
+          </Spin>
         </div>
       </Card>
 
@@ -485,7 +469,8 @@ function ViewCards({ setShowEditCard }) {
         visible={showEditCardModal}
         onCancel={handleEditModalClose}
         onEditSuccess={(info) => {
-          console.log("Edit Card Success");
+          // console.log("Edit Card Success");
+          handleEditModalClose();
         }}
         record={selectedRecord} // Pass the selectedRowKeys to the modal
         isUpdating={isUpdatingCards}

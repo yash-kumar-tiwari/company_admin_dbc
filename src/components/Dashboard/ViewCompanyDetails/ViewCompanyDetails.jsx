@@ -265,7 +265,7 @@ function ViewCompanyDetails() {
 
   return (
     <>
-      <Spin spinning={isFetchingCompany}>
+      <Spin spinning={isFetchingCompany} size="large">
         <Card
           type="inner"
           title={<span className="fw-bold text-center">Company Details</span>}
@@ -626,7 +626,7 @@ function ViewCompanyDetails() {
                     </Button>
                   </Item>
                 </Col>
-                <Col lg={6} md={3} sm={3}>
+                <Col lg={6} md={6} sm={6}>
                   <Item>
                     <Button
                       className="w-100"

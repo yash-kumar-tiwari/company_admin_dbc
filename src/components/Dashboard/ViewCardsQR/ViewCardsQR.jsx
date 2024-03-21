@@ -168,24 +168,26 @@ function ViewCardsQR() {
         className="view-cards-qr-custom-card"
       >
         <div className="viewCardsQRContainer table-responsive">
-          <Table
-            rowKey={(record) => record.id}
-            bordered
-            loading={isFetchingCardsUrl}
-            size="large"
-            rowSelection={rowSelection}
-            pagination={{
-              position: ["bottomRight"],
-              pageSize,
-              pageSizeOptions: ["5", "10", "20", "50"],
-              showSizeChanger: true,
-              onShowSizeChange: handlePageSizeChange,
-            }}
-            columns={columns}
-            dataSource={CardsData}
-            components={components}
-            scroll={{ x: true }} // Add this line to make the table horizontally scrollable
-          />
+          <Spin spinning={isFetchingCardsUrl} size="large">
+            <Table
+              rowKey={(record) => record.id}
+              bordered
+              // loading={isFetchingCardsUrl}
+              size="large"
+              rowSelection={rowSelection}
+              pagination={{
+                position: ["bottomRight"],
+                pageSize,
+                pageSizeOptions: ["5", "10", "20", "50"],
+                showSizeChanger: true,
+                onShowSizeChange: handlePageSizeChange,
+              }}
+              columns={columns}
+              dataSource={CardsData}
+              components={components}
+              scroll={{ x: true }} // Add this line to make the table horizontally scrollable
+            />
+          </Spin>
         </div>
       </Card>
 

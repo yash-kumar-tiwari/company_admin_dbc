@@ -22,7 +22,7 @@ import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 
-function EditCard({ visible, onCancel, onEdit, record, isUpdating }) {
+function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
   console.log(record);
   const card_id = record?.id;
 
@@ -111,7 +111,8 @@ function EditCard({ visible, onCancel, onEdit, record, isUpdating }) {
       const response = await editCardDetails(updatedDetails);
       if (response && response.status === 200) {
         message.success(response.data.message);
-        fetchCardData();
+        // fetchCardData();
+        onEditSuccess(updatedDetails);
       } else if (response.status === 401) {
         handleAuthenticationError(response.data.message, navigate);
       } else {
@@ -130,45 +131,47 @@ function EditCard({ visible, onCancel, onEdit, record, isUpdating }) {
     setBioHtml(content);
   };
 
-  const fetchCardData = useCallback(async () => {
-    try {
-      const response = await fetchViewDigitalCard(card_id);
+  form.setFieldsValue(record);
 
-      if (response && response.status === 200) {
-        setCardDetails(response.data.data);
-        const cardData = response.data.data;
-        setCompID(response.data.data.company_id);
+  // const fetchCardData = useCallback(async () => {
+  //   try {
+  //     const response = await fetchViewDigitalCard(card_id);
 
-        form.setFieldsValue({
-          first_name: cardData.first_name,
-          last_name: cardData.last_name,
-          user_email: cardData.user_email,
-          designation: cardData.designation,
-          contact_number: cardData.contact_number,
-          cover_pic: cardData.cover_pic,
-          profile_picture: cardData.profile_picture,
-          bio: cardData.bio,
-        });
+  //     if (response && response.status === 200) {
+  //       setCardDetails(response.data.data);
+  //       const cardData = response.data.data;
+  //       setCompID(response.data.data.company_id);
 
-        setBusinessCardData(cardData);
-        setBioHtml(cardData.bio || "");
-        setBusinessCardData(response.data.data);
-      } else if (response.status === 401) {
-        handleAuthenticationError(response.data.message, navigate);
-      } else {
-        message.error(response.data.message);
-      }
-    } catch (error) {
-      console.error("Error fetching card data:", error);
-      message.error(error.message);
-    }
-  }, [form, navigate, card_id]);
+  //       form.setFieldsValue({
+  //         first_name: cardData.first_name,
+  //         last_name: cardData.last_name,
+  //         user_email: cardData.user_email,
+  //         designation: cardData.designation,
+  //         contact_number: cardData.contact_number,
+  //         cover_pic: cardData.cover_pic,
+  //         profile_picture: cardData.profile_picture,
+  //         bio: cardData.bio,
+  //       });
 
-  useEffect(() => {
-    if (visible) {
-      fetchCardData();
-    }
-  }, [visible, fetchCardData]);
+  //       setBusinessCardData(cardData);
+  //       setBioHtml(cardData.bio || "");
+  //       setBusinessCardData(response.data.data);
+  //     } else if (response.status === 401) {
+  //       handleAuthenticationError(response.data.message, navigate);
+  //     } else {
+  //       message.error(response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching card data:", error);
+  //     message.error(error.message);
+  //   }
+  // }, [form, navigate, card_id]);
+
+  // useEffect(() => {
+  //   if (visible) {
+  //     fetchCardData();
+  //   }
+  // }, [visible, fetchCardData]);
 
   return (
     <>
@@ -179,13 +182,14 @@ function EditCard({ visible, onCancel, onEdit, record, isUpdating }) {
             <ExclamationCircleFilled className="mx-2 text-primary" />
             Edit Card -{" "}
             <span className="fw-normal">
-              {`${businessCardData.first_name} ${businessCardData.last_name}`}
+              {`${record?.first_name} ${record?.last_name}`}
             </span>
           </span>
         }
         open={visible}
         onCancel={onCancel}
         footer={null}
+        destroyOnClose
       >
         <Form
           form={form}
