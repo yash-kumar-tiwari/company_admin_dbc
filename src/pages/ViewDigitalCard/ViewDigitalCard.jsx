@@ -148,7 +148,9 @@ function ViewDigitalCard() {
               <div className="viewCardContainer">
                 <div
                   className="viewCardImagesSection"
-                  style={{ backgroundImage: coverImg }}
+                  style={{
+                    backgroundImage: `url(${cardDetails?.company_logo})`,
+                  }}
                 >
                   <Image
                     className="viewCardImages_profileImage"
@@ -616,7 +618,7 @@ function ViewDigitalCard() {
                   <div className="viewCardQRCode">
                     <center>
                       {cardDetails.qr_url && (
-                        <img
+                        <Image
                           src={cardDetails.qr_url}
                           alt="QR Code"
                           style={{

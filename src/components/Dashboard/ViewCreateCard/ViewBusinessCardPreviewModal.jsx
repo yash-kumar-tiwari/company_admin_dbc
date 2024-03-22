@@ -230,14 +230,19 @@ const ViewBusinessCardPreviewModal = ({
       closable
       width={650}
     >
-      <Container fluid className="viewPreviewDigitalBusinessCardContainer">
+      <Container fluid className="previewDigitalBusinessCardContainer">
         <Row>
           <Col lg={12} md={12} sm={12} className="my-5">
-            <div className="viewBusinessCardContainer">
-              <div className="viewCardContainer">
-                <div className="viewCardImagesSection">
+            <div className="previewBusinessCardContainer">
+              <div className="previewCardContainer">
+                <div
+                  className="previewCardImagesSection"
+                  style={{
+                    backgroundImage: `url(${companyDetails?.company_logo})`,
+                  }}
+                >
                   <Image
-                    className="viewCardImages_profileImage"
+                    className="previewCardImages_profileImage"
                     src={imageUrl || DefaultUserAvatar}
                     roundedCircle
                     alt="Profile"
@@ -245,32 +250,41 @@ const ViewBusinessCardPreviewModal = ({
                     width={150}
                   />
                 </div>
-                <div className="viewCardDetails p-4">
-                  <div className="viewCardProfileBioDetails">
+                <div className="previewCardDetails p-4">
+                  <div className="previewCardProfileBioDetails">
                     <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
-                        <div className="view_card_content_title">{`${data?.first_name} ${data?.last_name}`}</div>
-                        <div className="view_card_content_sub_title">{`${data?.designation} at ${companyDetails?.company_name}`}</div>
+                        <div className="preview_card_content_title">{`${data?.first_name} ${data?.last_name}`}</div>
+                        <div className="preview_card_content_sub_title">{`${data?.designation} at ${companyDetails?.company_name}`}</div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <span className="float-end">
+                        {/* <span className="float-end">
                           <Image
                             src={data.company_logo}
                             roundedCircle
                             height={50}
                             width={50}
                           />
-                        </span>
+                        </span> */}
                       </Col>
                     </Row>
                   </div>
-                  <div className="viewCardCompanyBioDetails">
+                  <div className="viewCardCompanyLogo mb-2">
+                    <Image
+                      src={companyDetails?.company_logo}
+                      rounded
+                      height={"auto"}
+                      width={"auto"}
+                      style={{ maxHeight: "50px", maxWidth: "50px" }}
+                    />
+                  </div>
+                  <div className="previewCardCompanyBioDetails">
                     <Row className="align-items-center">
                       <Col lg={8} md={8} sm={8}>
                         <label className="fw-bold text-black">
                           Company Location
                         </label>
-                        <div className="view_card_content_sub_title">
+                        <div className="preview_card_content_sub_title">
                           {companyDetails?.company_address}
                         </div>
                       </Col>
@@ -286,7 +300,7 @@ const ViewBusinessCardPreviewModal = ({
                     </Row>
                   </div>
                   {bioHtml && (
-                    <div className="viewCardAboutMe">
+                    <div className="previewCardAboutMe">
                       <Row className="my-3">
                         <label className="fw-bold text-black">About Me</label>
                         <div
@@ -299,7 +313,7 @@ const ViewBusinessCardPreviewModal = ({
                     </div>
                   )}
                   {companyDetails && companyDetails.product_service && (
-                    <div className="viewCardProductAndServices">
+                    <div className="previewCardProductAndServices">
                       <Row className="my-3">
                         <label className="fw-bold text-black">
                           Product And Services
@@ -313,7 +327,7 @@ const ViewBusinessCardPreviewModal = ({
                       </Row>
                     </div>
                   )}
-                  <div className="viewCardCompanyInfo">
+                  <div className="previewCardCompanyInfo">
                     <Row className="mt-1 align-items-center">
                       <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                         <label className="fw-bold text-black">Email</label>
@@ -346,7 +360,7 @@ const ViewBusinessCardPreviewModal = ({
                     </Row>
                   </div>
 
-                  <div className="viewCardSocialLinks">
+                  <div className="previewCardSocialLinks">
                     <Row className="my-3">
                       <Col lg={6} md={6} sm={6} xs={6}>
                         <Button
@@ -520,7 +534,7 @@ const ViewBusinessCardPreviewModal = ({
                     </Row>
                   </div>
 
-                  <div className="viewCardShareLinks">
+                  <div className="previewCardShareLinks">
                     <Row className="my-3">
                       <Col lg={4} md={4} sm={4} xs={3}>
                         <Button
@@ -541,13 +555,17 @@ const ViewBusinessCardPreviewModal = ({
                     </Row>
                   </div>
 
-                  <div className="viewCardQRCode">
+                  <div className="previewCardQRCode">
                     <center>
                       <Image
                         src={StaticQR}
                         alt="QR Code"
-                        height={150}
-                        width={150}
+                        style={{
+                          width: "250px",
+                          height: "250px",
+                          maxWidth: "250px",
+                          maxHeight: "250px",
+                        }}
                       />
                     </center>
                   </div>
