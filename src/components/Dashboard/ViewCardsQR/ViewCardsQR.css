@@ -4,8 +4,9 @@
 }
 
 .viewCardsQRContainer {
-  height: 68vh;
-  max-height: 68vh;
+  /* height: 68vh; */
+  /* max-height: 68vh; */
+  min-height: 65vh;
   overflow-y: auto;
 }
 /* 

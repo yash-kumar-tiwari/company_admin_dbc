@@ -16,10 +16,10 @@ form#editCompanyDetailForm {
   padding: 25px !important;
 }
 
-.viewCompanyDetailsContainer {
+/* .viewCompanyDetailsContainer {
   max-height: 68vh;
   overflow-y: auto;
-}
+} */
 
 .editCompanySocialMediaForm {
   max-height: 60vh;

@@ -10,8 +10,9 @@
 } */
 
 .viewCardsContainer {
-  height: 68vh;
-  max-height: 68vh;
+  /* height: 68vh; */
+  /* max-height: 68vh; */
+  min-height: 60vh;
   overflow-y: auto;
 }
 

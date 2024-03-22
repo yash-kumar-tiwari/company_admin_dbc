@@ -1,5 +1,5 @@
 .view-create-custom-card .ant-card-head {
-  background-color: #12A1A3; /* Change background color of the header */
+  background-color: #12a1a3; /* Change background color of the header */
   overflow-y: auto;
 }
 
@@ -25,24 +25,24 @@ span.ant-steps-icon svg {
   margin-bottom: 10px;
 }
 .view-create-card-steps .ant-steps-item.ant-steps-item-active {
-  background: #12A1A3;
-  border: 1px solid #12A1A3 !important;
+  background: #12a1a3;
+  border: 1px solid #12a1a3 !important;
 }
 .view-create-card-steps .ant-steps-item::after {
   content: unset !important;
 }
 form#createCardForm {
-  border: 1px solid #12A1A3;
+  border: 1px solid #12a1a3;
   border-radius: 0px;
   margin: 0px 6px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 25px !important;
 }
-.viewCreateCardContainer {
+/* .viewCreateCardContainer {
   max-height: 68vh;
   overflow-y: auto;
-}
+} */
 /* .ant-form-item-control-input-content input {
   height: 44px;
 } */
