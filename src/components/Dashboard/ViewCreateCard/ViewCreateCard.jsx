@@ -115,8 +115,8 @@ function ViewCreateCard() {
         className="view-profile-custom-card"
       >
         <Row>
-          <Col></Col>
-          <Col>
+          <Col lg={3} md={0} sm={0} xs={0}></Col>
+          <Col lg={3} md={6} sm={6} xs={6}>
             <Upload
               accept=".xlsx, .xls"
               beforeUpload={handleExcelUpload}
@@ -127,14 +127,14 @@ function ViewCreateCard() {
               </Button>
             </Upload>
           </Col>
-          <Col>
+          <Col lg={3} md={6} sm={6} xs={6}>
             <a href={downloadSampleExcel} target="_blank" rel="noreferrer">
               <Button type="primary" className="mb-3">
                 Download Sample File
               </Button>
             </a>
           </Col>
-          <Col></Col>
+          <Col lg={3} md={0} sm={0} xs={0}></Col>
         </Row>
 
         <div className="viewCreateCardContainer">

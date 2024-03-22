@@ -167,16 +167,25 @@ function ViewDigitalCard() {
                         <div className="view_card_content_sub_title">{`${cardDetails?.designation} at ${cardDetails?.company_name}`}</div>
                       </Col>
                       <Col lg={4} md={4} sm={4}>
-                        <span className="float-end">
+                        {/* <span className="float-end">
                           <Image
                             src={cardDetails?.company_logo}
                             roundedCircle
                             height={50}
                             width={50}
                           />
-                        </span>
+                        </span> */}
                       </Col>
                     </Row>
+                  </div>
+                  <div className="viewCardCompanyLogo mb-2">
+                    <Image
+                      src={cardDetails?.company_logo}
+                      rounded
+                      height={"auto"}
+                      width={"auto"}
+                      style={{ maxHeight: "50px", maxWidth: "50px" }}
+                    />
                   </div>
                   <div className="viewCardCompanyBioDetails">
                     <Row className="align-items-center">
@@ -607,7 +616,16 @@ function ViewDigitalCard() {
                   <div className="viewCardQRCode">
                     <center>
                       {cardDetails.qr_url && (
-                        <img src={cardDetails.qr_url} alt="QR Code" />
+                        <img
+                          src={cardDetails.qr_url}
+                          alt="QR Code"
+                          style={{
+                            width: "250px",
+                            height: "250px",
+                            maxWidth: "250px",
+                            maxHeight: "250px",
+                          }}
+                        />
                       )}
                     </center>
                   </div>

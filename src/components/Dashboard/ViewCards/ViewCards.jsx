@@ -361,9 +361,14 @@ function ViewCards({ setShowEditCard }) {
         title={<span className="fw-bold text-center">Cards</span>}
         className="view-cards-custom-card"
       >
-        <Button type="primary" className="mb-3" onClick={handleExportCards}>
-          Export Cards
-        </Button>
+        <Col lg={3} md={0} sm={0} xs={0}></Col>
+        <Col lg={3} md={6} sm={6} xs={6}>
+          <Button type="primary" className="mb-3" onClick={handleExportCards}>
+            Export Cards
+          </Button>
+        </Col>
+        <Col lg={3} md={6} sm={6} xs={6}></Col>
+        <Col lg={3} md={0} sm={0} xs={0}></Col>
 
         <div className="viewCardsContainer">
           <Spin spinning={isFetchingCards} size="large">
