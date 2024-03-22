@@ -113,9 +113,7 @@ const EditSocialMediaModal = ({ visible, onCancel, onSave, companyID }) => {
                   rules={[
                     {
                       type: "url",
-                      message: `Please enter a valid ${capitalizeFirstLetter(
-                        key
-                      )} URL`,
+                      message: `Please enter a valid URL e.g. www.${key}.com`,
                     },
                   ]}
                 >

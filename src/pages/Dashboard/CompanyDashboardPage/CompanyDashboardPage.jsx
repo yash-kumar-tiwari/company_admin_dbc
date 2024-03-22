@@ -140,14 +140,22 @@ const CompanyDashboardPage = () => {
             breakpoint="lg"
             collapsedWidth="0"
             onBreakpoint={(broken) => {
-              console.log(broken);
+              // console.log(broken);
             }}
             collapsed={collapsed} // Set collapsed state of the Sider
             onCollapse={(collapsed, type) => {
               setCollapsed(collapsed);
-              console.log(collapsed, type);
+              // console.log(collapsed, type);
             }}
-            style={{ backgroundColor: "#272C3B" }}
+            style={{
+              backgroundColor: "#272C3B",
+              position: "fixed",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              zIndex: 1,
+            }}
+
             // trigger={<MenuFoldOutlined />}
           >
             <div className="demo-logo-vertical" />
@@ -166,7 +174,7 @@ const CompanyDashboardPage = () => {
                 <Menu.Item
                   key={item.key}
                   icon={item.icon}
-                  style={{ borderRadius: "20px", color: "#12A0A2" }}
+                  // style={{ borderRadius: "20px" }}
                   className="sider-dashboard-menu-item my-2 fw-semibold"
                 >
                   {item.label}
@@ -184,13 +192,31 @@ const CompanyDashboardPage = () => {
               </Button>
             </Menu>
           </Sider>
-          <Layout style={{ backgroundColor: "#F5F4F8" }}>
-            <center className="mt-2">
-              <Space className="app-logo-mobile-view">
-                <Image src={AppLogoDark} width={150} className="text-center" />
-              </Space>
-            </center>
-            <Content style={{ backgroundColor: "#F5F4F8" }}>
+          <Layout
+            style={{
+              backgroundColor: "#F5F4F8",
+              // marginLeft: collapsed ? 0 : 200,
+              // transition: "margin-left 0.3s",
+            }}
+          >
+            {/* <center
+              className="mt-2"
+              style={{ backgroundColor: "#F5F4F8", padding: 0 }}
+            > */}
+            <Space className="app-logo-mobile-view">
+              <Image src={AppLogoDark} width={150} className="text-center" />
+            </Space>
+            {/* </center> */}
+            <Content
+              style={{
+                backgroundColor: "#F5F4F8",
+                // padding: "5px",
+                minHeight: "100vh",
+                overflowY: "auto",
+                marginLeft: collapsed ? 0 : 200,
+                transition: "margin-left 0.3s",
+              }}
+            >
               <div
                 style={{
                   padding: 16,

@@ -185,7 +185,7 @@ function ViewCardsQR() {
               columns={columns}
               dataSource={CardsData}
               components={components}
-              scroll={{ x: true }} // Add this line to make the table horizontally scrollable
+              scroll={{ x: true }}
             />
           </Spin>
         </div>
