@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, Button, Form, Input, Modal, Upload, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import { Editor } from "@tinymce/tinymce-react";
 import ImgCrop from "antd-img-crop";
-import { editCardDetails, uploadAvatar } from "../../../services/apiServices";
+import {
+  editCardDetails,
+  fetchViewDigitalCard,
+  uploadAvatar,
+} from "../../../services/apiServices";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import { ExclamationCircleFilled } from "@ant-design/icons";
+import { editorApiKey } from "../../../utils/constants";
 
 function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
   console.log(record);
@@ -110,47 +115,47 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
     setBioHtml(content);
   };
 
-  form.setFieldsValue(record);
+  // form.setFieldsValue(record);
 
-  // const fetchCardData = useCallback(async () => {
-  //   try {
-  //     const response = await fetchViewDigitalCard(card_id);
+  const fetchCardData = useCallback(async () => {
+    try {
+      const response = await fetchViewDigitalCard(card_id);
 
-  //     if (response && response.status === 200) {
-  //       setCardDetails(response.data.data);
-  //       const cardData = response.data.data;
-  //       setCompID(response.data.data.company_id);
+      if (response && response.status === 200) {
+        setCardDetails(response.data.data);
+        const cardData = response.data.data;
+        // setCompID(response.data.data.company_id);
 
-  //       form.setFieldsValue({
-  //         first_name: cardData.first_name,
-  //         last_name: cardData.last_name,
-  //         user_email: cardData.user_email,
-  //         designation: cardData.designation,
-  //         contact_number: cardData.contact_number,
-  //         cover_pic: cardData.cover_pic,
-  //         profile_picture: cardData.profile_picture,
-  //         bio: cardData.bio,
-  //       });
+        form.setFieldsValue({
+          first_name: cardData.first_name,
+          last_name: cardData.last_name,
+          user_email: cardData.user_email,
+          designation: cardData.designation,
+          contact_number: cardData.contact_number,
+          cover_pic: cardData.cover_pic,
+          profile_picture: cardData.profile_picture,
+          bio: cardData.bio,
+        });
 
-  //       setBusinessCardData(cardData);
-  //       setBioHtml(cardData.bio || "");
-  //       setBusinessCardData(response.data.data);
-  //     } else if (response.status === 401) {
-  //       handleAuthenticationError(response.data.message, navigate);
-  //     } else {
-  //       message.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching card data:", error);
-  //     message.error(error.message);
-  //   }
-  // }, [form, navigate, card_id]);
+        setBusinessCardData(cardData);
+        setBioHtml(cardData.bio || "");
+        setBusinessCardData(response.data.data);
+      } else if (response.status === 401) {
+        handleAuthenticationError(response.data.message, navigate);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching card data:", error);
+      message.error(error.message);
+    }
+  }, [form, navigate, card_id]);
 
-  // useEffect(() => {
-  //   if (visible) {
-  //     fetchCardData();
-  //   }
-  // }, [visible, fetchCardData]);
+  useEffect(() => {
+    if (visible) {
+      fetchCardData();
+    }
+  }, [visible, fetchCardData]);
 
   return (
     <>
@@ -294,8 +299,8 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                 //   rules={[{ required: true, message: "Please input your bio!" }]}
               >
                 <Editor
-                  apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
-                  initialValue={cardDetails?.bio || "Welcome to TinyMCE!"}
+                  apiKey={editorApiKey}
+                  initialValue={cardDetails?.bio || null}
                   init={{
                     plugins:
                       "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",

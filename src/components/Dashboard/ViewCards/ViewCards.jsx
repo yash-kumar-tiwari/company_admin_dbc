@@ -458,6 +458,7 @@ function ViewCards({ setShowEditCard }) {
         onEditSuccess={(info) => {
           // console.log("Edit Card Success");
           handleEditModalClose();
+          fetchViewCardsData();
         }}
         record={selectedRecord} // Pass the selectedRowKeys to the modal
       />
