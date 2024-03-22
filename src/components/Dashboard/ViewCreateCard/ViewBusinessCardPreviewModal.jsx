@@ -238,7 +238,7 @@ const ViewBusinessCardPreviewModal = ({
                 <div
                   className="previewCardImagesSection"
                   style={{
-                    backgroundImage: `url(${companyDetails?.company_logo})`,
+                    backgroundImage: `url(${companyDetails?.cover_pic})`,
                   }}
                 >
                   <Image

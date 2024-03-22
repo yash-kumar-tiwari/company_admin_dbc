@@ -3,12 +3,14 @@ import { Form, Input, Button, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { forgetPassword } from "../../../services/apiServices";
 import { validateEmail } from "../../../utils/formValidators";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AppBgImage from "../../../assets/images/static/app_background_image.jpg";
 import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 import "./ForgetPasswordPage.css";
 import { FaFacebookSquare } from "react-icons/fa";
 import { CiInstagram } from "react-icons/ci";
+import { Image } from "react-bootstrap";
+import { app_facebook_url, app_instagram_url } from "../../../utils/constants";
 
 function ForgetPasswordPage() {
   const navigate = useNavigate();
@@ -48,20 +50,37 @@ function ForgetPasswordPage() {
                 Where Business Networking Blossoms
               </h2>
             </div>
-            <img src={AppLogoLight} alt="Logo" className="logoimg" />
+            <NavLink to={"/"}>
+              <Image src={AppLogoLight} alt="Logo" className="logoimg" />
+            </NavLink>
             <div className="position-absolute bottom-0 start-50 translate-middle-x mb-5">
-              <FaFacebookSquare className="fs-1 fw-bold text-white me-2" />
-              <CiInstagram className="fs-1 fw-bold text-white me-2 " />
+              <a
+                href={app_facebook_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebookSquare className="fs-1 fw-bold text-white me-2" />
+              </a>
+
+              <a
+                href={app_instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <CiInstagram className="fs-1 fw-bold text-white me-2" />
+              </a>
             </div>
           </div>
           <div className="col-sm-12 col-md-6 bg-dark d-flex align-items-center justify-content-center">
             <div className="card border-0 bg-dark w-50">
-              <img
-                src={AppLogoLight}
-                className="mx-auto mt-4 mb-3"
-                alt="LogoImgSize"
-                style={{ width: "200px" }}
-              />
+              <NavLink to={"/"}>
+                <Image
+                  src={AppLogoLight}
+                  className="mx-auto mt-4 mb-3"
+                  alt="LogoImgSize"
+                  style={{ width: "200px" }}
+                />
+              </NavLink>
 
               <Form name="basic" onFinish={onFinish}>
                 <Form.Item

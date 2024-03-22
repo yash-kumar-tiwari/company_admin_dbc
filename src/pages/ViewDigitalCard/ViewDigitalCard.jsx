@@ -128,28 +128,28 @@ function ViewDigitalCard() {
               <Image
                 className="viewDigitalCard_CompanyLogo"
                 src={cardDetails?.company_logo}
-                height={100}
-                width={100}
-                roundedCircle
+                height={150}
+                width={150}
+                rounded
               />
 
               <div className="viewDigitalCard_Vision">
                 <div className="viewDigitalCard_CompanyVision-1">
-                  View Cards Digitally,
+                  Tap, Connect, Cultivate
                 </div>
                 <div className="viewDigitalCard_CompanyVision-1">
-                  Access Anytime... Anywhere{" "}
+                  Where Business Networking Blossoms{" "}
                 </div>
               </div>
             </div>
           </Col>
-          <Col lg={4} md={4} sm={12} xs={12} className="my-5">
+          <Col lg={4} md={4} sm={12} xs={12} className="">
             <div className="viewBusinessCardContainer">
               <div className="viewCardContainer">
                 <div
                   className="viewCardImagesSection"
                   style={{
-                    backgroundImage: `url(${cardDetails?.company_logo})`,
+                    backgroundImage: `url(${cardDetails?.cover_pic})`,
                   }}
                 >
                   <Image

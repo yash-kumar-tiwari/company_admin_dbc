@@ -20,6 +20,11 @@ body p {
   /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
 }
 
+.viewBusinessCardContainer {
+  margin-top: 10vh;
+  padding: 0px;
+}
+
 /* Company Container */
 
 .viewDigitalCard_CompanyBrief {
@@ -159,4 +164,11 @@ footer.viewDigitalCard_Footer {
   padding: 1vh;
   text-align: center;
   font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .viewBusinessCardContainer {
+    margin: 0px;
+    padding: 0px;
+  }
 }
