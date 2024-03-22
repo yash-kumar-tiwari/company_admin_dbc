@@ -7,7 +7,6 @@ import {
   LogoutOutlined,
   PlusOutlined,
   QrcodeOutlined,
-  MenuFoldOutlined,
 } from "@ant-design/icons";
 import { MdOutlinePassword } from "react-icons/md";
 
@@ -20,25 +19,22 @@ import { logoutUser } from "../../../services/apiServices";
 import { useNavigate } from "react-router-dom";
 import "./CompanyDashboardPage.css";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
-import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
 import { Image } from "react-bootstrap";
 import AppLogoDark from "../../../assets/images/static/app_logo_dark.png";
 import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const CompanyDashboardPage = () => {
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
   const navigate = useNavigate();
 
   const [previousTab, setPreviousTab] = useState(null);
   const [selectedTab, setSelectedTab] = useState(previousTab || "1");
-  const [collapsed, setCollapsed] = useState(false); // State to track sidebar collapsed status
-
-  const [showEditCard, setShowEditCard] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   const items = [
     { key: "1", icon: <ProfileOutlined />, label: "Company Details" },
@@ -50,13 +46,10 @@ const CompanyDashboardPage = () => {
   ];
 
   const handleMenuClick = (e) => {
-    // Update the previousTab before updating the selectedTab
     setPreviousTab(selectedTab);
     setSelectedTab(e.key);
-    setShowEditCard(false);
     if (window.innerWidth < 992) {
-      // Check if screen size is less than 992px (antd's default breakpoint)
-      setCollapsed(true); // Collapse the sidebar after selecting a menu item only on small screens
+      setCollapsed(true);
     }
   };
 
@@ -77,7 +70,7 @@ const CompanyDashboardPage = () => {
       case "3":
         return (
           <>
-            <ViewCards setShowEditCard={setShowEditCard} />
+            <ViewCards />
             {/* {showEditCard ? (
               <ViewEditCard setShowEditCard={setShowEditCard} />
             ) : (

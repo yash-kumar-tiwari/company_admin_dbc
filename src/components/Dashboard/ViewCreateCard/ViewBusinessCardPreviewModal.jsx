@@ -2,8 +2,8 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./ViewBusinessCardPreviewModal.css";
 
 import { Container, Col, Image, Row } from "react-bootstrap";
-import { Alert, Button, Modal, Space, message } from "antd";
-import { FaMapLocationDot, FaUserPlus } from "react-icons/fa6";
+import { Alert, Button, Modal, message } from "antd";
+import { FaUserPlus } from "react-icons/fa6";
 import { FaShareAlt } from "react-icons/fa";
 import StaticQR from "../../../assets/images/static/qr_img.png";
 import DefaultUserAvatar from "../../../assets/images/static/default_user.png";
@@ -23,7 +23,7 @@ import LinkedInCustomIcon from "../../../assets/images/social/linkedin.png";
 import WeChatCustomIcon from "../../../assets/images/social/wechat.png";
 import LineCustomIcon from "../../../assets/images/social/line.png";
 import YouTubeCustomIcon from "../../../assets/images/social/youtube.png";
-import TwitterCustomIcon from "../../../assets/images/social/twitter.png";
+// import TwitterCustomIcon from "../../../assets/images/social/twitter.png";
 import TikTokCustomIcon from "../../../assets/images/social/tiktok.png";
 import FacebookCustomIcon from "../../../assets/images/social/facebook.png";
 import {

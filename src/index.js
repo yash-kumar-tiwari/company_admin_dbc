@@ -9,11 +9,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/fonts.css";
 
 import { ConfigProvider, message } from "antd";
-import { LocaleProvider } from "antd";
 import enUS from "antd/lib/locale/en_US"; // import English language
 
 import { BrowserRouter } from "react-router-dom";
-import ErrorBoundary from "./pages/Dashboard/Error/ErrorBoundary";
 import { CompanyProvider } from "./contexts/CompanyContext";
 
 // Customize the message placement
@@ -39,4 +37,4 @@ root.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals(console.log);
+reportWebVitals(console.log);

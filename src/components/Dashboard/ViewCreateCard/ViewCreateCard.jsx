@@ -35,7 +35,7 @@ function ViewCreateCard() {
   const [fileList, setFileList] = useState([]);
   const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [bioHtml, setBioHtml] = useState("");
-  const [bioTxtQuill, setBioTxtQuill] = useState("");
+  // const [bioTxtQuill, setBioTxtQuill] = useState("");
 
   const [form] = Form.useForm();
   const formRef = React.createRef();
@@ -103,9 +103,9 @@ function ViewCreateCard() {
     setBioHtml(content);
   };
 
-  const handleBioQuillChange = (value) => {
-    setBioTxtQuill(value);
-  };
+  // const handleBioQuillChange = (value) => {
+  //   setBioTxtQuill(value);
+  // };
 
   return (
     <>
@@ -351,7 +351,7 @@ function ViewCreateCard() {
           // console.log("Success Message", cardDetails);
         }}
         bioHtml={bioHtml}
-        bioTxtQuill={bioTxtQuill}
+        // bioTxtQuill={bioTxtQuill}
       />
     </>
   );

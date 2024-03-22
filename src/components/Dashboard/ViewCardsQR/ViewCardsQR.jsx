@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Avatar,
   Button,
   Card,
   Form,
@@ -10,22 +9,16 @@ import {
   Table,
   Modal,
 } from "antd";
-import QRCode from "qrcode.react"; // Import QRCode library
 import "./ViewCardsQR.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { Col, Image, Row } from "react-bootstrap";
-import { Card as CardRB } from "react-bootstrap";
-import {
-  fetchCardsList,
-  fetchCardsUrlList,
-} from "../../../services/apiServices";
+import { Image } from "react-bootstrap";
+import { fetchCardsUrlList } from "../../../services/apiServices";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 
-const { Text, Title, Paragraph } = Typography;
-const { Item } = Form;
+const { Text } = Typography;
 
 function ViewCardsQR() {
   const navigate = useNavigate();

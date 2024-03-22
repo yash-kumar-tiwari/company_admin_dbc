@@ -1,25 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  Avatar,
-  Button,
-  Card,
-  Form,
-  Input,
-  Modal,
-  Upload,
-  message,
-} from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Avatar, Button, Form, Input, Modal, Upload, message } from "antd";
+import { useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import { Editor } from "@tinymce/tinymce-react";
 import ImgCrop from "antd-img-crop";
-import {
-  editCardDetails,
-  fetchViewDigitalCard,
-  uploadAvatar,
-} from "../../../services/apiServices";
+import { editCardDetails, uploadAvatar } from "../../../services/apiServices";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
-import MidinFooter from "../../MidinFooter/MidinFooter";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 
 function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
@@ -29,19 +15,12 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const params = useParams();
-  const urlString = params["*"];
-  // Extract the ID after the slash
-  const cardID = urlString?.split("/")[1];
-  //   console.log(cardID);
-
   const [isUpdatingCard, setIsUpdatingCard] = useState(false);
   const [businessCardData, setBusinessCardData] = useState({});
   const [cardDetails, setCardDetails] = useState({});
   const [profilePreview, setProfilePreview] = useState("");
   const [fileList, setFileList] = useState([]);
   const [bioHtml, setBioHtml] = useState("");
-  const [compID, setCompID] = useState("");
 
   const onChange = ({ fileList: newFileList }) => {
     // Assuming only one file is selected

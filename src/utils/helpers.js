@@ -2,10 +2,7 @@ import { ImageCompressor } from "image-compressor";
 
 // convert words from instagram to Instagram
 export const capitalizeFirstLetter = (string) => {
-  // Replace underscores with spaces
   const stringWithSpaces = string.replace(/_/g, " ");
-
-  // Capitalize the first letter
   return stringWithSpaces.charAt(0).toUpperCase() + stringWithSpaces.slice(1);
 };
 
@@ -190,30 +187,3 @@ export const formatOptions = [
   "image",
   "video",
 ];
-
-export const mysql_real_escape_string = (str) => {
-  return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
-    switch (char) {
-      case "\0":
-        return "\\0";
-      case "\x08":
-        return "\\b";
-      case "\x09":
-        return "\\t";
-      case "\x1a":
-        return "\\z";
-      case "\n":
-        return " ";
-      case "\r":
-        return "\\r";
-      case '"':
-        return '"' + char;
-      case "'":
-        return "'" + char;
-      case "\\":
-        return "'" + char;
-      case "%":
-        return "%";
-    }
-  });
-};

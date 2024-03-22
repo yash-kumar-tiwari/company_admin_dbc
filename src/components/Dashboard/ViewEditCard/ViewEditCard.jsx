@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, Button, Card, Form, Input, Upload, message } from "antd";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import { Editor } from "@tinymce/tinymce-react";
 import ImgCrop from "antd-img-crop";
@@ -16,19 +16,13 @@ function ViewEditCard({ card_id }) {
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const params = useParams();
-  const urlString = params["*"];
-  // Extract the ID after the slash
-  const cardID = urlString?.split("/")[1];
-  //   console.log(cardID);
-
   const [isUpdatingCard, setIsUpdatingCard] = useState(false);
   const [businessCardData, setBusinessCardData] = useState({});
   const [cardDetails, setCardDetails] = useState({});
   const [profilePreview, setProfilePreview] = useState("");
   const [fileList, setFileList] = useState([]);
   const [bioHtml, setBioHtml] = useState("");
-  const [compID, setCompID] = useState("");
+  // const [compID, setCompID] = useState("");
 
   const onChange = ({ fileList: newFileList }) => {
     // Assuming only one file is selected
@@ -61,7 +55,7 @@ function ViewEditCard({ card_id }) {
   const handleProfilePicUpdate = async (imageFile) => {
     // Check if there's a new file in fileList
     if (fileList.length > 0) {
-      const file = fileList[0].originFileObj; // Assuming only one file is selected
+      // const file = fileList[0].originFileObj;
 
       // Upload the file and get the path
       const response = await uploadAvatar(imageFile);
@@ -119,16 +113,13 @@ function ViewEditCard({ card_id }) {
 
   const fetchCardData = useCallback(async () => {
     try {
-      // Fetch card data from the backend based on the cardID
-      // const response = await fetchViewDigitalCard(cardID);
       const response = await fetchViewDigitalCard(card_id);
 
       if (response && response.status === 200) {
         setCardDetails(response.data.data);
         const cardData = response.data.data;
-        setCompID(response.data.data.company_id);
+        // setCompID(response.data.data.company_id);
 
-        // Set form fields data using form.setFieldsValue
         form.setFieldsValue({
           first_name: cardData.first_name,
           last_name: cardData.last_name,
@@ -151,9 +142,8 @@ function ViewEditCard({ card_id }) {
     } catch (error) {
       console.error("Error fetching card data:", error);
       message.error(error.message);
-      // Handle error, e.g., show error message
     }
-  }, [cardID, form, navigate, card_id]);
+  }, [form, navigate, card_id]);
 
   useEffect(() => {
     // Fetch user data when the component mounts
@@ -347,6 +337,7 @@ function ViewEditCard({ card_id }) {
                   htmlType="submit"
                   size="large"
                   className="w-100"
+                  loading={isUpdatingCard}
                 >
                   Edit Card Details
                 </Button>

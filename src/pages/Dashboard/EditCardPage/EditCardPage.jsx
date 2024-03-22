@@ -21,7 +21,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ViewCardsQR from "../../../components/Dashboard/ViewCardsQR/ViewCardsQR";
 import ViewEditCard from "../../../components/Dashboard/ViewEditCard/ViewEditCard";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const EditCardPage = () => {
   const { cardID } = useParams();

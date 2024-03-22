@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Form, Input, Button, Typography, message, Modal } from "antd";
+import { Card, Form, Input, Button, message, Modal } from "antd";
 import "./ViewChangePassword.css";
 import { Col, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,6 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 
-const { Text, Title } = Typography;
 const { Item } = Form;
 
 function ViewChangePassword() {

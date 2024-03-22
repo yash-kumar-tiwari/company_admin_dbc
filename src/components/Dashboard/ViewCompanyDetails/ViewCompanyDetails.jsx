@@ -152,11 +152,9 @@ function ViewCompanyDetails() {
   };
 
   const handleCoverPictureUpdate = async (imageFile) => {
-    // Check if there's a new file in fileList
     if (coverFileList.length > 0) {
-      const file = coverFileList[0].originFileObj; // Assuming only one file is selected
+      // const file = coverFileList[0].originFileObj;
 
-      // Upload the file and get the path
       const response = await uploadCardCoverPic(imageFile);
       if (response.status === 201) {
         let imagePath = response.data.data;
@@ -166,7 +164,6 @@ function ViewCompanyDetails() {
         return;
       }
     } else {
-      // If no new file selected, use the current avatar path
       return companyData.cover_pic || "";
     }
   };
@@ -675,6 +672,7 @@ function ViewCompanyDetails() {
         onCancel={handleSocialMediaModalCancel}
         onSave={handleSocialMediaModalSave}
         companyID={companyData?.id}
+        companyIdCtx={companyIdCtx}
       />
     </>
   );

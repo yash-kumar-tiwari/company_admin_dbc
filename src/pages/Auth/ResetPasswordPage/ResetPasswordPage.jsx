@@ -3,7 +3,7 @@ import { Form, Input, Button, message } from "antd";
 import { LockOutlined } from "@ant-design/icons";
 import { resetPassword } from "../../../services/apiServices"; // Assuming there's an API service function for resetting password
 import { validatePassword } from "../../../utils/formValidators";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import AppBgImage from "../../../assets/images/static/app_background_image.jpg";
 import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 import { FaFacebookSquare } from "react-icons/fa";
@@ -13,7 +13,6 @@ import { Image } from "react-bootstrap";
 import { app_facebook_url, app_instagram_url } from "../../../utils/constants";
 
 function ResetPasswordPage() {
-  const navigate = useNavigate();
   const { resetToken } = useParams();
   const [loading, setLoading] = useState(false);
 

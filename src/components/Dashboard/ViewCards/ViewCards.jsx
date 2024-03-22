@@ -20,9 +20,8 @@ import {
   EllipsisOutlined,
 } from "@ant-design/icons";
 import "./ViewCards.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { Col, Row } from "react-bootstrap";
 import {
   exportCardsDetailsFile,
   fetchCardsList,
@@ -34,19 +33,15 @@ import DeleteCard from "./DeleteCard";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 import EditCard from "./EditCard";
-import { saveAs } from "file-saver";
 
-const { Text, Title, Paragraph } = Typography;
-const { Item } = Form;
+const { Text } = Typography;
 
 function ViewCards({ setShowEditCard }) {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [isFetchingCards, setIsFetchingCards] = useState(false);
-  const [isUpdatingCards, setIsUpdatingCards] = useState(false);
   const [CardsData, setCardsData] = useState([]);
-  const [ellipsis, setEllipsis] = useState(true);
-  const [avatarPreview, setAvatarPreview] = useState("");
+  // const [ellipsis, setEllipsis] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null); // To store the selected user data
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [showActivateCardQRModal, setShowActivateCardQRModal] = useState(false);
@@ -55,7 +50,6 @@ function ViewCards({ setShowEditCard }) {
     useState(false);
   const [showDeleteCardModal, setShowDeleteCardModal] = useState(false);
   const [showEditCardModal, setShowEditCardModal] = useState(false);
-  const [editedCardData, setEditedCardData] = useState(null);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [pageSize, setPageSize] = useState(5);
 
@@ -65,7 +59,6 @@ function ViewCards({ setShowEditCard }) {
       const response = await fetchCardsList();
       if (response && response.status === 200) {
         setCardsData(response.data.data);
-        setAvatarPreview(response.data.data.avatar); // Set avatar preview
 
         form.setFieldsValue(response.data.data);
         navigate("/dashboard");
@@ -280,10 +273,8 @@ function ViewCards({ setShowEditCard }) {
 
   const handleEditCardModalOpen = (record) => {
     setSelectedRecord(record);
-    setSelectedCardId(record);
     setShowEditCardModal(true);
-    const card = CardsData.find((card) => card.id === record);
-    setEditedCardData(card);
+    // const card = CardsData.find((card) => card.id === record);
   };
 
   const handleActivateCardQRModalClose = () => {
@@ -306,10 +297,7 @@ function ViewCards({ setShowEditCard }) {
 
   const handleEditModalClose = () => {
     setShowEditCardModal(false);
-    setEditedCardData(null);
   };
-
-  const [selectedCardId, setSelectedCardId] = useState(null);
 
   const handlePageSizeChange = (current, size) => {
     console.log("New page size:", size);
@@ -317,7 +305,6 @@ function ViewCards({ setShowEditCard }) {
   };
 
   const handleEditCard = (cardId) => {
-    setSelectedCardId(cardId);
     setShowEditCard(true);
   };
 
@@ -361,14 +348,9 @@ function ViewCards({ setShowEditCard }) {
         title={<span className="fw-bold text-center">Cards</span>}
         className="view-cards-custom-card"
       >
-        <Col lg={3} md={0} sm={0} xs={0}></Col>
-        <Col lg={3} md={6} sm={6} xs={6}>
-          <Button type="primary" className="mb-3" onClick={handleExportCards}>
-            Export Cards
-          </Button>
-        </Col>
-        <Col lg={3} md={6} sm={6} xs={6}></Col>
-        <Col lg={3} md={0} sm={0} xs={0}></Col>
+        <Button type="primary" className="mb-3" onClick={handleExportCards}>
+          Export Cards
+        </Button>
 
         <div className="viewCardsContainer">
           <Spin spinning={isFetchingCards} size="large">
@@ -478,7 +460,6 @@ function ViewCards({ setShowEditCard }) {
           handleEditModalClose();
         }}
         record={selectedRecord} // Pass the selectedRowKeys to the modal
-        isUpdating={isUpdatingCards}
       />
     </>
   );
