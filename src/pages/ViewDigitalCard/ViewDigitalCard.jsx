@@ -291,14 +291,34 @@ function ViewDigitalCard() {
                         <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
                           <label className="fw-bold">Personal Whatsapp</label>
                           <div className="text-muted">
-                            <a
+                            {/* <a
                               href={`https://wa.me/${cardDetails.personal_whatsapp}`}
                               className="html_link company-info-wrap"
                               target="_blank"
                               rel="noreferrer"
                             >
                               {cardDetails?.personal_whatsapp || "NA"}
-                            </a>
+                            </a> */}
+                            <a
+                              href={`https://wa.me/${cardDetails.personal_whatsapp}`}
+                              className="html_link company-info-wrap"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {/* {cardDetails?.personal_whatsapp || "NA"} */}
+                              <img
+                                className="social_custom_icon float-start"
+                                src={WhatsAppCustomIcon}
+                                alt="Facebook Icon"
+                                style={{
+                                  maxHeight: "100%",
+                                  maxWidth: "10%",
+                                }}
+                              />
+                              <span className="button-content float-start mx-2">
+                                {cardDetails.personal_whatsapp}
+                              </span>
+                            </a>{" "}
                           </div>
                         </Col>
                       </Row>
