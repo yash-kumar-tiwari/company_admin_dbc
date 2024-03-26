@@ -174,6 +174,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
         onCancel={onCancel}
         footer={null}
         destroyOnClose
+        width="90%" // Set the width to 80% of the screen
       >
         <Form
           form={form}
@@ -184,8 +185,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
         >
           <div className="edit-card-modal-form">
             <Row>
-              <Col lg={4} md={12} sm={12} xs={12}></Col>
-              <Col lg={4} md={12} sm={12} xs={12}>
+              <Col lg={3} md={12} sm={12} xs={12}>
                 <center>
                   <label className="fw-bold my-1">Profile Picture</label>
                   <br />
@@ -218,102 +218,104 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                   <br />{" "}
                 </center>
               </Col>
-              <Col lg={4} md={12} sm={12} xs={12}></Col>
-            </Row>
-            <Row>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">First Name</label>
-                <Form.Item
-                  name="first_name"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input first name!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter First Name" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Last Name</label>
-                <Form.Item
-                  name="last_name"
-                  rules={[
-                    { required: true, message: "Please input last name!" },
-                  ]}
-                >
-                  <Input placeholder="Enter Last Name" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Email</label>
-                <Form.Item
-                  name="user_email"
-                  rules={[
-                    { required: true, message: "Please input email!" },
-                    {
-                      type: "email",
-                      message: "Please enter a valid email address!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter Email Address" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Designation</label>
-                <Form.Item
-                  name="designation"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input designation!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter Designation" size="large" />
-                </Form.Item>
-              </Col>
+              <Col lg={9} md={12} sm={12} xs={12}>
+                <Row>
+                  <Col lg={4} md={12} sm={12} xs={12}>
+                    <label className="fw-bold my-1">First Name</label>
+                    <Form.Item
+                      name="first_name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input first name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter First Name" size="large" />
+                    </Form.Item>
+                  </Col>
+                  <Col lg={4} md={12} sm={12} xs={12}>
+                    <label className="fw-bold my-1">Last Name</label>
+                    <Form.Item
+                      name="last_name"
+                      rules={[
+                        { required: true, message: "Please input last name!" },
+                      ]}
+                    >
+                      <Input placeholder="Enter Last Name" size="large" />
+                    </Form.Item>
+                  </Col>
+                  <Col lg={4} md={12} sm={12} xs={12}>
+                    <label className="fw-bold my-1">Email</label>
+                    <Form.Item
+                      name="user_email"
+                      rules={[
+                        { required: true, message: "Please input email!" },
+                        {
+                          type: "email",
+                          message: "Please enter a valid email address!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter Email Address" size="large" />
+                    </Form.Item>
+                  </Col>
+                  <Col lg={4} md={12} sm={12} xs={12}>
+                    <label className="fw-bold my-1">Designation</label>
+                    <Form.Item
+                      name="designation"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input designation!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter Designation" size="large" />
+                    </Form.Item>
+                  </Col>
 
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">Contact Number</label>
-                <Form.Item
-                  name="contact_number"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your contact number",
-                    },
-                    {
-                      pattern: /^\d+$/,
-                      message: "Please enter a valid contact number",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter Contact Number" size="large" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} md={12} sm={12}>
-                <label className="fw-bold my-1">WhatsApp Number</label>
-                <Form.Item
-                  name="personal_whatsapp"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your WhatsApp number",
-                    },
-                    {
-                      pattern: /^\d+$/,
-                      message: "Please enter a valid WhatsApp number",
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input placeholder="Enter WhatsApp Number" size="large" />
-                </Form.Item>
+                  <Col lg={4} md={12} sm={12} xs={12}>
+                    <label className="fw-bold my-1">Contact Number</label>
+                    <Form.Item
+                      name="contact_number"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter your contact number",
+                        },
+                        {
+                          pattern: /^\d+$/,
+                          message: "Please enter a valid contact number",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter Contact Number" size="large" />
+                    </Form.Item>
+                  </Col>
+                  <Col lg={4} md={12} sm={12} xs={12}>
+                    <label className="fw-bold my-1">WhatsApp Number</label>
+                    <Form.Item
+                      name="personal_whatsapp"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter your WhatsApp number",
+                        },
+                        {
+                          pattern: /^\d+$/,
+                          message: "Please enter a valid WhatsApp number",
+                        },
+                      ]}
+                      hasFeedback
+                    >
+                      <Input placeholder="Enter WhatsApp Number" size="large" />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
             </Row>
+            <Row></Row>
             <Col lg={12} md={12} sm={12}>
               <label className="fw-bold my-1">Bio</label>
               <Form.Item
@@ -325,6 +327,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                   apiKey={editorApiKey}
                   initialValue={cardDetails?.bio || null}
                   init={{
+                    height: 250,
                     plugins:
                       "anchor autolink charmap codesample emoticons image link searchreplace table visualblocks wordcount linkchecker lists fontsize fontfamily",
                     toolbar:
