@@ -281,10 +281,21 @@ function ViewDigitalCard() {
                           <label className="fw-bold">Company Phone</label>
                           <div className="text-muted">
                             <a
-                              href={`tel:${cardDetails?.company_phone}`}
+                              href={`tel:${cardDetails?.company_contact_number}`}
                               className="html_link company-info-wrap"
                             >
-                              {cardDetails?.company_phone || "NA"}
+                              {cardDetails?.company_contact_number || "NA"}
+                            </a>
+                          </div>
+                        </Col>
+                        <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
+                          <label className="fw-bold">Personal Whatsapp</label>
+                          <div className="text-muted">
+                            <a
+                              href={`tel:${cardDetails?.personal_whatsapp}`}
+                              className="html_link company-info-wrap"
+                            >
+                              {cardDetails?.personal_whatsapp || "NA"}
                             </a>
                           </div>
                         </Col>
