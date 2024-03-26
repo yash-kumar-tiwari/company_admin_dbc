@@ -21,7 +21,7 @@ const initialBusinessCardData = {
   designation: "",
   bio: "",
   contact_number: "",
-  cover_pic: "",
+  personal_whatsapp: "",
   profile_picture: "",
 };
 
@@ -189,7 +189,7 @@ function ViewCreateCard() {
                   <Input placeholder="Enter Email Address" size="large" />
                 </Form.Item>
               </Col>
-              <Col lg={6} md={12} sm={12}>
+              <Col lg={4} md={12} sm={12}>
                 <label className="fw-bold my-1">Designation</label>
                 <Form.Item
                   name="designation"
@@ -205,7 +205,7 @@ function ViewCreateCard() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} md={12} sm={12}>
+              <Col lg={4} md={12} sm={12}>
                 <label className="fw-bold my-1">Contact Number</label>
                 <Form.Item
                   name="contact_number"
@@ -222,6 +222,25 @@ function ViewCreateCard() {
                   hasFeedback
                 >
                   <Input placeholder="Enter Contact Number" size="large" />
+                </Form.Item>
+              </Col>
+              <Col lg={4} md={12} sm={12}>
+                <label className="fw-bold my-1">WhatsApp Number</label>
+                <Form.Item
+                  name="personal_whatsapp"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your WhatsApp number",
+                    },
+                    {
+                      pattern: /^\d+$/,
+                      message: "Please enter a valid WhatsApp number",
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Enter WhatsApp Number" size="large" />
                 </Form.Item>
               </Col>
               <Col lg={6} md={6} sm={6}>

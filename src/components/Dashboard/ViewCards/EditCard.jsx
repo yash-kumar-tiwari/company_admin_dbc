@@ -14,7 +14,6 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import { editorApiKey } from "../../../utils/constants";
 
 function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
-  console.log(record);
   const card_id = record?.id;
 
   const navigate = useNavigate();
@@ -132,6 +131,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
           user_email: cardData.user_email,
           designation: cardData.designation,
           contact_number: cardData.contact_number,
+          personal_whatsapp: cardData.personal_whatsapp,
           cover_pic: cardData.cover_pic,
           profile_picture: cardData.profile_picture,
           bio: cardData.bio,
@@ -246,7 +246,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                   <Input placeholder="Enter Last Name" size="large" />
                 </Form.Item>
               </Col>
-              <Col lg={12} md={12} sm={12}>
+              <Col lg={6} md={12} sm={12}>
                 <label className="fw-bold my-1">Email</label>
                 <Form.Item
                   name="user_email"
@@ -292,6 +292,25 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                   ]}
                 >
                   <Input placeholder="Enter Contact Number" size="large" />
+                </Form.Item>
+              </Col>
+              <Col lg={6} md={12} sm={12}>
+                <label className="fw-bold my-1">WhatsApp Number</label>
+                <Form.Item
+                  name="personal_whatsapp"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your WhatsApp number",
+                    },
+                    {
+                      pattern: /^\d+$/,
+                      message: "Please enter a valid WhatsApp number",
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Enter WhatsApp Number" size="large" />
                 </Form.Item>
               </Col>
             </Row>
