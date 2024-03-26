@@ -292,8 +292,10 @@ function ViewDigitalCard() {
                           <label className="fw-bold">Personal Whatsapp</label>
                           <div className="text-muted">
                             <a
-                              href={`tel:${cardDetails?.personal_whatsapp}`}
+                              href={`https://wa.me/${cardDetails.personal_whatsapp}`}
                               className="html_link company-info-wrap"
+                              target="_blank"
+                              rel="noreferrer"
                             >
                               {cardDetails?.personal_whatsapp || "NA"}
                             </a>

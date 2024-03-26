@@ -57,7 +57,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
   const handleProfilePicUpdate = async (imageFile) => {
     // Check if there's a new file in fileList
     if (fileList.length > 0) {
-      const file = fileList[0].originFileObj; // Assuming only one file is selected
+      // const file = fileList[0].originFileObj;
 
       // Upload the file and get the path
       const response = await uploadAvatar(imageFile);
@@ -380,6 +380,7 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                 htmlType="submit"
                 size="large"
                 className="w-100"
+                loading={isUpdatingCard}
               >
                 Edit Card
               </Button>
