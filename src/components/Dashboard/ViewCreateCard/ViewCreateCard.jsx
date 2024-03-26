@@ -156,6 +156,7 @@ function ViewCreateCard() {
                       message: "Please input first name!",
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="Enter First Name" size="large" />
                 </Form.Item>
@@ -167,6 +168,7 @@ function ViewCreateCard() {
                   rules={[
                     { required: true, message: "Please input last name!" },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="Enter Last Name" size="large" />
                 </Form.Item>
@@ -182,6 +184,7 @@ function ViewCreateCard() {
                       message: "Please enter a valid email address!",
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="Enter Email Address" size="large" />
                 </Form.Item>
@@ -196,6 +199,7 @@ function ViewCreateCard() {
                       message: "Please input designation!",
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="Enter Designation" size="large" />
                 </Form.Item>
@@ -208,9 +212,14 @@ function ViewCreateCard() {
                   rules={[
                     {
                       required: true,
-                      message: "Please input contact number!",
+                      message: "Please enter your contact number",
+                    },
+                    {
+                      pattern: /^\d+$/,
+                      message: "Please enter a valid contact number",
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input placeholder="Enter Contact Number" size="large" />
                 </Form.Item>

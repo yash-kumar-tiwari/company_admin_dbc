@@ -292,6 +292,10 @@ function ViewProfile() {
                         required: true,
                         message: "Please enter your mobile number",
                       },
+                      {
+                        pattern: /^\d+$/, // Regex pattern to allow only numerical values
+                        message: "Please enter a valid mobile number",
+                      },
                     ]}
                     hasFeedback
                   >
@@ -311,6 +315,10 @@ function ViewProfile() {
                       {
                         required: true,
                         message: "Please enter your phone number",
+                      },
+                      {
+                        pattern: /^\d+$/, // Regex pattern to allow only numerical values
+                        message: "Please enter a valid phone number",
                       },
                     ]}
                     hasFeedback

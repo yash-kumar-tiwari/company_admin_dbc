@@ -456,6 +456,10 @@ function ViewCompanyDetails() {
                         required: true,
                         message: "Please enter your company contact number",
                       },
+                      {
+                        pattern: /^\d+$/,
+                        message: "Please enter a valid company contact number",
+                      },
                     ]}
                     hasFeedback
                   >

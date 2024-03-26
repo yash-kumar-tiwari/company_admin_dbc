@@ -283,7 +283,11 @@ function EditCard({ visible, onCancel, onEditSuccess, record, isUpdating }) {
                   rules={[
                     {
                       required: true,
-                      message: "Please input contact number!",
+                      message: "Please enter your contact number",
+                    },
+                    {
+                      pattern: /^\d+$/,
+                      message: "Please enter a valid contact number",
                     },
                   ]}
                 >
