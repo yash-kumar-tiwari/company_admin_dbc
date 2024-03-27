@@ -9,7 +9,7 @@ import "react-quill/dist/quill.snow.css"; // Import Quill's CSS for styling
 import { Editor } from "@tinymce/tinymce-react";
 import MidinFooter from "../../MidinFooter/MidinFooter";
 import ImgCrop from "antd-img-crop";
-import { downloadSampleExcel } from "../../../utils/constants";
+import { downloadSampleExcel, editorApiKey } from "../../../utils/constants";
 import { createMultipleBusinessCard } from "../../../services/apiServices";
 import { handleAuthenticationError } from "../../../utils/authHelpers";
 import { useNavigate } from "react-router-dom";
@@ -282,7 +282,7 @@ function ViewCreateCard() {
                 // ]}
               >
                 <Editor
-                  apiKey="wm5bqxko1kasuhyx26o0ax3jabo3kr7nj4gzhlm2oenw0ipn"
+                  apiKey={editorApiKey}
                   init={{
                     placeholder: "Enter Bio Details",
                     plugins:

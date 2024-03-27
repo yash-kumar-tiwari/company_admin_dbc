@@ -1,6 +1,11 @@
 {
-  "short_name": "Midin App",
-  "name": "Midin App - Tap, Connect, Cultivate",
+  "name": "Midin App Card",
+  "short_name": "Midin App Card",
+  "start_url": "/v/companyName/cardReference",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "scope": "/v/companyName/cardReference",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,9 +23,5 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/v/:companyName/:cardReference",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
-  "scope": "/"
+  "orientation": "portrait"
 }

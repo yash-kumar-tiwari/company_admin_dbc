@@ -341,7 +341,7 @@ function ViewCompanyDetails() {
                   <Row
                     className="my-1 p-4"
                     style={{
-                      backgroundColor: "#bae7ff",
+                      backgroundColor: "#12a0a2",
                       borderRadius: "15px",
                     }}
                   >
