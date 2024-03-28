@@ -12,9 +12,11 @@ const setAuthToken = (token) => {
   if (token) {
     localStorage.setItem("user-token", token);
     localStorage.setItem("authenticated", true);
+    localStorage.setItem("previousTab", 1);
   } else {
     localStorage.removeItem("user-token");
     localStorage.setItem("authenticated", false);
+    localStorage.removeItem("previousTab");
   }
 };
 
