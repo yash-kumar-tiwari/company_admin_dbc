@@ -310,7 +310,7 @@ function ViewCompanyDetails() {
                 <Col lg={4} md={6} sm={6} className="my-3">
                   <label className="fw-bold my-1">Cover Picture</label>
                   <br />
-                  <ImgCrop rotationSlider showReset>
+                  <ImgCrop rotationSlider aspectSlider showReset aspect={4 / 3}>
                     <Upload
                       accept="image/*"
                       onChange={onCoverChange}

@@ -41,6 +41,8 @@ export const logoutUser = async () => {
     setAuthToken(null);
     localStorage.removeItem("user-token");
     localStorage.removeItem("authenticated");
+    localStorage.removeItem("previousTab");
+    localStorage.removeItem("companyId");
     return true;
   } catch (error) {
     console.error("Error logging out:", error);
