@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import LoginPage from "./pages/Auth/LoginPage/LoginPage";
@@ -10,6 +10,16 @@ import EditCardPage from "./pages/Dashboard/EditCardPage/EditCardPage";
 import Page404 from "./pages/Error/404Page/Page404";
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("user-token");
+    const isAuthenticated = localStorage.getItem("authenticated");
+    if (token && isAuthenticated) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <>
       <Routes>
