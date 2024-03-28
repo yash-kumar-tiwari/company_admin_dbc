@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Function to make API requests with JSON data
+// Function to make API requests with JSON Data
 export const makeJsonApiRequest = async (
   method,
   endpoint,
@@ -36,7 +36,7 @@ export const makeJsonApiRequest = async (
   }
 };
 
-// Function to make API requests with form data
+// Function to make API requests with Form Data
 export const makeFormDataApiRequest = async (
   method,
   endpoint,
@@ -53,7 +53,6 @@ export const makeFormDataApiRequest = async (
       };
     }
 
-    // Create FormData object
     const requestData = new FormData();
 
     // If formData is an array, append each file individually
@@ -80,7 +79,7 @@ export const makeFormDataApiRequest = async (
   }
 };
 
-// Function to make API requests with dynamic form data
+// Function to make API requests with Dynamic Form Data
 export const makeDynamicFormDataApiRequest = async (
   method,
   endpoint,
@@ -97,7 +96,6 @@ export const makeDynamicFormDataApiRequest = async (
       };
     }
 
-    // Create FormData object
     const requestData = new FormData();
 
     // If formData is an array, append each file individually with its field name

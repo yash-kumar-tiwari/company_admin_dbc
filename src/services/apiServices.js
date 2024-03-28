@@ -31,8 +31,6 @@ export const loginUser = async (loginCredentials) => {
   );
   if (response && response.status === 200) {
     setAuthToken(response.data.data.token);
-    // localStorage.setItem("user-data", JSON.stringify(response.data.userData));
-    // message.success(response.message);
   }
   return response;
 };
