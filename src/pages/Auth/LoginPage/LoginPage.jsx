@@ -6,7 +6,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { loginUser } from "../../../services/apiServices";
 import { validateEmail, validatePassword } from "../../../utils/formValidators";
 import { NavLink, useNavigate } from "react-router-dom";
-import AppBgImage from "../../../assets/images/static/app_background_image.jpg";
+import AppBgImage from "../../../assets/images/static/app_background_image_resize.jpg";
 import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 import { FaFacebookSquare } from "react-icons/fa";
 import { CiInstagram } from "react-icons/ci";

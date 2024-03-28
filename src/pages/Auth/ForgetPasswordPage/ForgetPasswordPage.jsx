@@ -4,7 +4,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { forgetPassword } from "../../../services/apiServices";
 import { validateEmail } from "../../../utils/formValidators";
 import { NavLink, useNavigate } from "react-router-dom";
-import AppBgImage from "../../../assets/images/static/app_background_image.jpg";
+import AppBgImage from "../../../assets/images/static/app_background_image_resize.jpg";
 import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 import "./ForgetPasswordPage.css";
 import { FaFacebookSquare } from "react-icons/fa";

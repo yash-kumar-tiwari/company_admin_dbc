@@ -4,7 +4,7 @@ import { LockOutlined } from "@ant-design/icons";
 import { resetPassword } from "../../../services/apiServices"; // Assuming there's an API service function for resetting password
 import { validatePassword } from "../../../utils/formValidators";
 import { NavLink, useParams } from "react-router-dom";
-import AppBgImage from "../../../assets/images/static/app_background_image.jpg";
+import AppBgImage from "../../../assets/images/static/app_background_image_resize.jpg";
 import AppLogoLight from "../../../assets/images/static/app_logo_light.png";
 import { FaFacebookSquare } from "react-icons/fa";
 import { CiInstagram } from "react-icons/ci";
