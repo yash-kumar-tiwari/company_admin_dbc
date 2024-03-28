@@ -71,11 +71,6 @@ const CompanyDashboardPage = () => {
         return (
           <>
             <ViewCards />
-            {/* {showEditCard ? (
-              <ViewEditCard setShowEditCard={setShowEditCard} />
-            ) : (
-              <ViewCards setShowEditCard={setShowEditCard} />
-            )} */}
           </>
         );
       case "4":

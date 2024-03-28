@@ -22,7 +22,6 @@ const MetaDataPageInfo = ({ title, description, keywords, favicon }) => {
         type="image/png"
         href={favicon || "/path/to/default/favicon.png"}
       />
-      {/* Add more meta tags as needed */}
     </Helmet>
   );
 };

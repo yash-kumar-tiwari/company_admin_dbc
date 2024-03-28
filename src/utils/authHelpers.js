@@ -15,6 +15,8 @@ export const getAuthenticationToken = () => {
 export const removeAuthenticationToken = () => {
   localStorage.removeItem("user-token");
   localStorage.removeItem("authenticated");
+  localStorage.removeItem("previousTab");
+  localStorage.removeItem("companyId");
 };
 
 // handle authentication error and navigate to the signin if status 401 from api is returned
